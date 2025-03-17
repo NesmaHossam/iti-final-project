@@ -1,5 +1,6 @@
 <template>
-    <footer class="bg-green-900 text-white text-center p-4 font-[inter] flex flex-col items-center">
+    <footer>
+      <div class="bg-green-900 text-white text-center p-4 font-[inter] md:flex flex-col items-center hidden">
         <h2 class="lg:text-5xl md:text-3xl text-3xl mb-6 font-inter font-normal">Zaytona</h2>
         <div class="md:flex md:items-center lg:gap-6 gap-3 lg:mb-12 mb-6 font-playfair lg:text-2xl md:text-xl font-normal grid grid-cols-3 ">
             <nuxt-link to="/">Home</nuxt-link>
@@ -25,5 +26,11 @@
             <Icon name="uil:music" class="text-white w-6 h-6 " />
         </div>
         <p class=" lg:text-xl md:text-lg">&copy; {{ new Date().getFullYear() }} Zaytona. All rights reserved.</p>
+      </div>
+      <div class="bg-green-900 text-white text-center p-4 font-inter block md:hidden">
+        <h2 class="lg:text-5xl md:text-3xl text-3xl mb-6 font-inter font-normal">Zaytona</h2>
+        <p class=" lg:text-xl md:text-lg">&copy; {{ new Date().getFullYear() }} Zaytona. All rights reserved.</p>
+      </div>
     </footer>
+
 </template>
