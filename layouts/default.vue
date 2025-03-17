@@ -1,6 +1,9 @@
 <template>
-  <AppHeader />
-  <main>
+  <div class=" min-h-[100vh] flex flex-col justify-between">
+   <div>
+    <AppHeader />
     <slot />
-  </main>
+   </div>
+    <AppFooter />
+  </div>
 </template>
