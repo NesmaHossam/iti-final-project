@@ -1,5 +1,5 @@
 <template>
-    <footer class="bg-slate-800 text-white text-center p-4 font-[inter] flex flex-col items-center">
+    <footer class="bg-green-900 text-white text-center p-4 font-[inter] flex flex-col items-center">
         <h2 class="lg:text-5xl md:text-3xl text-3xl mb-6 font-inter font-normal">Zaytona</h2>
         <div class="md:flex md:items-center lg:gap-6 gap-3 lg:mb-12 mb-6 font-playfair lg:text-2xl md:text-xl font-normal grid grid-cols-3 ">
             <nuxt-link to="/">Home</nuxt-link>
