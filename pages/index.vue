@@ -26,4 +26,5 @@ watch(selectedTag, () => {
 
 <template>
   <h1>Home</h1>
+  <AppFooter/>
 </template>
