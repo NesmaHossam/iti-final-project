@@ -73,6 +73,19 @@ export const useAuth = () => {
     }
   }
 
+
+  // reset password
+
+  async function resetPassword(newPassword) {
+    try {
+      const res = await useApi("/auth/reset-password", "POST", { newPassword });
+      return res;
+    } catch (error) {
+      console.error("Password reset error:", error);
+      throw new Error(error.response?._data?.message || "Failed to reset password");
+    }
+  }
+
   return {
     login,
     logout,
@@ -80,6 +93,7 @@ export const useAuth = () => {
     silentRefresh,
     loginWithGoogle,
     requestPasswordReset,
+    resetPassword,
     token,
   };
 };
