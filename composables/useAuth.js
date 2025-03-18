@@ -3,6 +3,7 @@ export const useAuth = () => {
   const token = useCookie("token");
   const refreshToken = useCookie("refreshToken");
 
+  // login
   async function login(credentials) {
     try {
       const res = await useApi("/auth/login", "POST", credentials);
@@ -14,6 +15,18 @@ export const useAuth = () => {
     } catch (error) {
       console.error("Login error:", error);
       throw new Error(error.response?._data?.message || "Login failed");
+    }
+  }
+
+  async function loginWithGoogle() {
+    try {
+      const res = await useApi("/auth/google/login", "POST");
+      token.value = res.accessToken;
+      refreshToken.value = res.refreshToken;
+      return res;
+    } catch (error) {
+      console.error("Google login error:", error);
+      throw new Error(error.response?._data?.message || "Google login failed");
     }
   }
 
@@ -40,11 +53,47 @@ export const useAuth = () => {
     }
   }
 
+  // logout
   async function logout() {
     token.value = null;
     refreshToken.value = null;
     router.push("/login");
   }
 
-  return { login, logout, silentMe, silentRefresh, token };
+  // forget password
+  async function requestPasswordReset(email) {
+    try {
+      const res = await useApi("/auth/forgot-password", "POST", { email });
+      return res;
+    } catch (error) {
+      console.error("Password reset error:", error);
+      throw new Error(
+        error.response?._data?.message || "Failed to send reset link"
+      );
+    }
+  }
+
+
+  // reset password
+
+  async function resetPassword(newPassword) {
+    try {
+      const res = await useApi("/auth/reset-password", "POST", { newPassword });
+      return res;
+    } catch (error) {
+      console.error("Password reset error:", error);
+      throw new Error(error.response?._data?.message || "Failed to reset password");
+    }
+  }
+
+  return {
+    login,
+    logout,
+    silentMe,
+    silentRefresh,
+    loginWithGoogle,
+    requestPasswordReset,
+    resetPassword,
+    token,
+  };
 };
