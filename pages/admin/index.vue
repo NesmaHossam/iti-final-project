@@ -11,7 +11,7 @@ import { useWebsiteStore } from '../../stores/menuStore.js'
 
 <template>
   <div>
-    <h1>DashBoard</h1>
+    <h1> DashBoard </h1>
     <p>{{ Negm.name }}</p>
   </div>
 </template>
