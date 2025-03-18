@@ -3,6 +3,7 @@ export const useAuth = () => {
   const token = useCookie("token");
   const refreshToken = useCookie("refreshToken");
 
+  // login
   async function login(credentials) {
     try {
       const res = await useApi("/auth/login", "POST", credentials);
@@ -19,7 +20,7 @@ export const useAuth = () => {
 
   async function loginWithGoogle() {
     try {
-      const res = await useApi("/auth/google/login", "POST"); 
+      const res = await useApi("/auth/google/login", "POST");
       token.value = res.accessToken;
       refreshToken.value = res.refreshToken;
       return res;
@@ -52,11 +53,33 @@ export const useAuth = () => {
     }
   }
 
+  // logout
   async function logout() {
     token.value = null;
     refreshToken.value = null;
     router.push("/login");
   }
 
-  return { login, logout, silentMe, silentRefresh, loginWithGoogle, token };
+  // forget password
+  async function requestPasswordReset(email) {
+    try {
+      const res = await useApi("/auth/forgot-password", "POST", { email });
+      return res;
+    } catch (error) {
+      console.error("Password reset error:", error);
+      throw new Error(
+        error.response?._data?.message || "Failed to send reset link"
+      );
+    }
+  }
+
+  return {
+    login,
+    logout,
+    silentMe,
+    silentRefresh,
+    loginWithGoogle,
+    requestPasswordReset,
+    token,
+  };
 };

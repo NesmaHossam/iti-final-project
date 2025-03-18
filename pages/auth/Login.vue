@@ -45,7 +45,7 @@ async function login({ data }) {
 <template>
   <div class="h-screen flex items-center justify-center p-6">
     <div class="bg-gray-300 shadow-lg rounded-lg w-[500px] p-8 overflow-hidden">
-      <h1 class="text-3xl mb-6 text-center font-bold">LOG IN</h1>
+      <h1 class="text-3xl mb-6 text-center font-bold cursor-default">LOG IN</h1>
 
       <div class="h-[30px] mb-4">
         <p v-if="errorMsg" class="text-center p-2 text-sm bg-red-50 rounded">
