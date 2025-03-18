@@ -69,8 +69,7 @@ async function submitEmail({ data }) {
           color="white"
           class="duration-300 bg-gray-400 hover:bg-gray-300 cursor-pointer"
           block
-        >
-          Submit
+        >Submit
         </UButton>
       </UForm>
 
