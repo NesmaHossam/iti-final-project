@@ -17,6 +17,18 @@ export const useAuth = () => {
     }
   }
 
+  async function loginWithGoogle() {
+    try {
+      const res = await useApi("/auth/google/login", "POST"); 
+      token.value = res.accessToken;
+      refreshToken.value = res.refreshToken;
+      return res;
+    } catch (error) {
+      console.error("Google login error:", error);
+      throw new Error(error.response?._data?.message || "Google login failed");
+    }
+  }
+
   async function silentMe() {
     try {
       const res = await useApi("/auth/me", "GET");
@@ -46,5 +58,5 @@ export const useAuth = () => {
     router.push("/login");
   }
 
-  return { login, logout, silentMe, silentRefresh, token };
+  return { login, logout, silentMe, silentRefresh, loginWithGoogle, token };
 };
