@@ -1,9 +1,9 @@
 <script setup>
     definePageMeta({
-        layout : false
+        layout : "admin"
     })
 </script>
 
 <template>
-    <h1>OTP</h1>
+    <h1>Menu</h1>
 </template>
