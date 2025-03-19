@@ -40,7 +40,6 @@ const isPasswordVisible = ref(false);
 const isConfirmPasswordVisible = ref(false);
 const user = useUserStore()
 const router = useRouter()
-
 async function signUp() {
   try {
     isLoading.value = true;
