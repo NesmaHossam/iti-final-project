@@ -49,7 +49,7 @@ export const useAuth = () => {
       return res;
     } catch (error) {
       console.log(error.response?._data?.message || "Login failed");
-      router.push("/login");
+      router.push("/auth/Login");
     }
   }
 
@@ -57,9 +57,8 @@ export const useAuth = () => {
   async function logout() {
     token.value = null;
     refreshToken.value = null;
-    router.push("/login");
+    router.push("/auth/Login");
   }
-
   // forget password
   async function requestPasswordReset(email) {
     try {
