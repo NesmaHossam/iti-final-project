@@ -6,14 +6,14 @@ definePageMeta({
 });
 // state
 const formState = reactive({
-  username: "",
+  email: "",
   password: "",
 });
 const rememberMe = ref(false);
 
 // schema
 const schema = z.object({
-  username: z.string().trim().min(1, "Username is required"),
+  email: z.string().trim().min(1, "email is required"),
   password: z.string().trim().min(1, "Password is required"),
 });
 
@@ -21,14 +21,12 @@ const schema = z.object({
 const isLoading = ref(false);
 const errorMsg = ref(null);
 const auth = useAuth();
-const router = useRouter();
 
-async function login({ data }) {
-  console.log("Submitting:", data);
+async function login() {
+  console.log("Submitting:", formState);
   try {
     isLoading.value = true;
-    await auth.login(data);
-    router.push("/");
+    await auth.login(formState);
   } catch (error) {
     if (error.message.includes("Invalid credentials")) {
       errorMsg.value = "Invalid username or password. Please try again.";
@@ -70,9 +68,9 @@ const isPasswordVisible = ref(false);
 
       <UForm :state="formState" :schema="schema" @submit="login">
         <div class="mb-4">
-          <UFormGroup label="Email" name="username">
+          <UFormGroup label="Email" name="email">
             <UInput
-              v-model="formState.username"
+              v-model="formState.email"
               placeholder="Email"
               class="w-full bg-[#FCF6EB] text-[#A39782] border-[#A39782] rounded-lg"
             >

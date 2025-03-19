@@ -27,7 +27,7 @@ const auth = useAuth();
                     <a href="mailto:zaytona@gmail.com">zaytona@gmail.com</a>
                     <appAuthChecker>
                         <template #auth>
-                            <nuxt-link to="#" class='underline underline-offset-4' @click="auth.logout">Log Out</nuxt-link>
+                            <nuxt-link to="/auth/Login" class='underline underline-offset-4' @click="auth.logout">Log Out</nuxt-link>
                         </template>
                         <template #unAuth>
                             <nuxt-link to="/auth/Login" class=' underline underline-offset-4'>Login</nuxt-link>

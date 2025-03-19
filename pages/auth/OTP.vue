@@ -53,6 +53,7 @@ function startTimer() {
     }
   }, 1000);
 }
+console.log(formState.otp);
 
 onMounted(() => {
   startTimer();
@@ -61,6 +62,10 @@ onMounted(() => {
 onBeforeUnmount(() => {
   clearInterval(timerInterval);
 });
+
+const user = useUserStore()
+const { userEmail } = storeToRefs(user)
+console.log(userEmail.value);
 </script>
 
 <template>
@@ -69,7 +74,7 @@ onBeforeUnmount(() => {
       src="../../assets/images/Auth/OTP1.png"
       alt="OTP Image"
       class="absolute top-[15%] right-[16%] w-[300px]"
-    />
+    >
     <div
       class="bg-slate-200/10 backdrop-blur-md shadow-lg rounded-lg w-[600px] p-8 relative z-2"
     >
