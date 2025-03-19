@@ -12,7 +12,7 @@ export const useApi = (request, method, payload, moreHeaders) => {
   return $fetch(request, {
     method: method,
     headers: headers,
-    body: payload,
+    body: JSON.stringify(payload),
     baseURL: config.public.baseUrl,
   });
 };

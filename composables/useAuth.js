@@ -3,14 +3,24 @@ export const useAuth = () => {
   const token = useCookie("token");
   const refreshToken = useCookie("refreshToken");
 
-  // login
-  async function login(credentials) {
+  // sign up 
+  async function signup (data) {
     try {
-      const res = await useApi("/auth/login", "POST", credentials);
-
+      const res = await useApi("/auth/signup", "POST", data);
+      console.log(res);
+      return res;
+    } catch (error) {
+      console.error("Login error:", error);
+      throw new Error(error.response?._data?.message || "Login failed");
+    }
+  }
+  // login
+  async function login(data) {
+    try {
+      const res = await useApi("/auth/login", "POST", data);
       token.value = res.accessToken;
       refreshToken.value = res.refreshToken;
-
+      router.push('/')
       return res;
     } catch (error) {
       console.error("Login error:", error);
@@ -88,12 +98,10 @@ export const useAuth = () => {
 
   // OTP
   const isAuthenticated = ref(false);
-
   const requestOTP = async (email) => {
     console.log(`Requesting password reset for ${email}`);
     return new Promise((resolve) => setTimeout(resolve, 1000));
   };
-
   const verifyOTP = async (otp) => {
     console.log(`Verifying OTP: ${otp}`);
     return new Promise((resolve) => {
@@ -109,6 +117,7 @@ export const useAuth = () => {
   };
 
   return {
+    signup,
     login,
     logout,
     silentMe,

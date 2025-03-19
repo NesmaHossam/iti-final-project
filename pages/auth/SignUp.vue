@@ -10,9 +10,9 @@ const formState = reactive({
   firstName: "",
   lastName: "",
   email: "",
-  phone: "",
+  mobileNumber: "",
   password: "",
-  confirmPass: "",
+  confirmPassword: "",
 });
 
 // schema
@@ -21,16 +21,16 @@ const schema = z
     firstName: z.string().min(1, "First Name is required"),
     lastName: z.string().min(1, "Last Name is required"),
     email: z.string().email("Invalid email format"),
-    phone: z
+    mobileNumber: z
       .string()
-      .min(10, "Phone number must be at least 10 digits")
-      .max(15, "Phone number too long"),
+      .min(10, "mobile Number number must be at least 10 digits")
+      .max(15, "mobile Number number too long"),
     password: z.string().min(6, "Password must be at least 6 characters"),
-    confirmPass: z.string(),
+    confirmPassword: z.string(),
   })
-  .refine((data) => data.password === data.confirmPass, {
+  .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
-    path: ["confirmPass"],
+    path: ["confirmPassword"],
   });
 
 // submit function
@@ -38,7 +38,8 @@ const isLoading = ref(false);
 const errorMsg = ref(null);
 const isPasswordVisible = ref(false);
 const isConfirmPasswordVisible = ref(false);
-const router = useRouter();
+const user = useUserStore()
+const router = useRouter()
 
 async function signUp() {
   try {
@@ -47,13 +48,13 @@ async function signUp() {
     
     const result = schema.safeParse(formState);
     if (!result.success) {
-      // This properly extracts error messages from Zod validation
       errorMsg.value = result.error.errors.map(e => e.message).join("\n");
       return;
     }
-    
     console.log("Form submitted successfully", formState);
-    router.push("/");
+    await auth.signup(formState)
+    user.setEmail(formState.email)
+    router.push('/auth/OTP');
   } catch (error) {
     console.error("Signup error:", error);
     errorMsg.value = error.message || "An unexpected error occurred";
@@ -137,10 +138,10 @@ async function signUp() {
         </div>
 
         <div class="mb-4">
-          <UFormGroup label="Phone Number" name="phone">
+          <UFormGroup label="mobile Number Number" name="mobileNumber">
             <UInput
-              v-model="formState.phone"
-              placeholder="Phone Number"
+              v-model="formState.mobileNumber"
+              placeholder="Number"
               class="w-full bg-[#FCF6EB] text-[#A39782] border-[#A39782] rounded-lg"
             >
               <template #leading>
@@ -185,7 +186,7 @@ async function signUp() {
         <div class="mb-4">
           <UFormGroup label="Confirm Password" name="confirmPassword">
             <UInput
-              v-model="formState.confirmPass"
+              v-model="formState.confirmPassword"
               :type="isConfirmPasswordVisible ? 'text' : 'password'"
               placeholder="Confirm Password"
               class="w-full bg-[#FCF6EB] text-[#A39782] border-[#A39782] rounded-lg"

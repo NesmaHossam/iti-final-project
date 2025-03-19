@@ -1,5 +1,5 @@
 <script setup>
-import { useWebsiteStore } from '../../stores/menuStore.js'
+import { useWebsiteStore } from '../../stores/userEmail.js'
 
     definePageMeta({
         layout : "admin"
