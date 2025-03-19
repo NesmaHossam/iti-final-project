@@ -72,7 +72,6 @@ export const useAuth = () => {
     }
   }
 
-
   // reset password
 
   async function resetPassword(newPassword) {
@@ -81,9 +80,33 @@ export const useAuth = () => {
       return res;
     } catch (error) {
       console.error("Password reset error:", error);
-      throw new Error(error.response?._data?.message || "Failed to reset password");
+      throw new Error(
+        error.response?._data?.message || "Failed to reset password"
+      );
     }
   }
+
+  // OTP
+  const isAuthenticated = ref(false);
+
+  const requestOTP = async (email) => {
+    console.log(`Requesting password reset for ${email}`);
+    return new Promise((resolve) => setTimeout(resolve, 1000));
+  };
+
+  const verifyOTP = async (otp) => {
+    console.log(`Verifying OTP: ${otp}`);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        if (otp === "1234") {
+          isAuthenticated.value = true;
+          resolve();
+        } else {
+          throw new Error("Invalid OTP");
+        }
+      }, 1000);
+    });
+  };
 
   return {
     login,
@@ -93,6 +116,9 @@ export const useAuth = () => {
     loginWithGoogle,
     requestPasswordReset,
     resetPassword,
+    isAuthenticated,
+    requestOTP,
+    verifyOTP,
     token,
   };
 };
