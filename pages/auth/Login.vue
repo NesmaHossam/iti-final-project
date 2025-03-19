@@ -6,8 +6,8 @@ definePageMeta({
 });
 // state
 const formState = reactive({
-  username: undefined,
-  password: undefined,
+  username: "",
+  password: "",
 });
 const rememberMe = ref(false);
 
