@@ -3,7 +3,6 @@
 
 @import "tailwindcss";
 @import "@nuxt/ui";
-
 @theme {
   --font-inter: "Inter", sans-serif;
   --font-playfair: "Playfair", serif;
