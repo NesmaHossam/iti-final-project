@@ -29,7 +29,7 @@
         <img
           src="../../assets/images/Home/Hero1.png"
           alt="hero image"
-          class="w-[500px] relative z-10 "
+          class="w-[500px] relative z-10"
         />
 
         <img
@@ -47,30 +47,37 @@
     </div>
   </div>
 
-
-<div class="flex justify-between items-center m-5">
-
-    
-      <div class="flex justify-around items-center  gap-[80px]" >
-        <div>
-           <p class="cursor-default">Open Daily: 8 AM - 12 AM</p>
-        </div>
-        <div>
-             <p class="cursor-default">(+20) 0100 506 6611</p>
-        </div>
-        <div>
-            <p class="underline underline-offset-6 cursor-default">12 Nile Street, Zamalek, Cairo</p>
-        </div>
-      
+  <div class="flex justify-between items-center m-5">
+    <div class="flex justify-around items-center gap-[80px]">
+      <div>
+        <p class="cursor-default">Open Daily: 8 AM - 12 AM</p>
       </div>
-    
-    <div class="flex gap-2 flex-col">
-        <img src="../../assets/images/Home/facebooklogo.png" alt="facelogo " class="cursor-pointer">
-        <img src="../../assets/images/Home/instalogo.png" alt="instalogo" class="cursor-pointer">
-        <img src="../../assets/images/Home/tiktoklogo.png" alt="tiktoklogo" class="cursor-pointer">
+      <div>
+        <p class="cursor-default">(+20) 0100 506 6611</p>
+      </div>
+      <div>
+        <p class="underline underline-offset-6 cursor-default">
+          12 Nile Street, Zamalek, Cairo
+        </p>
+      </div>
     </div>
-</div>
 
-
-
+    <div class="flex gap-2 flex-col">
+      <img
+        src="../../assets/images/Home/facebooklogo.png"
+        alt="facelogo "
+        class="cursor-pointer"
+      />
+      <img
+        src="../../assets/images/Home/instalogo.png"
+        alt="instalogo"
+        class="cursor-pointer"
+      />
+      <img
+        src="../../assets/images/Home/tiktoklogo.png"
+        alt="tiktoklogo"
+        class="cursor-pointer"
+      />
+    </div>
+  </div>
 </template>
