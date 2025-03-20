@@ -5,7 +5,7 @@ const auth = useAuth();
 <template>
   <header>
     <div
-      class="flex justify-between items-center p-6 bg-slate-300 text-playfair text-xl"
+      class="flex justify-around items-center p-6 bg-transparent fixed top-0 w-[100%] text-playfair text-xl text-amber-50 z-1"
     >
       <div>
         <nuxt-link to="/">
@@ -17,7 +17,7 @@ const auth = useAuth();
         </nuxt-link>
       </div>
 
-      <div class="second-nav flex gap-6">
+      <div class="second-nav flex gap-[40px]">
         <nuxt-link to="/">Home</nuxt-link>
         <nuxt-link to="/user/Tables/BookTable">Reservation</nuxt-link>
         <nuxt-link to="/user/Menu">Menu</nuxt-link>
