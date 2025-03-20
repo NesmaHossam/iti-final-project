@@ -8,7 +8,7 @@ definePageMeta({
 
 // State
 const formState = reactive({
-  otp: undefined,
+  otp: "",
 });
 const isLoading = ref(false);
 const errorMsg = ref(null);
@@ -20,7 +20,7 @@ const schema = z.object({
   otp: z
     .string()
     .trim()
-    .length(4, "OTP must be 4 digits")
+    .length(6, "OTP must be 6 digits")
     .regex(/^\d+$/, "OTP must be numeric"),
 });
 
@@ -28,6 +28,9 @@ const schema = z.object({
 const auth = useAuth();
 
 async function submitOTP({ data }) {
+  console.log("Submitting OTP: ", data.otp);
+  console.log("Current formState.otp: ", formState.otp);
+
   try {
     isLoading.value = true;
     await auth.verifyOTP(data.otp);
@@ -62,9 +65,14 @@ onMounted(() => {
 onBeforeUnmount(() => {
   clearInterval(timerInterval);
 });
+const formattedTimer = computed(() => {
+  const minutes = Math.floor(timerValue.value / 60);
+  const seconds = (timerValue.value % 60).toString().padStart(2, "0");
+  return `${minutes}:${seconds}`;
+});
 
-const user = useUserStore()
-const { userEmail } = storeToRefs(user)
+const user = useUserStore();
+const { userEmail } = storeToRefs(user);
 console.log(userEmail.value);
 </script>
 
@@ -74,7 +82,7 @@ console.log(userEmail.value);
       src="../../assets/images/Auth/OTP1.png"
       alt="OTP Image"
       class="absolute top-[15%] right-[16%] w-[300px]"
-    >
+    />
     <div
       class="bg-slate-200/10 backdrop-blur-md shadow-lg rounded-lg w-[600px] p-8 relative z-2"
     >
@@ -93,9 +101,7 @@ console.log(userEmail.value);
         class="text-2xl text-[#7A7161] text-center cursor-default mt-2"
         id="timer"
       >
-        {{ Math.floor(timerValue / 60) }}:{{
-          (timerValue % 60).toString().padStart(2, "0")
-        }}
+        {{ formattedTimer }}
       </p>
       <div class="h-[30px] mb-4">
         <p v-if="errorMsg" class="text-center p-2 text-sm bg-red-50 rounded">
@@ -111,15 +117,16 @@ console.log(userEmail.value);
 
       <UForm :state="formState" :schema="schema" @submit="submitOTP">
         <div class="mb-4 flex justify-center">
-            <UFormGroup label="OTP" name="otp">
-  <UPinInput
-    v-model="formState.otp"
-    class="border-b gap-4 border-[#A39782] focus:outline-none focus:border-[#A39782] bg-transparent"
-    variant="none"
-    size="xl"
-    style="display: flex; justify-content: space-between;"
-  />
-</UFormGroup>
+          <UFormGroup label="OTP" name="otp">
+            <UPinInput
+              type="number"
+              v-model="formState.otp"
+              class="border-b gap-4 border-[#A39782] focus:outline-none focus:border-[#A39782] bg-transparent"
+              variant="none"
+              size="xl"
+              style="display: flex; justify-content: space-between"
+            />
+          </UFormGroup>
         </div>
 
         <UButton

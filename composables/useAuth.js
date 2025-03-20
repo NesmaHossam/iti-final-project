@@ -3,8 +3,8 @@ export const useAuth = () => {
   const token = useCookie("token");
   const refreshToken = useCookie("refreshToken");
 
-  // sign up 
-  async function signup (data) {
+  // sign up
+  async function signup(data) {
     try {
       const res = await useApi("/auth/signup", "POST", data);
       console.log(res);
@@ -20,7 +20,7 @@ export const useAuth = () => {
       const res = await useApi("/auth/login", "POST", data);
       token.value = res.accessToken;
       refreshToken.value = res.refreshToken;
-      router.push('/')
+      router.push("/");
       return res;
     } catch (error) {
       console.error("Login error:", error);
@@ -99,22 +99,26 @@ export const useAuth = () => {
   // OTP
   const isAuthenticated = ref(false);
   const requestOTP = async (email) => {
-    console.log(`Requesting password reset for ${email}`);
+    console.log(`Requesting OTP for ${email}`);
     return new Promise((resolve) => setTimeout(resolve, 1000));
   };
-  const verifyOTP = async (otp) => {
-    console.log(`Verifying OTP: ${otp}`);
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        if (otp === "1234") {
-          isAuthenticated.value = true;
-          resolve();
-        } else {
-          throw new Error("Invalid OTP");
-        }
-      }, 1000);
-    });
-  };
+
+  async function verifyOTP(otp) {
+    try {
+      console.log(`Verifying OTP: ${otp}`);
+      const res = await useApi("/auth/confirm-otp", "POST", { otp });
+      token.value = res.accessToken;
+      refreshToken.value = res.refreshToken;
+      isAuthenticated.value = true;
+      router.push("/auth/Login");
+      return res;
+    } catch (error) {
+      console.error("OTP verification error:", error);
+      throw new Error(
+        error.response?._data?.message || "OTP verification failed"
+      );
+    }
+  }
 
   return {
     signup,
