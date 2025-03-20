@@ -1,6 +1,6 @@
 <template>
     <footer>
-      <div class="bg-green-900 text-white text-center p-4 font-[inter] md:flex flex-col items-center hidden">
+      <div class="bg-[#233866] text-white text-center p-4 font-[inter] md:flex flex-col items-center hidden">
         <nuxt-link to="/" class="lg:text-5xl md:text-3xl text-3xl mb-6 font-inter font-normal">Zaytona</nuxt-link>
         <div class="md:flex md:items-center lg:gap-6 gap-3 lg:mb-12 mb-6 font-playfair lg:text-2xl md:text-xl font-normal grid grid-cols-3 ">
             <nuxt-link to="/">Home</nuxt-link>
