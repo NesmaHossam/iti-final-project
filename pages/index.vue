@@ -1,7 +1,10 @@
 <script setup>
-
+import { HomeBookTable } from "#components";
 </script>
 
 <template>
- <HomeHero  />
+  <HomeHero />
+  <HomeBookTable />
+  <HomeMenuSlider />
+  <HomeAboutUs />
 </template>
