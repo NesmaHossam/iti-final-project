@@ -1,6 +1,4 @@
-<script setup>
-import { HomeBookTable } from "#components";
-</script>
+<script setup></script>
 
 <template>
   <HomeHero />

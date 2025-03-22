@@ -55,25 +55,22 @@
         />
       </div>
 
-      
-        <div class="flex flex-col gap-5 w-[25%]">
-          <h1 class="text-5xl font-bold text-[#233866] cursor-default">
-            Reserve Your Table Effortlessly!
-          </h1>
-          <p class="text-xl text-[#080D18] cursor-default">
-            Book your table in just a few clicks! Choose your date, time, and
-            preferred seating, and let us handle the rest for a perfect dining
-            experience.
-          </p>
+      <div class="flex flex-col gap-5 w-[25%]">
+        <h1 class="text-5xl font-bold text-[#233866] cursor-default">
+          Reserve Your Table Effortlessly!
+        </h1>
+        <p class="text-xl text-[#080D18] cursor-default">
+          Book your table in just a few clicks! Choose your date, time, and
+          preferred seating, and let us handle the rest for a perfect dining
+          experience.
+        </p>
 
-          <UButton
-            to="/user/tables"
-            class="bg-[#233866] text-amber-50 px-8 py-3 duration-300 hover:border-[#233866]  hover:border  hover:text-[#233866] flex items-center justify-center gap-2"
-            >Book Your Table Now!</UButton
-          >
-    
+        <UButton
+          to="/user/tables"
+          class="bg-[#233866] text-amber-50 px-8 py-3 duration-300 hover:border-[#233866] hover:border hover:text-[#233866] flex items-center justify-center gap-2"
+          >Book Your Table Now!</UButton
+        >
       </div>
-
     </div>
   </div>
 </template>
