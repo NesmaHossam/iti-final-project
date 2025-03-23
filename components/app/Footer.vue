@@ -136,4 +136,4 @@
       &copy; {{ new Date().getFullYear() }} Zaytona. All rights reserved.
     </p>
   </div>
-</template>
+</div></template>
