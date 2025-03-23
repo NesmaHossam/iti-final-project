@@ -68,10 +68,10 @@ async function signUp() {
     <img
       src="../../assets/images/Auth/signup1.png"
       alt="image one"
-      class="absolute top-[5%] right-[22%] w-[180px]"
+      class="absolute top-[-10%] right-[19%] w-[300px]"
     >
     <div
-      class="bg-slate-200/10 backdrop-blur-md shadow-lg rounded-lg w-[500px] p-8 overflow-hidden relative z-2"
+      class="bg-slate-200/10 backdrop-blur-md  shadow-2xl rounded-tl-[20%] rounded-br-[20%] w-[700px] p-8 overflow-hidden relative z-2"
     >
       <h1
         class="text-3xl mb-6 text-center font-bold cursor-default text-[#312D27]"
@@ -86,13 +86,13 @@ async function signUp() {
           {{ errorMsg }}
         </p>
       </div>
-      <UForm :state="formState" :schema="schema" @submit="signUp">
-        <div class="mb-4 flex gap-12">
+      <UForm :state="formState" :schema="schema" @submit="signUp"  class="px-[10%]">
+        <div class="mb-4 flex justify-between gap-12">
           <UFormGroup label="First Name" name="firstName">
             <UInput
               v-model="formState.firstName"
               placeholder="First Name"
-              class="grow-1 bg-[#FCF6EB] text-[#A39782] border-[#A39782] rounded-lg"
+              class="grow-1 bg-[#FCF6EB] text-[#A39782] border-[#A39782] rounded-lg "
             >
               <template #leading>
                 <UIcon
@@ -140,7 +140,7 @@ async function signUp() {
           <UFormGroup label="mobile Number Number" name="mobileNumber">
             <UInput
               v-model="formState.mobileNumber"
-              placeholder="Number"
+              placeholder="Phone Number"
               class="w-full bg-[#FCF6EB] text-[#A39782] border-[#A39782] rounded-lg"
             >
               <template #leading>
@@ -239,17 +239,17 @@ async function signUp() {
       </UForm>
 
       <p class="mt-4 text-center text-sm cursor-default text-[#7A7161]">
-        Don't have an account?<nuxt-link
+        Already have account?<nuxt-link
           to="/auth/Login"
           class="underline underline-offset-4 pl-1 font-semibold"
-          >Login</nuxt-link
+          >Sign in</nuxt-link
         >
       </p>
     </div>
     <img
       src="../../assets/images/Auth/signup2.png"
       alt="image two"
-      class="absolute bottom-[-10%] left-[25%] w-[150px] z-0"
+      class="absolute bottom-[10%] left-[20%] w-[250px] z-0"
     >
   </div>
 </template>

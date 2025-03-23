@@ -53,10 +53,10 @@ const isConfirmPasswordVisible = ref(false);
     <img
       src="../../assets/images/Auth/Resetpass1.png"
       alt="image one"
-      class="absolute top-[10%] right-[18%] w-[300px]"
+      class="absolute top-[0%] right-[18%] w-[400px]"
     />
     <div
-      class="bg-slate-200/10 backdrop-blur-md shadow-lg rounded-lg w-[600px] overflow-hiddenw-[600px] p-8 relative z-2"
+      class="bg-slate-200/10 backdrop-blur-md  shadow-2xl rounded-tl-[20%] rounded-br-[20%] w-[700px] overflow-hiddenw-[600px] p-8 relative z-2"
     >
       <h1
         class="text-3xl mb-6 text-center font-bold cursor-default text-[#312D27]"
@@ -78,7 +78,7 @@ const isConfirmPasswordVisible = ref(false);
         </p>
       </div>
 
-      <UForm :state="formState" :schema="schema" @submit="resetPassword">
+      <UForm :state="formState" :schema="schema" @submit="resetPassword"  class="px-[10%]">
         <div class="mb-4">
           <UFormGroup label="New Password" name="newPassword">
             <UInput
@@ -159,7 +159,7 @@ const isConfirmPasswordVisible = ref(false);
     <img
       src="../../assets/images/Auth/Resetpass2.png"
       alt="image two"
-      class="absolute bottom-[-6%] left-[15%] w-[400px] z-0"
+      class="absolute bottom-[5%] left-[20%] w-[300px] z-0"
     />
   </div>
 </template>

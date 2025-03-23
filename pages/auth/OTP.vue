@@ -81,10 +81,10 @@ console.log(userEmail.value);
     <img
       src="../../assets/images/Auth/OTP1.png"
       alt="OTP Image"
-      class="absolute top-[15%] right-[16%] w-[300px]"
+      class="absolute top-[0%] right-[16%] w-[400px]"
     />
     <div
-      class="bg-slate-200/10 backdrop-blur-md shadow-lg rounded-lg w-[600px] p-8 relative z-2"
+      class="bg-slate-200/10 backdrop-blur-md  shadow-2xl rounded-tl-[20%] rounded-br-[20%] w-[700px] p-8 relative z-2"
     >
       <h1
         class="text-3xl mb-6 text-center font-bold cursor-default text-[#312D27]"
@@ -115,7 +115,7 @@ console.log(userEmail.value);
         </p>
       </div>
 
-      <UForm :state="formState" :schema="schema" @submit="submitOTP">
+      <UForm :state="formState" :schema="schema" @submit="submitOTP"  class="px-[10%]">
         <div class="mb-4 flex justify-center">
           <UFormGroup label="OTP" name="otp">
             <UPinInput
@@ -151,7 +151,7 @@ console.log(userEmail.value);
     <img
       src="../../assets/images/Auth/OTP2.png"
       alt="Background Image"
-      class="absolute bottom-[6%] left-[16%] w-[400px] z-0"
+      class="absolute bottom-[6%] left-[20%] w-[300px] z-0"
     />
   </div>
 </template>

@@ -42,9 +42,9 @@ async function submitEmail({ data }) {
       alt="image one"
       class="absolute top-[15%] right-[18%] w-[300px] "
     />
-    <div class="bg-slate-200/10 backdrop-blur-md shadow-lg rounded-lg w-[600px] overflow-hiddenw-[600px] p-8 relative z-2">
-      <h1 class="text-3xl mb-6 text-center font-bold cursor-default text-[#312D27]">FORGET PASSWORD</h1>
-      <p class="text-xl text-[#7A7161] text-center cursor-default">
+    <div class="bg-slate-200/10 backdrop-blur-md  shadow-2xl rounded-tl-[20%] rounded-br-[20%] w-[700px] overflow-hiddenw-[600px] p-8 relative z-2">
+      <h1 class="text-3xl mb-6 text-center font-bold cursor-default text-[#080D18]">FORGET PASSWORD</h1>
+      <p class="text-xl text-[#0D1628] text-center cursor-default">
         No worries, we’ve got you! Reset your password easily.      </p>
       <div class="h-[30px] mb-4">
         <p v-if="errorMsg" class="text-center p-2 text-sm bg-red-50 rounded">
@@ -58,7 +58,7 @@ async function submitEmail({ data }) {
         </p>
       </div>
 
-      <UForm :state="formState" :schema="schema" @submit="submitEmail">
+      <UForm :state="formState" :schema="schema" @submit="submitEmail"  class="px-[10%]">
         <div class="mb-4">
           <UFormGroup label="Email" name="email">
           
@@ -66,12 +66,12 @@ async function submitEmail({ data }) {
             <UInput
               v-model="formState.email"
               placeholder="Email"
-              class="w-full bg-[#FCF6EB] text-[#A39782] border-[#A39782] rounded-lg"
+              class="w-full bg-[#FFFFFF] text-[#233866] border-[#233866] rounded-lg"
             >
               <template #leading>
                 <UIcon
                   name="i-heroicons-envelope"
-                  class="w-5 h-5 text-[#A39782]"
+                  class="w-5 h-5 text-[#233866]"
                 />
               </template>
             </UInput>
@@ -82,16 +82,16 @@ async function submitEmail({ data }) {
           :loading="isLoading"
           type="submit"
           color="white"
-          class="duration-300 bg-[#A39782] text-white cursor-pointer text-lg"
+          class="duration-300 bg-[#233866] text-white cursor-pointer text-lg"
           block
         >Submit
         </UButton>
       </UForm>
 
-      <p class="mt-4 text-center text-sm cursor-default text-[#7A7161]">
-        Go back to
-        <nuxt-link to="/auth/login" class="underline underline-offset-4 pl-1 font-semibold"
-          >Log in</nuxt-link
+      <p class="mt-4 text-center text-sm cursor-default text-[#080D18]">
+        Remembered your password?
+        <nuxt-link to="/auth/login" class="underline underline-offset-4 pl-1 font-semibold text-[#233866]"
+          >Sign in</nuxt-link
         >
       </p>
     </div>
