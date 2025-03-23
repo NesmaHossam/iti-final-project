@@ -1,9 +1,9 @@
 <template>
   <div>
-    <HomeHero />
+    <!-- <HomeHero />
      <HomeBookTable />
     <HomeMenuSlider />
     <HomeAboutUs/>
-    <HomeReviews/>
+    <HomeReviews/> -->
   </div>
 </template>

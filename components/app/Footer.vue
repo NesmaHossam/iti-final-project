@@ -37,79 +37,76 @@
 
 <template>
   <div
-    class="bg-[#233866] text-white p-4 font-[inter] md:flex justify-around items-center gap-5 "
+    class="bg-[#233866] text-white p-4 font-[inter] flex flex-col md:flex-row justify-between items-center gap-5 text-sm"
   >
-    <div>
-      <div>
-        <img
-          src="../../assets/images/Logo.png"
-          alt="footer image"
-          class="w-[300px]"
-        />
-      </div>
+    <div class="flex justify-center md:justify-center">
+      <img
+        src="../../assets/images/Logo.png"
+        alt="footer image"
+        class="w-[70%] md:w-[60%] max-w-[150px]"
+      />
     </div>
-    <div class="flex gap-5 ">
-      <div class="flex flex-col gap-3 ">
+    <div class="flex gap-5 md:gap-10">
+      <div class="flex flex-col gap-3">
         <nuxt-link to="/">Home</nuxt-link>
         <nuxt-link to="/user/Tables/BookTable">Reservation</nuxt-link>
         <nuxt-link to="/user/Menu">Menu</nuxt-link>
       </div>
-      <div class="flex flex-col gap-3 ">
-        <nuxt-link to="/user/AboutUs">Our Stroy</nuxt-link>
+      <div class="flex flex-col gap-3">
+        <nuxt-link to="/user/AboutUs">Our Story</nuxt-link>
         <nuxt-link to="/user/ContactUs">Contact Us</nuxt-link>
       </div>
     </div>
     <div class="flex flex-col gap-3 items-center md:items-start">
-      <p>Phone Number : <a href="tel:+201005066611">+20 100 506 6611</a></p>
+      <p>Phone Number: <a href="tel:+201005066611">+20 100 506 6611</a></p>
       <p class="cursor-default">12 Nile Street, Zamalek, Cairo</p>
-
-      <p class="cursor-default">Open daily from 08:00 AM to 12:00 Am</p>
+      <p class="cursor-default">Open daily from 08:00 AM to 12:00 AM</p>
     </div>
-    <div class="social flex gap-3 flex-col items-center md:items-start">
-      <div class="flex gap-3">
+    <div class="social flex flex-col gap-3 items-center md:items-start">
+      <div class="flex gap-3 items-center">
         <Icon name="uil:facebook" class="text-white w-6 h-6" />
         <p>Zaytona.eg</p>
       </div>
-      <div class="flex gap-3 ">
+      <div class="flex gap-3 items-center">
         <Icon name="uil:instagram" class="text-white w-6 h-6" />
         <p>Zaytona.eg</p>
       </div>
-      <div class="flex gap-3">
+      <div class="flex gap-3 items-center">
         <Icon name="uil:music" class="text-white w-6 h-6" />
         <p class="cursor-default">
-          Email : <a href="mailto:zaytona@gmail.com">zaytona@cusine.com</a>
+          Email: <a href="mailto:zaytona@gmail.com">zaytona@cusine.com</a>
         </p>
       </div>
     </div>
+    <div class="flex flex-col gap-3 items-center text-center">
+      <h2 class="text-white text-2xl font-semibold">Stay Updated!</h2>
+      <h6 class="text-white">Enter your email to receive exclusive offers</h6>
 
-    <div class="flex flex-col gap-3 items-center">
-      <div class="flex flex-col gap-3 text-center">
-        <h2>Stay Updated!</h2>
-        <h6 class="cursor-default ">Enter your email to receive exclusive offers</h6>
-      </div>
-      <div class="flex flex-col gap-3">
+      <div class="flex flex-col gap-3 w-full max-w-xs">
+        <div class="relative">
+          <UInput
+            placeholder="Email"
+            class="bg-transparent text-[#233866] border-2 border-[#233866] rounded-lg py-2 px-4"
+          >
+            <template #leading>
+              <UIcon
+                name="i-heroicons-envelope"
+                class="absolute left-5 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#233866]"
+              />
+            </template>
+          </UInput>
+        </div>
         <UInput
-          placeholder="Email"
-          class="w-full bg-[#FFFFFF] text-[#233866] border-[#233866] rounded-lg "
-        >
-          <template #leading>
-            <UIcon
-              name="i-heroicons-envelope"
-              class="w-5 h-5 text-[#233866] rounded-2xl"
-            />
-          </template>
-        </UInput>
-        <UButton
           type="submit"
-          class="duration-300 bg-[#FFFFFF] text-[#080D18] cursor-pointer text-lg rounded-2xl "
-          block
+          class="bg-transparent text-[#233866] border-2 border-[#233866] rounded-lg py-2 px-4"
         >
-Subscribe        </UButton>
+        </UInput>
       </div>
     </div>
   </div>
-  <div class="bg-[#233866] text-white text-center p-4 font-inter ">
-    <p class=" lg:text-xl md:text-lg">&copy; {{ new Date().getFullYear() }} Zaytona. All rights reserved.</p>
-
+  <div class="bg-[#233866] text-white text-center p-4 font-inter">
+    <p class="lg:text-xl md:text-lg">
+      &copy; {{ new Date().getFullYear() }} Zaytona. All rights reserved.
+    </p>
   </div>
 </template>
