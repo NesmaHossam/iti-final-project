@@ -1,11 +1,11 @@
 <template>
-  <div class="flex justify-around items-center bg-[#233866] h-[100vh]">
-    <div class="flex justify-around items-center w-full mt-[17%]">
-      <div class="flex flex-col gap-5 w-1/2">
-        <h1 class="text-5xl font-bold text-amber-50 w-2/3 cursor-default">
+  <div class="bg-[#233866] h-[85vh] flex justify-center">
+    <div class="container flex justify-between items-start mt-[90px]">
+      <div class="flex flex-col gap-5 w-2/5 self-center">
+        <h1 class="text-5xl font-bold text-amber-50 cursor-default">
           Experience the Art of Flavor at Zaytona
         </h1>
-        <p class="text-xl text-amber-50 w-2/4 cursor-default">
+        <p class="text-xl text-amber-50  cursor-default">
           Enjoy exquisite flavors crafted with passion. Fresh ingredients,
           authentic recipes, and warm hospitality await you!
         </p>
@@ -25,24 +25,8 @@
         </div>
       </div>
 
-      <div class="relative flex justify-center z-0">
-        <img
-          src="../../assets/images/Home/Hero1.png"
-          alt="hero image"
-          class="w-[500px] relative z-10"
-        />
-
-        <img
-          src="../../assets/images/Home/Hero3.png"
-          alt="hero image"
-          class="w-[200px] absolute right-[-50px] top-[20%] z-20"
-        />
-
-        <img
-          src="../../assets/images/Home/Hero2.png"
-          alt="hero image"
-          class="w-[400px] absolute left-[-250px] bottom-[-60px] z-20"
-        />
+      <div class=" image flex justify-center items-start z-0 w-3/5">
+        <img src="../../assets/images/Home/Group 4.png" alt="hero image" class=" translate-y-14">
       </div>
     </div>
   </div>

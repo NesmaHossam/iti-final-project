@@ -77,29 +77,21 @@ console.log(userEmail.value);
 </script>
 
 <template>
-  <div class="h-screen flex items-center justify-center p-6 relative">
-    <img
-      src="../../assets/images/Auth/OTP1.png"
-      alt="OTP Image"
-      class="absolute top-[0%] right-[16%] w-[400px]"
-    />
-    <div
-      class="bg-slate-200/10 backdrop-blur-md  shadow-2xl rounded-tl-[20%] rounded-br-[20%] w-[700px] p-8 relative z-2"
-    >
+  <div>
       <h1
-        class="text-3xl mb-6 text-center font-bold cursor-default text-[#312D27]"
+        class="text-3xl mb-6 text-center font-bold cursor-default text-dark-blue"
       >
         VERIFICATION CODE
       </h1>
-      <p class="text-xl text-[#7A7161] text-center cursor-default">
+      <p class="text-lg md:text-xl text-light-dark-blue text-center cursor-default">
         We have sent you a One Time Password to your email!
       </p>
-      <p class="text-xl text-[#7A7161] text-center cursor-default mt-2">
+      <p class="text-lg md:text-xl text-primary text-center cursor-default mt-2">
         Please Enter OTP
       </p>
       <p
-        class="text-2xl text-[#7A7161] text-center cursor-default mt-2"
         id="timer"
+        class="text-xl md:text-2xl text-primary text-center cursor-default mt-2"
       >
         {{ formattedTimer }}
       </p>
@@ -121,7 +113,7 @@ console.log(userEmail.value);
             <UPinInput
               type="number"
               v-model="formState.otp"
-              class="border-b gap-4 border-[#A39782] focus:outline-none focus:border-[#A39782] bg-transparent"
+              class="border-b gap-4 border-primary focus:outline-none focus:border-primary bg-transparent"
               variant="none"
               size="xl"
               style="display: flex; justify-content: space-between"
@@ -133,12 +125,12 @@ console.log(userEmail.value);
           :loading="isLoading"
           type="submit"
           color="white"
-          class="duration-300 bg-[#A39782] text-white cursor-pointer text-lg"
+          class="duration-300 bg-primary text-white cursor-pointer text-lg"
           block
           >Submit
         </UButton>
 
-        <p class="mt-4 text-center text-sm cursor-default text-[#7A7161]">
+        <p class="mt-4 text-center text-sm cursor-default text-primary">
           Didn’t receive the code?
           <nuxt-link
             to="/auth/resend-otp"
@@ -147,11 +139,5 @@ console.log(userEmail.value);
           >
         </p>
       </UForm>
-    </div>
-    <img
-      src="../../assets/images/Auth/OTP2.png"
-      alt="Background Image"
-      class="absolute bottom-[6%] left-[20%] w-[300px] z-0"
-    />
   </div>
 </template>
