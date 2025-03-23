@@ -1,9 +1,11 @@
 <template>
   <div>
-    <!-- <HomeHero /> -->
-     <!-- <HomeBookTable />
-    <HomeMenuSlider />
+    <HomeHero />
+    
+     <HomeBookTable />
+      
+    <!-- <HomeMenuSlider /> -->
     <HomeAboutUs/>
-    <HomeReviews/> -->
+    <!-- <HomeReviews/> -->
   </div>
 </template>
