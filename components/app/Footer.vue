@@ -51,8 +51,8 @@
       <img
         src="../../assets/images/Logo.png"
         alt="footer image"
-        class="w-[70%] md:w-[60%] max-w-[150px]"
-      >
+        class="w-[60%] md:w-[100%] max-w-[150px]"
+      />
     </div>
     <div class="flex gap-5 md:gap-10">
       <div class="flex flex-col gap-3">
@@ -86,11 +86,11 @@
         </p>
       </div>
     </div>
-    <div class="flex flex-col gap-3 items-center text-center">
-      <h2 class="text-white text-2xl font-semibold">Stay Updated!</h2>
+    <div class="flex flex-col  items-center text-center">
+      <h2 class="text-white text-xl font-semibold">Stay Updated!</h2>
       <h6 class="text-white">Enter your email to receive exclusive offers</h6>
 
-      <div class="flex flex-col gap-3 w-full max-w-xs">
+      <div class="flex flex-col w-full max-w-xs">
         <div class="relative">
           <UInput
             placeholder="Email"
@@ -99,7 +99,7 @@
             <template #leading>
               <UIcon
                 name="i-heroicons-envelope"
-                class="absolute left-5 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#233866]"
+                class="absolute left-6 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#233866]"
               />
             </template>
           </UInput>
