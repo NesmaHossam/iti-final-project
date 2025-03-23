@@ -98,10 +98,6 @@ export const useAuth = () => {
 
   // OTP
   const isAuthenticated = ref(false);
-  const requestOTP = async (email) => {
-    console.log(`Requesting OTP for ${email}`);
-    return new Promise((resolve) => setTimeout(resolve, 1000));
-  };
 
 async function verifyOTP(email, otp) {
   try {
@@ -130,7 +126,6 @@ async function verifyOTP(email, otp) {
     requestPasswordReset,
     resetPassword,
     isAuthenticated,
-    requestOTP,
     verifyOTP,
     token,
   };

@@ -38,7 +38,6 @@
 <template>
   <div
     class="bg-primary text-white p-4 font-[inter] md:flex justify-around items-center gap-5 hidden"
-    class="bg-[#233866] text-white p-4 font-[inter] flex flex-col md:flex-row justify-between items-center gap-5 text-sm"
   >
     <div>
       <div>
@@ -53,7 +52,7 @@
         src="../../assets/images/Logo.png"
         alt="footer image"
         class="w-[70%] md:w-[60%] max-w-[150px]"
-      />
+      >
     </div>
     <div class="flex gap-5 md:gap-10">
       <div class="flex flex-col gap-3">
@@ -108,8 +107,7 @@
         <UInput
           type="submit"
           class="bg-transparent text-[#233866] border-2 border-[#233866] rounded-lg py-2 px-4"
-        >
-        </UInput>
+        />
       </div>
     </div>
   </div>
@@ -122,4 +120,4 @@
       &copy; {{ new Date().getFullYear() }} Zaytona. All rights reserved.
     </p>
   </div>
-</template>
+</div></template>
