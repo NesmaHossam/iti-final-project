@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-around items-center h-[100vh] py-[100px]">
+  <div class="flex justify-around items-center h-[100vh] py-[100px] bg-[#F6F3F0]">
     <div class="flex flex-col gap-5 w-[27%]">
       <h1 class="text-5xl font-bold text-[#233866] cursor-default">
         The Heart Behind Our Flavor

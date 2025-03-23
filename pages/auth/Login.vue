@@ -50,7 +50,7 @@ const isPasswordVisible = ref(false);
       class="absolute top-[-10%] right-[17%]"
     />
     <div
-      class="bg-slate-200/10 backdrop-blur-md shadow-2xl rounded-tl-[20%] rounded-br-[20%] w-[700px] p-8 overflow-hidden relative z-2"
+      class="bg-slate-200/10 backdrop-blur-md shadow-2xl rounded-tl-[20%] shadow-indigo-500/50 rounded-br-[20%] w-[700px] p-8 overflow-hidden relative z-2"
     >
       <h1
         class="text-3xl mb-6 text-center font-bold cursor-default text-[#080D18]"
