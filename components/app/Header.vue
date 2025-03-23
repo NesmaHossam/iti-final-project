@@ -3,17 +3,16 @@ const auth = useAuth();
 </script>
 
 <template>
-  <header>
-    <div
-      class="flex justify-around items-center p-6 bg-transparent fixed top-0 w-[100%] text-playfair text-xl text-amber-50 z-1"
+
+    <header
+      class=" container mx-auto flex justify-between items-center bg-transparent text-playfair text-xl text-amber-50 fixed  top-0 left-0 right-0 z-1 pt-4"
     >
       <div>
         <nuxt-link to="/">
           <img
             src="../../assets/images/Logo.png"
             alt="logo image"
-            class="h-[80px]"
-          />
+          >
         </nuxt-link>
       </div>
 
@@ -43,6 +42,5 @@ const auth = useAuth();
           </template>
         </appAuthChecker>
       </div>
-    </div>
-  </header>
+    </header>
 </template>

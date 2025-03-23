@@ -43,21 +43,13 @@ const isPasswordVisible = ref(false);
 </script>
 
 <template>
-  <div class="flex items-center justify-center p-8 relative">
-    <img
-      src="../../assets/images/Auth/login1.png"
-      alt="image one"
-      class="absolute top-[-10%] right-[17%]"
-    />
-    <div
-      class="bg-slate-200/10 backdrop-blur-md shadow-lg rounded-lg w-[500px] p-8 overflow-hidden relative z-2"
-    >
+    <div>
       <h1
-        class="text-3xl mb-6 text-center font-bold cursor-default text-[#312D27]"
+        class="text-xl md:text-3xl mb-6 text-center font-bold cursor-default text-dark-blue"
       >
         SIGN IN
       </h1>
-      <p class="text-xl text-[#7A7161] text-center">
+      <p class="text-lg md:text-xl text-light-dark-blue text-center">
         Zaytona’s team is ready to serve you with warmth and care.
       </p>
       <div class="h-[30px] mb-4">
@@ -72,12 +64,12 @@ const isPasswordVisible = ref(false);
             <UInput
               v-model="formState.email"
               placeholder="Email"
-              class="w-full bg-[#FCF6EB] text-[#A39782] border-[#A39782] rounded-lg"
+              class="w-full  text-primary border-primary rounded-lg"
             >
               <template #leading>
                 <UIcon
                   name="i-heroicons-envelope"
-                  class="w-5 h-5 text-[#A39782]"
+                  class="w-5 h-5 text-primary"
                 />
               </template>
             </UInput>
@@ -89,12 +81,12 @@ const isPasswordVisible = ref(false);
               v-model="formState.password"
               :type="isPasswordVisible ? 'text' : 'password'"
               placeholder="Password"
-              class="w-full bg-[#FCF6EB] text-[#A39782] border-[#A39782] rounded-lg"
+              class="w-full text-primary border-primary rounded-lg"
             >
               <template #leading>
                 <UIcon
                   name="i-heroicons-lock-closed"
-                  class="w-5 h-5 text-[#A39782]"
+                  class="w-5 h-5 text-primary"
                 />
               </template>
               <template #trailing>
@@ -104,7 +96,7 @@ const isPasswordVisible = ref(false);
                       ? 'i-heroicons-eye-off'
                       : 'i-heroicons-eye'
                   "
-                  class="w-5 h-5 text-[#A39782] cursor-pointer"
+                  class="w-5 h-5 text-primary cursor-pointer"
                   @click="isPasswordVisible = !isPasswordVisible"
                 />
               </template>
@@ -115,9 +107,9 @@ const isPasswordVisible = ref(false);
         <div class="flex items-center justify-between mb-4">
           <label class="flex items-center justify-between">
             <input v-model="rememberMe" type="checkbox" />
-            <span class="ml-2 text-sm text-[#A39782]">Remember me</span>
+            <span class="ml-2 text-sm text-primary">Remember me</span>
           </label>
-          <nuxt-link to="/auth/ForgetPassword" class="text-[#A39782] underline"
+          <nuxt-link to="/auth/ForgetPassword" class="text-primary underline"
             >Forget Password?</nuxt-link
           >
         </div>
@@ -126,40 +118,34 @@ const isPasswordVisible = ref(false);
           :loading="isLoading"
           type="submit"
           color="white"
-          class="duration-300 bg-[#A39782] text-white cursor-pointer text-lg"
+          class="duration-300 bg-primary text-white cursor-pointer text-lg"
           block
         >
           Sign in
         </UButton>
 
         <div class="my-3 text-center flex gap-4 items-center w-full">
-          <div class="flex-grow border-t border-[#A39782]" />
-          <span class="text-sm text-[#A39782] cursor-default">OR</span>
-          <div class="flex-grow border-t border-[#A39782]" />
+          <div class="flex-grow border-t border-primary" />
+          <span class="text-sm text-primary cursor-default">OR</span>
+          <div class="flex-grow border-t border-primary" />
         </div>
 
         <UButton
-          class="flex items-center justify-center gap-2 duration-300 border border-[#A39782] text-[#A39782] mb-6 cursor-pointer"
+          class="flex items-center justify-center gap-2 duration-300 border border-primary text-primary mb-6 cursor-pointer"
           block
           @click="loginWithGoogle"
         >
-          <UIcon name="i-mdi-google" class="w-4 h-4 text-[#A39782]" />
+          <UIcon name="i-mdi-google" class="w-4 h-4 text-primary" />
           Log in With Google
         </UButton>
       </UForm>
 
-      <p class="mt-4 text-center text-sm cursor-default text-[#7A7161]">
+      <p class="mt-4 text-center text-sm cursor-default text-dark-blue">
         Don't have an account?<nuxt-link
           to="/auth/SignUp"
-          class="underline underline-offset-4 pl-1 font-semibold"
+          class="underline underline-offset-4 pl-1 font-semibold text-primary"
           >Sign Up</nuxt-link
         >
       </p>
     </div>
-    <img
-      src="../../assets/images/Auth/login2.png"
-      alt="image two"
-      class="absolute bottom-[-10%] left-[25%] w-[150px] z-0"
-    />
-  </div>
 </template>

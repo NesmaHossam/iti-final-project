@@ -10,8 +10,8 @@ export const useAuth = () => {
       console.log(res);
       return res;
     } catch (error) {
-      console.error("Login error:", error);
-      throw new Error(error.response?._data?.message || "Login failed");
+      console.error("Sign up error:", error);
+      throw new Error(error.response?._data?.message || "Sign up failed");
     }
   }
   // login

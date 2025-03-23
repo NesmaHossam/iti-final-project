@@ -64,21 +64,12 @@ async function signUp() {
 </script>
 
 <template>
-  <div class="flex items-center justify-center p-8 relative">
-    <img
-      src="../../assets/images/Auth/signup1.png"
-      alt="image one"
-      class="absolute top-[5%] right-[22%] w-[180px]"
-    >
-    <div
-      class="bg-slate-200/10 backdrop-blur-md shadow-lg rounded-lg w-[500px] p-8 overflow-hidden relative z-2"
-    >
+    <div>
       <h1
-        class="text-3xl mb-6 text-center font-bold cursor-default text-[#312D27]"
-      >
+        class="text-xl md:text-3xl mb-6 text-center font-bold cursor-default text-dark-blue">
         SIGN UP
       </h1>
-      <p class="text-xl text-[#7A7161] text-center">
+      <p class="text-lg md:text-xl text-light-dark-blue text-center">
         Sign up now, to book your table with ease.
       </p>
       <div class="h-[30px] mb-4">
@@ -87,32 +78,32 @@ async function signUp() {
         </p>
       </div>
       <UForm :state="formState" :schema="schema" @submit="signUp">
-        <div class="mb-4 flex gap-12">
-          <UFormGroup label="First Name" name="firstName">
+        <div class="mb-4 flex flex-col lg:gap-8 gap-4 md:flex-row justify-between">
+          <UFormGroup label="First Name" name="firstName" class="grow-1 flex">
             <UInput
               v-model="formState.firstName"
               placeholder="First Name"
-              class="grow-1 bg-[#FCF6EB] text-[#A39782] border-[#A39782] rounded-lg"
+              class=" text-primary border-primary rounded-lg grow-1"
             >
               <template #leading>
                 <UIcon
                   name="i-heroicons-user"
-                  class="w-5 h-5 text-[#A39782]"
+                  class="w-5 h-5 text-primary"
                 />
               </template>
             </UInput>
           </UFormGroup>
 
-          <UFormGroup label="Last Name" name="lastName">
+          <UFormGroup label="Last Name" name="lastName" class="grow-1 flex">
             <UInput
               v-model="formState.lastName"
               placeholder="Last Name"
-              class="grow-1 bg-[#FCF6EB] text-[#A39782] border-[#A39782] rounded-lg"
+              class="grow-1 text-primary border-primary rounded-lg grow-1"
             >
               <template #leading>
                 <UIcon
                   name="i-heroicons-user"
-                  class="w-5 h-5 text-[#A39782]"
+                  class="w-5 h-5 text-primary"
                 />
               </template>
             </UInput>
@@ -124,12 +115,12 @@ async function signUp() {
             <UInput
               v-model="formState.email"
               placeholder="Email"
-              class="w-full bg-[#FCF6EB] text-[#A39782] border-[#A39782] rounded-lg"
+              class="w-full text-primary border-primary rounded-lg"
             >
               <template #leading>
                 <UIcon
                   name="i-heroicons-envelope"
-                  class="w-5 h-5 text-[#A39782]"
+                  class="w-5 h-5 text-primary"
                 />
               </template>
             </UInput>
@@ -141,12 +132,12 @@ async function signUp() {
             <UInput
               v-model="formState.mobileNumber"
               placeholder="Number"
-              class="w-full bg-[#FCF6EB] text-[#A39782] border-[#A39782] rounded-lg"
+              class="w-full  text-primary border-primary rounded-lg"
             >
               <template #leading>
                 <UIcon
                   name="i-heroicons-phone"
-                  class="w-5 h-5 text-[#A39782]"
+                  class="w-5 h-5 text-primary"
                 />
               </template>
             </UInput>
@@ -159,12 +150,12 @@ async function signUp() {
               v-model="formState.password"
               :type="isPasswordVisible ? 'text' : 'password'"
               placeholder="Password"
-              class="w-full bg-[#FCF6EB] text-[#A39782] border-[#A39782] rounded-lg"
+              class="w-full text-primary border-primary rounded-lg"
             >
               <template #leading>
                 <UIcon
                   name="i-heroicons-lock-open"
-                  class="w-5 h-5 text-[#A39782]"
+                  class="w-5 h-5 text-primary"
                 />
               </template>
               <template #trailing>
@@ -174,7 +165,7 @@ async function signUp() {
                       ? 'i-heroicons-eye-off'
                       : 'i-heroicons-eye'
                   "
-                  class="w-5 h-5 text-[#A39782] cursor-pointer"
+                  class="w-5 h-5 text-primary cursor-pointer"
                   @click="isPasswordVisible = !isPasswordVisible"
                 />
               </template>
@@ -188,12 +179,12 @@ async function signUp() {
               v-model="formState.confirmPassword"
               :type="isConfirmPasswordVisible ? 'text' : 'password'"
               placeholder="Confirm Password"
-              class="w-full bg-[#FCF6EB] text-[#A39782] border-[#A39782] rounded-lg"
+              class="w-full text-primary border-primary rounded-lg"
             >
               <template #leading>
                 <UIcon
                   name="i-heroicons-lock-closed"
-                  class="w-5 h-5 text-[#A39782]"
+                  class="w-5 h-5 text-primary"
                 />
               </template>
               <template #trailing>
@@ -203,7 +194,7 @@ async function signUp() {
                       ? 'i-heroicons-eye-off'
                       : 'i-heroicons-eye'
                   "
-                  class="w-5 h-5 text-[#A39782] cursor-pointer"
+                  class="w-5 h-5 text-primary cursor-pointer"
                   @click="isConfirmPasswordVisible = !isConfirmPasswordVisible"
                 />
               </template>
@@ -215,7 +206,7 @@ async function signUp() {
           :loading="isLoading"
           type="submit" 
           color="white"
-          class="duration-300 bg-[#A39782] text-white cursor-pointer text-lg"
+          class="duration-300 bg-primary text-white cursor-pointer text-lg"
           block
           @click.prevent="signUp"
         >
@@ -223,33 +214,27 @@ async function signUp() {
         </UButton>
 
         <div class="my-3 text-center flex gap-4 items-center w-full">
-          <div class="flex-grow border-t border-[#A39782]" />
-          <span class="text-sm text-[#A39782] cursor-default">OR</span>
-          <div class="flex-grow border-t border-[#A39782]" />
+          <div class="flex-grow border-t border-primary" />
+          <span class="text-sm text-primary cursor-default">OR</span>
+          <div class="flex-grow border-t border-primary" />
         </div>
 
         <UButton
-          class="flex items-center justify-center gap-2 duration-300 border border-[#A39782] text-[#A39782] mb-6 cursor-pointer"
+          class="flex items-center justify-center gap-2 duration-300 border border-primary text-primary mb-6 cursor-pointer"
           block
           @click="auth.loginWithGoogle"
         >
-          <UIcon name="i-mdi-google" class="w-4 h-4 text-[#A39782]" />
+          <UIcon name="i-mdi-google" class="w-4 h-4 text-primary" />
           Log in With Google
         </UButton>
       </UForm>
 
-      <p class="mt-4 text-center text-sm cursor-default text-[#7A7161]">
+      <p class="mt-4 text-center text-sm cursor-default text-dark-blue">
         Don't have an account?<nuxt-link
           to="/auth/Login"
-          class="underline underline-offset-4 pl-1 font-semibold"
+          class="underline underline-offset-4 pl-1 font-semibold text-primary"
           >Login</nuxt-link
         >
       </p>
     </div>
-    <img
-      src="../../assets/images/Auth/signup2.png"
-      alt="image two"
-      class="absolute bottom-[-10%] left-[25%] w-[150px] z-0"
-    >
-  </div>
 </template>
