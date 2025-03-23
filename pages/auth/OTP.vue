@@ -1,5 +1,4 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
 import { z } from "zod";
 
 definePageMeta({
@@ -13,7 +12,6 @@ const formState = reactive({
 const isLoading = ref(false);
 const errorMsg = ref(null);
 const successMsg = ref(null);
-const timerValue = ref(84);
 
 // Schema
 const schema = z.object({
@@ -27,13 +25,32 @@ const schema = z.object({
 // Auth function
 const auth = useAuth();
 
-async function submitOTP({ data }) {
-  console.log("Submitting OTP: ", data.otp);
-  console.log("Current formState.otp: ", formState.otp);
+// Access user store to get email
+const user = useUserStore();
+const { userEmail } = storeToRefs(user);
+console.log("Current user email:", userEmail.value);
 
+// Check if email exists
+if (!userEmail.value) {
+  errorMsg.value = "Email is missing. Please go back to the previous step.";
+}
+
+async function submitOTP() {
+  console.log("Submitting OTP: ", formState.otp);
+  console.log("For email: ", userEmail.value);
+
+  // Make sure email is available
+  if (!userEmail.value) {
+    errorMsg.value = "Email is required. Please go back and enter your email.";
+    return;
+  }
+
+  // Make sure OTP is a string
+  const otpString = formState.otp.join("");
+  
   try {
     isLoading.value = true;
-    await auth.verifyOTP(data.otp);
+    await auth.verifyOTP(userEmail.value, otpString);
     successMsg.value = "OTP verified successfully!";
     errorMsg.value = null;
   } catch (error) {
@@ -43,37 +60,6 @@ async function submitOTP({ data }) {
     isLoading.value = false;
   }
 }
-
-// Timer Logic
-let timerInterval = null;
-
-function startTimer() {
-  timerInterval = setInterval(() => {
-    if (timerValue.value > 0) {
-      timerValue.value--;
-    } else {
-      clearInterval(timerInterval);
-    }
-  }, 1000);
-}
-console.log(formState.otp);
-
-onMounted(() => {
-  startTimer();
-});
-
-onBeforeUnmount(() => {
-  clearInterval(timerInterval);
-});
-const formattedTimer = computed(() => {
-  const minutes = Math.floor(timerValue.value / 60);
-  const seconds = (timerValue.value % 60).toString().padStart(2, "0");
-  return `${minutes}:${seconds}`;
-});
-
-const user = useUserStore();
-const { userEmail } = storeToRefs(user);
-console.log(userEmail.value);
 </script>
 
 <template>
@@ -89,12 +75,6 @@ console.log(userEmail.value);
       <p class="text-lg md:text-xl text-primary text-center cursor-default mt-2">
         Please Enter OTP
       </p>
-      <p
-        id="timer"
-        class="text-xl md:text-2xl text-primary text-center cursor-default mt-2"
-      >
-        {{ formattedTimer }}
-      </p>
       <div class="h-[30px] mb-4">
         <p v-if="errorMsg" class="text-center p-2 text-sm bg-red-50 rounded">
           {{ errorMsg }}
@@ -107,16 +87,16 @@ console.log(userEmail.value);
         </p>
       </div>
 
-      <UForm :state="formState" :schema="schema" @submit="submitOTP"  class="px-[10%]">
+      <UForm :state="formState" :schema="schema" class="px-[10%]" @submit="submitOTP">
         <div class="mb-4 flex justify-center">
           <UFormGroup label="OTP" name="otp">
-            <UPinInput
+            <UPinInput 
+              v-model="formState.otp" 
+              :length="6"
               type="number"
-              v-model="formState.otp"
               class="border-b gap-4 border-primary focus:outline-none focus:border-primary bg-transparent"
               variant="none"
               size="xl"
-              style="display: flex; justify-content: space-between"
             />
           </UFormGroup>
         </div>
@@ -127,16 +107,13 @@ console.log(userEmail.value);
           color="white"
           class="duration-300 bg-primary text-white cursor-pointer text-lg"
           block
+          @click="submitOTP"
           >Submit
         </UButton>
 
         <p class="mt-4 text-center text-sm cursor-default text-primary">
           Didn’t receive the code?
-          <nuxt-link
-            to="/auth/resend-otp"
-            class="underline underline-offset-4 pl-1 font-semibold"
-            >Resend OTP</nuxt-link
-          >
+          <span class="underline underline-offset-4 pl-1 font-semibold">Resend OTP</span>
         </p>
       </UForm>
   </div>
