@@ -98,7 +98,7 @@ async function signUp() {
             <UInput
               v-model="formState.lastName"
               placeholder="Last Name"
-              class="grow-1 text-primary border-primary rounded-lg grow-1"
+              class="grow-1 text-primary border-primary rounded-lg "
             >
               <template #leading>
                 <UIcon
