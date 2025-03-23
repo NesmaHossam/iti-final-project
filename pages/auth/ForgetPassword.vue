@@ -52,7 +52,7 @@ async function submitEmail({ data }) {
         </p>
       </div>
 
-      <UForm :state="formState" :schema="schema" @submit="submitEmail"  class="px-[10%]">
+      <UForm :state="formState" :schema="schema" class="px-[10%]"  @submit="submitEmail">
         <div class="mb-4">
           <UFormGroup label="Email" name="email">
           

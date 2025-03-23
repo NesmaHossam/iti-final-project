@@ -58,7 +58,7 @@ const isPasswordVisible = ref(false);
         </p>
       </div>
 
-      <UForm :state="formState" :schema="schema" @submit="login" class="px-[10%]">
+      <UForm :state="formState" :schema="schema" class="px-[10%]" @submit="login">
         <div class="mb-4">
           <UFormGroup label="Email" name="email">
             <UInput
@@ -106,7 +106,7 @@ const isPasswordVisible = ref(false);
 
         <div class="flex items-center justify-between mb-4">
           <label class="flex items-center justify-between">
-            <input v-model="rememberMe" type="checkbox" />
+            <input v-model="rememberMe" type="checkbox" >
             <span class="ml-2 text-sm text-primary">Remember me</span>
           </label>
           <nuxt-link to="/auth/ForgetPassword" class="text-primary underline"
