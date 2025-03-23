@@ -5,4 +5,5 @@
   <HomeBookTable />
   <HomeMenuSlider />
   <HomeAboutUs />
+  <HomeReviews/>
 </template>
