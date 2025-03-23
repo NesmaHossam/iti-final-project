@@ -51,8 +51,8 @@ async function signUp() {
       return;
     }
     console.log("Form submitted successfully", formState);
+    user.setEmail(formState.email) // don't forget to move it bottom
     await auth.signup(formState)
-    user.setEmail(formState.email)
     router.push('/auth/OTP');
   } catch (error) {
     console.error("Signup error:", error);

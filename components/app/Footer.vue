@@ -37,8 +37,17 @@
 
 <template>
   <div
+    class="bg-primary text-white p-4 font-[inter] md:flex justify-around items-center gap-5 hidden"
     class="bg-[#233866] text-white p-4 font-[inter] flex flex-col md:flex-row justify-between items-center gap-5 text-sm"
   >
+    <div>
+      <div>
+        <img
+          src="../../assets/images/Logo.png"
+          alt="footer image"
+          class="w-[300px]"
+        >
+      </div>
     <div class="flex justify-center md:justify-center">
       <img
         src="../../assets/images/Logo.png"
@@ -104,6 +113,10 @@
       </div>
     </div>
   </div>
+  <div class="bg-primary text-white text-center p-4 font-inter  md:hidden flex gap-4 justify-center items-center">
+        <nuxt-link to="/" class="lg:text-5xl md:text-3xl text-3xl  font-inter font-normal"><img src="../../assets/images/LOGO.png" alt=""></nuxt-link>
+        <p class=" lg:text-xl md:text-lg">&copy; {{ new Date().getFullYear() }} Zaytona. All rights reserved.</p>
+      </div>
   <div class="bg-[#233866] text-white text-center p-4 font-inter">
     <p class="lg:text-xl md:text-lg">
       &copy; {{ new Date().getFullYear() }} Zaytona. All rights reserved.
