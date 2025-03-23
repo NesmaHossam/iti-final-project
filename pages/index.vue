@@ -2,8 +2,8 @@
   <div>
     <HomeHero />
      <HomeBookTable />
-    <!-- <HomeMenuSlider />
+    <HomeMenuSlider />
     <HomeAboutUs/>
-    <HomeReviews/> -->
+    <HomeReviews/>
   </div>
 </template>
