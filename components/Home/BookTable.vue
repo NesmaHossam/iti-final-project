@@ -1,7 +1,7 @@
 <template>
   <div class="bg-[#F6F3F0] py-10">
     <UContainer class="flex flex-col gap-10">
-      <div class="justify-between items-center px-5 py-5 hidden md:flex">
+      <div class="hidden md:flex justify-between items-center py-3">
         <div
           class="flex justify-around items-center gap-8 text-sm md:text-base"
         >
@@ -13,7 +13,6 @@
             12 Nile Street, Zamalek, Cairo
           </p>
         </div>
-
         <div class="flex flex-col gap-2">
           <img
             src="../../assets/images/Home/facebooklogo.png"
@@ -34,9 +33,9 @@
       </div>
 
       <div
-        class="flex flex-col md:flex-row items-center justify-between md:h-[80vh]"
+        class="flex flex-col md:flex-row items-center justify-between md:h-[70vh] mt-14 sm:mt-10 md:mt-6 lg:mt-4"
       >
-        <div class="relative flex justify-center md:w-1/2 w-full">
+        <div class="relative flex justify-center w-full md:w-1/2">
           <img
             src="../../assets/images/Home/reservation.png"
             alt="Dining Table"
@@ -45,16 +44,16 @@
         </div>
 
         <div
-          class="flex flex-col items-center md:items-start text-center md:text-left gap-5 w-full md:w-[40%] mt-10 md:mt-0"
+          class="flex flex-col items-center md:items-start text-center md:text-left gap-4 w-full md:w-[45%] mt-8 md:mt-0"
         >
           <h1
-            class="text-3xl md:text-5xl font-bold text-[#233866] cursor-default"
+            class="text-2xl md:text-5xl font-bold text-[#233866] cursor-default"
           >
             Reserve Your Table Effortlessly!
           </h1>
 
           <p
-            class="text-lg md:text-xl text-[#080D18] cursor-default hidden md:block"
+            class="hidden md:block text-lg md:text-xl text-[#080D18] cursor-default"
           >
             Book your table in just a few clicks! Choose your date, time, and
             preferred seating, and let us handle the rest for a perfect dining
@@ -63,7 +62,7 @@
 
           <UButton
             to="/user/tables"
-            class="bg-[#233866] text-amber-50 px-6 py-3 rounded-lg duration-300 hover:border-[#233866] hover:border hover:text-[#233866] flex items-center justify-center gap-2"
+            class="bg-[#233866] text-amber-50 px-6 py-3 rounded-lg duration-300 hover:border-[#233866] hover:border hover:text-[#233866] flex items-center justify-center gap-2 w-[90%] md:w-auto"
           >
             Book Your Table Now!
           </UButton>

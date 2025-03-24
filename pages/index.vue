@@ -4,8 +4,8 @@
     
      <HomeBookTable />
       
-    <!-- <HomeMenuSlider /> -->
+    <HomeMenuSlider />
     <HomeAboutUs/>
-    <!-- <HomeReviews/> -->
+    <HomeReviews/>
   </div>
 </template>
