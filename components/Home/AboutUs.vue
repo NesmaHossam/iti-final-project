@@ -4,7 +4,7 @@
       class="flex flex-row items-center justify-between min-h-[30vh] md:min-h-[50vh] px-3 md:px-0"
     >
       <div class="flex flex-col gap-3 w-[50%] text-center md:text-left">
-        <h1 class="text-sm md:text-4xl font-bold text-[#233866] cursor-default">
+        <h1 class="text-sm md:text-4xl font-bold text-primary cursor-default">
           The Heart Behind Our Flavor
         </h1>
 
@@ -21,12 +21,12 @@
 
         <NuxtLink
           to="/user/AboutUs"
-          class="text-[#233866] text-sm md:text-lg mt-2 md:mt-4"
+          class="text-primary text-sm md:text-lg mt-2 md:mt-4"
         >
           View More Details About Us
         </NuxtLink>
 
-        <hr class="border-[#233866] w-full md:w-[40%]" />
+        <hr class="border-primary w-full md:w-[40%]" />
       </div>
 
       <div class="flex justify-center w-[50%]">

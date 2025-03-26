@@ -74,7 +74,7 @@
               <template #leading>
                 <UIcon
                   name="i-heroicons-envelope"
-                  class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white"
+                  class="absolute left-6 top-1/2 transform -translate-y-1/2 w-4 h-4 text-primary"
                 />
               </template>
             </UInput>
@@ -86,6 +86,7 @@
           </button>
         </div>
       </div>
+      
     </UContainer>
   </footer>
 

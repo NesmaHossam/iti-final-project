@@ -20,6 +20,7 @@
     "@pinia/nuxt": "^0.10.1",
     "nuxt": "^3.16.0",
     "pinia": "^3.0.1",
+    "uicon": "^2.0.1",
     "zod": "^3.24.2"
   },
   "devDependencies": {

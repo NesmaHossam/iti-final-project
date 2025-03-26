@@ -1,8 +1,12 @@
 <template>
-  <div class="bg-[url('/assets/images/Home/Reviewsbg.png')] bg-contain min-h-[50vh] md:min-h-[50vh]">
+  <div
+    class="bg-[url('/assets/images/Home/Reviewsbg.png')] bg-contain min-h-[50vh] md:min-h-[50vh]"
+  >
     <UContainer>
       <div class="flex justify-between items-center mt-[30px] md:mt-[50px]">
-        <h1 class="text-l sm:text-xl md:text-4xl font-bold text-primary cursor-default w-1/2 md:w-1/3">
+        <h1
+          class="text-l sm:text-xl md:text-4xl font-bold text-primary cursor-default w-1/2 md:w-1/3"
+        >
           Testimonials and Feedback
         </h1>
       </div>
@@ -11,7 +15,11 @@
         <div class="overflow-hidden">
           <div
             class="flex transition-transform duration-500 ease-in-out gap-5"
-            :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
+            :style="{
+              transform: `translateX(-${
+                currentIndex * (100 / itemsPerSlide)
+              }%)`,
+            }"
           >
             <div
               v-for="(review, index) in reviews"
@@ -82,7 +90,7 @@ const reviews = ref([
 ]);
 
 const currentIndex = ref(0);
-const itemsPerSlide = 1; 
+const itemsPerSlide = 1;
 const totalSlides = Math.ceil(reviews.value.length / itemsPerSlide);
 
 const nextSlide = () => {
@@ -103,12 +111,12 @@ const prevSlide = () => {
 </script>
 
 <style scoped>
-.transition-transform {
-  display: flex;
-  width: 100%; 
-}
-
 .shrink-0 {
   flex-shrink: 0;
+}
+
+.transition-transform {
+  display: flex;
+  width: calc(100% * totalSlides);
 }
 </style>
