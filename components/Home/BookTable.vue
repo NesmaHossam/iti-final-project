@@ -47,7 +47,7 @@
           class="flex flex-col items-center md:items-start text-center md:text-left gap-4 w-full md:w-[45%] mt-8 md:mt-0"
         >
           <h1
-            class="text-2xl md:text-5xl font-bold text-[#233866] cursor-default"
+            class="text-2xl md:text-5xl font-bold text-primary cursor-default"
           >
             Reserve Your Table Effortlessly!
           </h1>
@@ -62,7 +62,7 @@
 
           <UButton
             to="/user/tables"
-            class="bg-[#233866] text-amber-50 px-6 py-3 rounded-lg duration-300 hover:border-[#233866] hover:border hover:text-[#233866] flex items-center justify-center gap-2 w-[90%] md:w-auto"
+            class="bg-[#233866] text-amber-50 px-6 py-3 rounded-lg duration-300 hover:border-primary hover:border hover:text-primary flex items-center justify-center gap-2 w-[90%] md:w-auto"
           >
             Book Your Table Now!
           </UButton>

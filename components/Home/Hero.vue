@@ -1,11 +1,11 @@
 <template>
   <div
-    class="bg-[#233866] min-h-[50vh] md:min-h-[80vh] flex items-center justify-center relative"
+    class="bg-primary min-h-[50vh] md:min-h-[80vh] flex items-center justify-center relative"
   >
     <UContainer
       class="flex flex-col md:flex-row justify-between items-center mt-2 md:mt-4 w-full px-4"
     >
-      <div class="md:w-2/5 w-full text-left relative z-10 flex flex-col">
+      <div class="md:w-2/5 w-full text-left relative z-0 flex flex-col">
         <h1
           class="text-xl w-2/4 sm:w-1/2 md:w-full md:text-5xl font-bold text-white leading-tight"
         >
@@ -18,7 +18,7 @@
         <div class="mt-4 flex flex-col gap-3 md:flex-row">
           <UButton
             to="/auth/signUp"
-            class="bg-white text-[#233866] px-3 py-2 font-semibold rounded-lg w-[30%] md:w-auto text-sm md:text-base flex items-center justify-center"
+            class="bg-white text-[#233866] px-3 py-2 font-semibold rounded-lg w-[30%] md:w-auto text-sm md:text-base flex items-center justify-center hover:bg-primary hover:text-white hover:border hover:border-white"
           >
             Sign Up Now!
           </UButton>

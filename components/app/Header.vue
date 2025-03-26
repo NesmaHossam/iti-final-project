@@ -7,7 +7,7 @@ const isMenuOpen = ref(false);
 <template>
   <header
     v-if="!isMenuOpen"
-    class="bg-primary text-playfair text-xl text-amber-50 fixed top-0 left-0 right-0 z-10 py-4"
+    class="bg-primary text-playfair text-xl text-amber-50 fixed top-0 left-0 right-0 z-1 py-4"
   >
     <UContainer class="flex justify-between items-center">
       <div>
@@ -17,11 +17,17 @@ const isMenuOpen = ref(false);
       </div>
 
       <div class="hidden md:flex gap-[40px]">
-        <nuxt-link to="/">Home</nuxt-link>
-        <nuxt-link to="/user/Tables/BookTable">Reservation</nuxt-link>
-        <nuxt-link to="/user/Menu">Menu</nuxt-link>
-        <nuxt-link to="/user/AboutUs">Our Story</nuxt-link>
-        <nuxt-link to="/user/ContactUs">Contact Us</nuxt-link>
+        <nuxt-link to="/" class="navigate relative">Home</nuxt-link>
+        <nuxt-link to="/user/Tables/BookTable" class="navigate relative"
+          >Reservation</nuxt-link
+        >
+        <nuxt-link to="/user/Menu" class="navigate relative">Menu</nuxt-link>
+        <nuxt-link to="/user/AboutUs" class="navigate relative"
+          >Our Story</nuxt-link
+        >
+        <nuxt-link to="/user/ContactUs" class="navigate relative"
+          >Contact Us</nuxt-link
+        >
       </div>
 
       <div class="hidden md:block">
@@ -36,7 +42,7 @@ const isMenuOpen = ref(false);
             </nuxt-link>
           </template>
           <template #unAuth>
-            <nuxt-link to="/auth/Login" class="underline underline-offset-4">
+            <nuxt-link to="/auth/Login" class="navigate relative">
               Sign in
             </nuxt-link>
           </template>
@@ -119,3 +125,22 @@ const isMenuOpen = ref(false);
     </UContainer>
   </div>
 </template>
+
+<style scoped>
+.navigate::after {
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: #fff;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+
+.navigate:hover::after {
+  width: 100%;
+  left: 0;
+}
+</style>

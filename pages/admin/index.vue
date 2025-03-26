@@ -1,17 +1,17 @@
 <script setup>
-import { useWebsiteStore } from '../../stores/userEmail.js'
+import { useWebsiteStore } from "../../stores/userEmail.js";
 
-    definePageMeta({
-        layout : "admin"
-    })
+definePageMeta({
+  layout: "admin",
+});
 
-    const Negm = useWebsiteStore()
-    console.log(Negm)
+const Negm = useWebsiteStore();
+console.log(Negm);
 </script>
 
 <template>
   <div>
-    <h1> DashBoard </h1>
+    <h1>DashBoard</h1>
     <p>{{ Negm.name }}</p>
   </div>
 </template>

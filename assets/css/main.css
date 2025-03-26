@@ -6,9 +6,9 @@
 @theme {
   --font-inter: "Inter", sans-serif;
   --font-playfair: "Playfair", serif;
-  --color-primary : #233866;
-  --color-dark-blue : #080D18;
-  --color-light-dark-blue : #0D1628;
+  --color-primary: #233866;
+  --color-dark-blue: #080d18;
+  --color-light-dark-blue: #0d1628;
 }
 
 body {
