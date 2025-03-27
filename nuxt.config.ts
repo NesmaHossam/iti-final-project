@@ -2,6 +2,9 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxt/ui", "@nuxt/eslint", "@pinia/nuxt", "@nuxt/icon"],
+  colorMode: {
+    preference: "light",
+  },
   css: ["~/assets/css/main.css", "@mdi/font/css/materialdesignicons.css"],
   ui: {
     theme: {
@@ -15,7 +18,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       baseUrl: process.env.BASE_URL,
-      clientId: process.env.GOOGLE_CLIENT_ID
+      clientId: process.env.GOOGLE_CLIENT_ID,
     },
   },
 });
