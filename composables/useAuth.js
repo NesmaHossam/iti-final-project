@@ -17,7 +17,7 @@ export const useAuth = () => {
   // login
   async function login(data) {
     try {
-      const res = await useApi("/auth/login", "POST", data);
+      const res = await useApi("/auth/signin", "POST", data);
       token.value = res.accessToken;
       refreshToken.value = res.refreshToken;
       router.push("/");
@@ -28,11 +28,12 @@ export const useAuth = () => {
     }
   }
 
-  async function loginWithGoogle() {
+  async function loginWithGoogle({ idToken }, headers) {
     try {
-      const res = await useApi("/auth/google/login", "POST");
+      const res = await useApi("/auth/loginWithGmail", "POST", { idToken }, headers);
       token.value = res.accessToken;
       refreshToken.value = res.refreshToken;
+      router.push("/");
       return res;
     } catch (error) {
       console.error("Google login error:", error);
@@ -69,10 +70,11 @@ export const useAuth = () => {
     refreshToken.value = null;
     router.push("/auth/Login");
   }
+  
   // forget password
   async function requestPasswordReset(email) {
     try {
-      const res = await useApi("/auth/forgot-password", "POST", { email });
+      const res = await useApi("/auth/forgetPassword", "PATCH", { email });
       return res;
     } catch (error) {
       console.error("Password reset error:", error);
@@ -82,11 +84,15 @@ export const useAuth = () => {
     }
   }
 
-  // reset password
-
-  async function resetPassword(newPassword) {
+  // reset password with email, OTP, new password and confirm password
+  async function resetPassword(email, code, password, confirmPassword) {
     try {
-      const res = await useApi("/auth/reset-password", "POST", { newPassword });
+      const res = await useApi("/auth/resetPassword", "PATCH", { 
+        email, 
+        code, 
+        password,
+        confirmPassword 
+      });
       return res;
     } catch (error) {
       console.error("Password reset error:", error);
@@ -99,22 +105,22 @@ export const useAuth = () => {
   // OTP
   const isAuthenticated = ref(false);
 
-async function verifyOTP(email, otp) {
-  try {
-    console.log(`Verifying OTP: ${otp} for email: ${email}`);
-    const res = await useApi("/auth/confirm-otp", "POST", { email, otp });
-    token.value = res.accessToken;
-    refreshToken.value = res.refreshToken;
-    isAuthenticated.value = true;
-    router.push("/auth/Login");
-    return res;
-  } catch (error) {
-    console.error("OTP verification error:", error);
-    throw new Error(
-      error.response?._data?.message || "OTP verification failed"
-    );
+  async function verifyOTP(email, code) {
+    try {
+      console.log(`Verifying OTP: ${code} for email: ${email}`);
+      const res = await useApi("/auth/confirmEmail", "POST", { email, code });
+      token.value = res.accessToken;
+      refreshToken.value = res.refreshToken;
+      isAuthenticated.value = true;
+      router.push("/auth/Login");
+      return res;
+    } catch (error) {
+      console.error("OTP verification error:", error);
+      throw new Error(
+        error.response?._data?.message || "OTP verification failed"
+      );
+    }
   }
-}
 
   return {
     signup,

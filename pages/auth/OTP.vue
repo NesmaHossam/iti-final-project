@@ -25,27 +25,19 @@ const schema = z.object({
 // Auth function
 const auth = useAuth();
 
-// Access user store to get email
 const user = useUserStore();
 const { userEmail } = storeToRefs(user);
-console.log("Current user email:", userEmail.value);
 
-// Check if email exists
-if (!userEmail.value) {
-  errorMsg.value = "Email is missing. Please go back to the previous step.";
-}
+console.log("OTP Component - Email from store:", userEmail.value);
 
 async function submitOTP() {
-  console.log("Submitting OTP: ", formState.otp);
-  console.log("For email: ", userEmail.value);
+  console.log("Submitting OTP with email:", userEmail.value);
+  console.log("OTP value:", formState.otp);
 
-  // Make sure email is available
   if (!userEmail.value) {
     errorMsg.value = "Email is required. Please go back and enter your email.";
     return;
   }
-
-  // Make sure OTP is a string
   const otpString = formState.otp.join("");
   
   try {
@@ -94,8 +86,8 @@ async function submitOTP() {
               v-model="formState.otp" 
               :length="6"
               type="number"
-              class="border-b gap-4 border-primary focus:outline-none focus:border-primary bg-transparent"
-              variant="none"
+              class=" gap-4 bg-transparent mb-8"
+              variant="outline"
               size="xl"
             />
           </UFormGroup>

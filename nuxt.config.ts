@@ -15,6 +15,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       baseUrl: process.env.BASE_URL,
+      clientId: process.env.GOOGLE_CLIENT_ID
     },
   },
 });

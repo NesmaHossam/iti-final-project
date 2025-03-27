@@ -9,8 +9,10 @@
   --color-primary : #233866;
   --color-dark-blue : #080D18;
   --color-light-dark-blue : #0D1628;
+  --ui-primary : #233866;
 }
 
 body {
   font-family: var(--font-playfair);
 }
+
