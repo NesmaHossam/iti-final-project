@@ -33,7 +33,7 @@
       </div>
 
       <div
-        class="flex flex-col md:flex-row items-center justify-between md:h-[70vh] mt-14 sm:mt-10 md:mt-6 lg:mt-4"
+        class="flex flex-col md:flex-row items-center justify-between md:h-[70vh] mt-14 sm:mt-10 md:mt-6 lg:mt-4 booking"
       >
         <div class="relative flex justify-center w-full md:w-1/2">
           <img
@@ -71,3 +71,21 @@
     </UContainer>
   </div>
 </template>
+
+
+<style scoped>
+
+ 
+
+@media (min-width: 378px) and (max-width: 770px) {
+  .booking {
+margin-top: 30%;  }
+}
+
+/* @media (min-width: 768px) and (max-width: 1180px) {
+  .booking {
+height: 70vh;  }
+} */
+
+
+</style>
