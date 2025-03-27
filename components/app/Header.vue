@@ -7,7 +7,7 @@ const isMenuOpen = ref(false);
 <template>
   <header
     v-if="!isMenuOpen"
-    class="bg-primary text-playfair text-xl text-amber-50 fixed top-0 left-0 right-0 z-1 py-4"
+    class="bg-primary text-playfair text-xl text-amber-50 fixed top-0 left-0 right-0 z-1 py-4 "
   >
     <UContainer class="flex justify-between items-center">
       <div>
@@ -16,7 +16,7 @@ const isMenuOpen = ref(false);
         </nuxt-link>
       </div>
 
-      <div class="hidden md:flex gap-[40px]">
+      <div class="hidden md:flex gap-[40px] nav">
         <nuxt-link to="/" class="navigate relative">Home</nuxt-link>
         <nuxt-link to="/user/Tables/BookTable" class="navigate relative"
           >Reservation</nuxt-link
@@ -53,14 +53,14 @@ const isMenuOpen = ref(false);
         @click="isMenuOpen = !isMenuOpen"
         class="md:hidden focus:outline-none"
       >
-        <span class="text-2xl">&#9776;</span>
+        <span class="text-3xl ">&#9776;</span>
       </button>
     </UContainer>
   </header>
 
   <div
     v-if="isMenuOpen"
-    class="fixed top-0 left-0 h-screen w-[50%] bg-[#233866] text-white z-20"
+    class="fixed top-0 left-0 h-screen w-[70%] bg-[#233866] text-white z-20"
   >
     <UContainer class="flex flex-col p-5 h-full">
       <button
@@ -76,7 +76,7 @@ const isMenuOpen = ref(false);
         class="w-[60%] md:w-[100%] max-w-[150px] mb-6"
       />
 
-      <nuxt-link to="/" class="py-4 text-2xl" @click="isMenuOpen = false"
+      <nuxt-link to="/" class="py-4 text-xl" @click="isMenuOpen = false"
         >Home</nuxt-link
       >
       <nuxt-link
@@ -142,5 +142,11 @@ const isMenuOpen = ref(false);
 .navigate:hover::after {
   width: 100%;
   left: 0;
+}
+
+
+@media (min-width: 768px) and (max-width: 1180px) {
+  .nav {
+font-size:17px ; }
 }
 </style>
