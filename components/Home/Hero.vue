@@ -3,11 +3,11 @@
     class="bg-primary min-h-[50vh] md:min-h-[80vh] flex items-center justify-center relative"
   >
     <UContainer
-      class="flex flex-col md:flex-row justify-between items-center mt-2 md:mt-4 w-full px-4"
+      class="flex flex-col md:flex-row justify-between items-center mt-2 md:mt-4 w-full px-4 hero"
     >
       <div class="md:w-2/5 w-full text-left relative z-0 flex flex-col">
         <h1
-          class="text-xl w-2/4 sm:w-1/2 md:w-full md:text-5xl font-bold text-white leading-tight"
+          class="text-lg md-xl w-2/4 sm:w-1/2 md:w-full md:text-5xl font-bold text-white leading-tight"
         >
           Experience the Art of Flavor at Zaytona
         </h1>
@@ -18,7 +18,7 @@
         <div class="mt-4 flex flex-col gap-3 md:flex-row">
           <UButton
             to="/auth/signUp"
-            class="bg-white text-[#233866] px-3 py-2 font-semibold rounded-lg w-[30%] md:w-auto text-sm md:text-base flex items-center justify-center hover:bg-primary hover:text-white hover:border hover:border-white"
+            class="bg-white text-[#233866] px-3 py-2 font-semibold rounded-lg w-[30%] md:w-auto text-[10px] md:text-base flex items-center justify-center hover:bg-primary hover:text-white hover:border hover:border-white"
           >
             Sign Up Now!
           </UButton>
@@ -42,3 +42,18 @@
     </UContainer>
   </div>
 </template>
+<style scoped>
+@media (min-width: 768px) and (max-width: 1180px) {
+  .hero img {
+    width: 100% !important;
+  }
+  .hero h1 {
+    font-size: 30px;
+
+   
+  }
+  .hero p {
+    font-size: 20px;
+  }
+}
+</style>
