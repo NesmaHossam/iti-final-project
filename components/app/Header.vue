@@ -1,60 +1,146 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 const auth = useAuth();
-const isMenuOpen = ref(false); 
+const isMenuOpen = ref(false);
 </script>
 
 <template>
-  <header class=" bg-primary mx-auto flex justify-around items-center text-playfair text-xl text-amber-50 fixed top-0 left-0 right-0 z-1 py-4">
-    <div>
-      <nuxt-link to="/">
-        <img src="../../assets/images/Logo.png" alt="logo image" />
-      </nuxt-link>
-    </div>
+  <header
+    v-if="!isMenuOpen"
+    class="bg-primary text-playfair text-xl text-amber-50 fixed top-0 left-0 right-0 z-1 py-4"
+  >
+    <UContainer class="flex justify-between items-center">
+      <div>
+        <nuxt-link to="/">
+          <img src="../../assets/images/Logo.png" alt="logo image" />
+        </nuxt-link>
+      </div>
 
-    <div class="hidden md:flex second-nav gap-[40px]">
-      <nuxt-link to="/">Home</nuxt-link>
-      <nuxt-link to="/user/Tables/BookTable">Reservation</nuxt-link>
-      <nuxt-link to="/user/Menu">Menu</nuxt-link>
-      <nuxt-link to="/user/AboutUs">Our Story</nuxt-link>
-      <nuxt-link to="/user/ContactUs">Contact Us</nuxt-link>
-    </div>
+      <div class="hidden md:flex gap-[40px]">
+        <nuxt-link to="/" class="navigate relative">Home</nuxt-link>
+        <nuxt-link to="/user/Tables/BookTable" class="navigate relative"
+          >Reservation</nuxt-link
+        >
+        <nuxt-link to="/user/Menu" class="navigate relative">Menu</nuxt-link>
+        <nuxt-link to="/user/AboutUs" class="navigate relative"
+          >Our Story</nuxt-link
+        >
+        <nuxt-link to="/user/ContactUs" class="navigate relative"
+          >Contact Us</nuxt-link
+        >
+      </div>
 
-    <div class="hidden md:block">
-      <appAuthChecker>
-        <template #auth>
-          <nuxt-link to="#" class="underline underline-offset-4" @click="auth.logout">Log Out</nuxt-link>
-        </template>
-        <template #unAuth>
-          <nuxt-link to="/auth/Login" class="underline underline-offset-4">Sign in</nuxt-link>
-        </template>
-      </appAuthChecker>
-    </div>
+      <div class="hidden md:block">
+        <appAuthChecker>
+          <template #auth>
+            <nuxt-link
+              to="#"
+              class="underline underline-offset-4"
+              @click="auth.logout"
+            >
+              Log Out
+            </nuxt-link>
+          </template>
+          <template #unAuth>
+            <nuxt-link to="/auth/Login" class="navigate relative">
+              Sign in
+            </nuxt-link>
+          </template>
+        </appAuthChecker>
+      </div>
 
-    <!-- Dropdown button for mobile -->
-    <button @click="isMenuOpen = !isMenuOpen" class="md:hidden focus:outline-none">
-      <span class="text-2xl">&#9776;</span> <!-- Hamburger icon -->
-    </button>
+      <button
+        @click="isMenuOpen = !isMenuOpen"
+        class="md:hidden focus:outline-none"
+      >
+        <span class="text-2xl">&#9776;</span>
+      </button>
+    </UContainer>
   </header>
 
-  <!-- Dropdown menu for mobile -->
-  <div v-if="isMenuOpen" class="md:hidden bg-[#233866] text-white flex flex-col p-4 absolute w-full mt-[80px]">
-    <nuxt-link to="/" class="py-2">Home</nuxt-link>
-    <nuxt-link to="/user/Tables/BookTable" class="py-2">Reservation</nuxt-link>
-    <nuxt-link to="/user/Menu" class="py-2">Menu</nuxt-link>
-    <nuxt-link to="/user/AboutUs" class="py-2">Our Story</nuxt-link>
-    <nuxt-link to="/user/ContactUs" class="py-2">Contact Us</nuxt-link>
-    <appAuthChecker>
-      <template #auth>
-        <nuxt-link to="#" class="py-2 underline underline-offset-4" @click="auth.logout">Log Out</nuxt-link>
-      </template>
-      <template #unAuth>
-        <nuxt-link to="/auth/Login" class="py-2 underline underline-offset-4">Sign in</nuxt-link>
-      </template>
-    </appAuthChecker>
+  <div
+    v-if="isMenuOpen"
+    class="fixed top-0 left-0 h-screen w-[50%] bg-[#233866] text-white z-20"
+  >
+    <UContainer class="flex flex-col p-5 h-full">
+      <button
+        @click="isMenuOpen = false"
+        class="absolute top-4 right-6 text-3xl"
+      >
+        &times;
+      </button>
+
+      <img
+        src="../../assets/images/Logo.png"
+        alt="logo image"
+        class="w-[60%] md:w-[100%] max-w-[150px] mb-6"
+      />
+
+      <nuxt-link to="/" class="py-4 text-2xl" @click="isMenuOpen = false"
+        >Home</nuxt-link
+      >
+      <nuxt-link
+        to="/user/Tables/BookTable"
+        class="py-4 text-2xl"
+        @click="isMenuOpen = false"
+        >Reservation</nuxt-link
+      >
+      <nuxt-link
+        to="/user/Menu"
+        class="py-4 text-2xl"
+        @click="isMenuOpen = false"
+        >Menu</nuxt-link
+      >
+      <nuxt-link
+        to="/user/AboutUs"
+        class="py-4 text-2xl"
+        @click="isMenuOpen = false"
+        >Our Story</nuxt-link
+      >
+      <nuxt-link
+        to="/user/ContactUs"
+        class="py-4 text-2xl"
+        @click="isMenuOpen = false"
+        >Contact Us</nuxt-link
+      >
+
+      <div class="mt-auto w-full">
+        <appAuthChecker>
+          <template #auth>
+            <nuxt-link
+              to="#"
+              class="block py-4 text-2xl underline text-center underline-offset-4"
+              @click="auth.logout"
+            >
+              Log Out
+            </nuxt-link>
+          </template>
+          <template #unAuth>
+            <nuxt-link to="/auth/Login" class="block py-4 text-2xl text-center">
+              Sign in
+            </nuxt-link>
+          </template>
+        </appAuthChecker>
+      </div>
+    </UContainer>
   </div>
 </template>
 
 <style scoped>
-/* Add any additional styles here if needed */
+.navigate::after {
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: #fff;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+
+.navigate:hover::after {
+  width: 100%;
+  left: 0;
+}
 </style>

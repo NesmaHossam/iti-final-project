@@ -1,76 +1,73 @@
 <template>
-  <div class="bg-[#F6F3F0] mt-0 pb-[200px]">
-    <div class="flex justify-between items-center mx-5 py-5">
-      <div class="flex justify-around items-center gap-[80px]">
-        <div>
+  <div class="bg-[#F6F3F0] py-10">
+    <UContainer class="flex flex-col gap-10">
+      <div class="hidden md:flex justify-between items-center py-3">
+        <div
+          class="flex justify-around items-center gap-8 text-sm md:text-base"
+        >
           <p class="cursor-default">Open Daily: 8 AM - 12 AM</p>
-        </div>
-        <div>
           <p class="cursor-default">(+20) 0100 506 6611</p>
-        </div>
-        <div>
-          <p class="underline underline-offset-6 cursor-default">
+          <p
+            class="underline underline-offset-4 cursor-default hidden md:block"
+          >
             12 Nile Street, Zamalek, Cairo
           </p>
         </div>
+        <div class="flex flex-col gap-2">
+          <img
+            src="../../assets/images/Home/facebooklogo.png"
+            alt="Facebook"
+            class="w-10 cursor-pointer"
+          />
+          <img
+            src="../../assets/images/Home/instalogo.png"
+            alt="Instagram"
+            class="w-10 cursor-pointer"
+          />
+          <img
+            src="../../assets/images/Home/tiktoklogo.png"
+            alt="TikTok"
+            class="w-10 cursor-pointer"
+          />
+        </div>
       </div>
 
-      <div class="flex gap-2 flex-col">
-        <img
-          src="../../assets/images/Home/facebooklogo.png"
-          alt="facelogo "
-          class="cursor-pointer"
-        />
-        <img
-          src="../../assets/images/Home/instalogo.png"
-          alt="instalogo"
-          class="cursor-pointer"
-        />
-        <img
-          src="../../assets/images/Home/tiktoklogo.png"
-          alt="tiktoklogo"
-          class="cursor-pointer"
-        />
-      </div>
-    </div>
+      <div
+        class="flex flex-col md:flex-row items-center justify-between md:h-[70vh] mt-14 sm:mt-10 md:mt-6 lg:mt-4"
+      >
+        <div class="relative flex justify-center w-full md:w-1/2">
+          <img
+            src="../../assets/images/Home/reservation.png"
+            alt="Dining Table"
+            class="w-[80%] sm:w-[60%] md:w-[90%] lg:w-[100%] max-w-[500px] md:max-w-[600px]"
+          />
+        </div>
 
-    <div class="flex justify-around items-center h-[100vh]">
-      <div class="relative flex justify-center z-0">
-        <img
-          src="../../assets/images/Home/reservation1.png"
-          alt="hero image"
-          class="w-[500px] relative z-10"
-        />
-
-        <img
-          src="../../assets/images/Home/reservation3.png"
-          alt="hero image"
-          class="w-[300px] absolute right-[-40%] bottom-[-20%] z-20"
-        />
-
-        <img
-          src="../../assets/images/Home/reservation2.png"
-          alt="hero image"
-          class="w-[200px] absolute left-[-90px] top-[20%] z-20"
-        />
-      </div>
-
-      <div class="flex flex-col gap-5 w-[25%]">
-        <h1 class="text-5xl font-bold text-[#233866] cursor-default">
-          Reserve Your Table Effortlessly!
-        </h1>
-        <p class="text-xl text-[#080D18] cursor-default">
-          Book your table in just a few clicks! Choose your date, time, and
-          preferred seating, and let us handle the rest for a perfect dining
-          experience.
-        </p>
-
-        <UButton
-          to="/user/tables"
-          class="bg-[#233866] text-amber-50 px-8 py-3 duration-300 hover:border-[#233866] hover:border hover:text-[#233866] flex items-center justify-center gap-2"
-          >Book Your Table Now!</UButton
+        <div
+          class="flex flex-col items-center md:items-start text-center md:text-left gap-4 w-full md:w-[45%] mt-8 md:mt-0"
         >
+          <h1
+            class="text-2xl md:text-5xl font-bold text-primary cursor-default"
+          >
+            Reserve Your Table Effortlessly!
+          </h1>
+
+          <p
+            class="hidden md:block text-lg md:text-xl text-[#080D18] cursor-default"
+          >
+            Book your table in just a few clicks! Choose your date, time, and
+            preferred seating, and let us handle the rest for a perfect dining
+            experience.
+          </p>
+
+          <UButton
+            to="/user/tables"
+            class="bg-[#233866] text-amber-50 px-6 py-3 rounded-lg duration-300 hover:border-primary hover:border hover:text-primary flex items-center justify-center gap-2 w-[90%] md:w-auto"
+          >
+            Book Your Table Now!
+          </UButton>
+        </div>
       </div>
-    </div>
+    </UContainer>
   </div>
 </template>

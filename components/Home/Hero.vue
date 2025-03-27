@@ -1,33 +1,44 @@
 <template>
-  <div class="bg-[#233866] h-[85vh] flex justify-center">
-    <div class="container flex justify-between items-start mt-[90px]">
-      <div class="flex flex-col gap-5 w-2/5 self-center">
-        <h1 class="text-5xl font-bold text-amber-50 cursor-default">
+  <div
+    class="bg-primary min-h-[50vh] md:min-h-[80vh] flex items-center justify-center relative"
+  >
+    <UContainer
+      class="flex flex-col md:flex-row justify-between items-center mt-2 md:mt-4 w-full px-4"
+    >
+      <div class="md:w-2/5 w-full text-left relative z-0 flex flex-col">
+        <h1
+          class="text-xl w-2/4 sm:w-1/2 md:w-full md:text-5xl font-bold text-white leading-tight"
+        >
           Experience the Art of Flavor at Zaytona
         </h1>
-        <p class="text-xl text-amber-50  cursor-default">
+        <p class="text-base md:text-xl text-white mt-3 hidden md:block">
           Enjoy exquisite flavors crafted with passion. Fresh ingredients,
           authentic recipes, and warm hospitality await you!
         </p>
-
-        <div class="flex gap-4 mt-5">
+        <div class="mt-4 flex flex-col gap-3 md:flex-row">
           <UButton
             to="/auth/signUp"
-            class="bg-amber-50 text-[#233866] px-9 py-3 duration-300 hover:text-amber-50 border border-amber-50"
-            >Sign Up Now!</UButton
+            class="bg-white text-[#233866] px-3 py-2 font-semibold rounded-lg w-[30%] md:w-auto text-sm md:text-base flex items-center justify-center hover:bg-primary hover:text-white hover:border hover:border-white"
           >
+            Sign Up Now!
+          </UButton>
 
           <UButton
             to="/user/tables"
-            class="bg-transparent text-amber-50 px-8 py-3 duration-300 border border-amber-50 hover:bg-amber-50 hover:text-[#233866]"
-            >Book Your Table</UButton
+            class="border border-white text-white px-6 py-3 rounded-lg w-full md:w-auto hover:bg-white hover:text-[#233866] hidden md:block"
           >
+            Book Your Table
+          </UButton>
         </div>
       </div>
 
-      <div class=" image flex justify-center items-start z-0 w-3/5">
-        <img src="../../assets/images/Home/Group 4.png" alt="hero image" class=" translate-y-14">
+      <div class="relative w-full md:w-3/5 flex justify-end">
+        <img
+          src="../../assets/images/Home/Group 4.png"
+          alt="hero image"
+          class="w-[80%] sm:w-[70%] md:w-[80%] lg:w-[100%] max-w-[800px] absolute top-[0%] right-0"
+        />
       </div>
-    </div>
+    </UContainer>
   </div>
 </template>
