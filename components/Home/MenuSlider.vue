@@ -10,7 +10,7 @@
           </h1>
           <NuxtLink
             to="/user/Menu"
-            class="text-[#233866] text-sm sm:text-md md:text-xl text-center mt-4 underline underline-offset-8"
+            class="text-primary text-sm sm:text-md md:text-xl text-center mt-4 underline underline-offset-8"
           >
             View More Menu Items
           </NuxtLink>
@@ -44,7 +44,7 @@
                   <img
                     :src="dish.image"
                     class="w-[150px] sm:w-[180px] md:w-[200px] absolute top-[-100px] right-[-80px] z-[-1] md:top-[-150px] md:right-[-65px]"
-                  />
+                  >
                 </div>
 
                 <UButton
@@ -61,12 +61,12 @@
               src="@/assets/images/Home/arrowleft.png"
               class="cursor-pointer w-6 sm:w-8"
               @click="prevSlide"
-            />
+            >
             <img
               src="@/assets/images/Home/arrowright.png"
               class="cursor-pointer w-6 sm:w-8"
               @click="nextSlide"
-            />
+            >
           </div>
         </div>
       </div>

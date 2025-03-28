@@ -20,7 +20,7 @@ onUnmounted(() => {
   <div class="min-h-[100vh] flex flex-col justify-between">
     <div>
       <AppHeader :class="scrollY > 120 ? 'bg-white text-slate-900' : 'bg-[#233866]'" />
-      <slot />
+        <slot/>
     </div>
     <AppFooter />
   </div>
