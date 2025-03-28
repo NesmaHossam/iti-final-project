@@ -33,9 +33,9 @@
       </div>
 
       <div
-        class="flex flex-col md:flex-row items-center justify-between md:h-[70vh] mt-14 sm:mt-10 md:mt-6 lg:mt-4 booking"
+        class="flex flex-col md:flex-row items-center justify-between  md:h-[70vh] sm:mt-10 md:mt-6 lg:mt-4 booking"
       >
-        <div class="relative flex justify-center w-full md:w-1/2">
+        <div class="relative flex  justify-center w-full md:w-1/2">
           <img
             src="../../assets/images/Home/reservation.png"
             alt="Dining Table"
@@ -44,16 +44,16 @@
         </div>
 
         <div
-          class="flex flex-col items-center md:items-start text-center md:text-left gap-4 w-full md:w-[45%] mt-8 md:mt-0"
+          class="flex flex-col  md:items-start  gap-4 w-full md:w-[45%] mt-8 md:mt-0"
         >
           <h1
-            class="text-2xl md:text-5xl font-bold text-primary cursor-default"
+            class="text-2xl md:text-5xl font-bold text-primary  w-[100%] lg:w-[90%] xl:w-[70%] cursor-default"
           >
             Reserve Your Table Effortlessly!
           </h1>
 
           <p
-            class="hidden md:block text-lg md:text-xl text-[#080D18] cursor-default"
+            class=" text-base md:text-xl text-dark-blue  w-[90%] lg:w-[60%]"
           >
             Book your table in just a few clicks! Choose your date, time, and
             preferred seating, and let us handle the rest for a perfect dining
@@ -62,7 +62,7 @@
 
           <UButton
             to="/user/tables"
-            class="bg-[#233866] text-amber-50 px-6 py-3 rounded-lg duration-300 hover:border-primary hover:border hover:text-primary flex items-center justify-center gap-2 w-[90%] md:w-auto"
+            class="bg-primary text-amber-50 px-6 py-3 rounded-lg duration-300 hover:border-primary hover:border hover:text-primary flex items-center justify-center gap-2  w-auto"
           >
             Book Your Table Now!
           </UButton>
@@ -79,7 +79,8 @@
 
 @media (min-width: 378px) and (max-width: 770px) {
   .booking {
-margin-top: 30%;  }
+/* margin-top: 30%; */
+  }
 }
 
 /* @media (min-width: 768px) and (max-width: 1180px) {

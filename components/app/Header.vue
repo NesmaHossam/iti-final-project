@@ -12,7 +12,7 @@ const isMenuOpen = ref(false);
     <UContainer class="flex justify-between items-center">
       <div>
         <nuxt-link to="/">
-          <img src="../../assets/images/Logo.png" alt="logo image" />
+          <img src="../../assets/images/Logo.png" alt="logo image"  >
         </nuxt-link>
       </div>
 
@@ -42,7 +42,7 @@ const isMenuOpen = ref(false);
             </nuxt-link>
           </template>
           <template #unAuth>
-            <nuxt-link to="/auth/Login" class="navigate relative">
+            <nuxt-link to="/auth/Login" class="navigate relative text-primary bg-white px-4 py-2 border border-white rounded-2xl">
               Sign in
             </nuxt-link>
           </template>

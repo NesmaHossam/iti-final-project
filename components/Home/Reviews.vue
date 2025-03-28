@@ -5,7 +5,7 @@
     <UContainer>
       <div class="flex justify-between items-center mt-[30px] md:mt-[50px]">
         <h1
-          class="text-l sm:text-xl md:text-4xl font-bold text-primary cursor-default w-1/2 md:w-1/3"
+          class="text-l sm:text-xl md:text-2xl lg:text-4xl font-bold text-primary cursor-default w-1/2 md:w-1/3"
         >
           Testimonials and Feedback
         </h1>

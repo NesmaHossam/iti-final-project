@@ -225,7 +225,7 @@ async function signUp() {
     </UForm>
 
     <p class="mt-4 text-center text-sm cursor-default text-dark-blue">
-      Don't have an account?<nuxt-link
+      Already have an account?<nuxt-link
         to="/auth/Login"
         class="underline underline-offset-4 pl-1 font-semibold text-primary"
         >Login</nuxt-link

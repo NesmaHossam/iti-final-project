@@ -91,9 +91,9 @@ async function submitEmail({ data }) {
       </UForm>
 
       <p class="mt-4 text-center text-sm cursor-default text-light-dark-blue">
-        Go back to
+        Remembered your password?
         <nuxt-link to="/auth/login" class="underline underline-offset-4 pl-1 font-semibold text-primary"
-          >Log in</nuxt-link
+          >Sign in</nuxt-link
         >
       </p>
   </div>

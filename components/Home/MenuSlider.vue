@@ -4,13 +4,13 @@
       <div class="min-h-[50vh] md:min-h-[90vh] flex flex-col relative">
         <div class="mt-[30px] md:mt-[50px] flex justify-between items-center">
           <h1
-            class="text-l sm:text-xl md:text-4xl font-bold text-primary cursor-default w-1/2 md:w-1/3"
+            class="text-l sm:text-xl md:text-2xl lg:text-4xl font-bold text-primary cursor-default w-1/2 md:w-1/3"
           >
             Signature Delights Our Most Famous Dishes
           </h1>
           <NuxtLink
             to="/user/Menu"
-            class="text-[#233866] text-sm sm:text-md md:text-xl text-center mt-4 underline underline-offset-4"
+            class="text-[#233866] text-sm sm:text-md md:text-xl text-center mt-4 underline underline-offset-8"
           >
             View More Menu Items
           </NuxtLink>
