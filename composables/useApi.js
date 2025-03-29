@@ -6,7 +6,7 @@ export const useApi = (request, method, payload, moreHeaders) => {
   };
 
   if (token.value) {
-    headers["Authorization"] = `Bearer ${token.value}`;
+    headers["authorization"] = `User ${token.value}`;
   }
 
   return $fetch(request, {

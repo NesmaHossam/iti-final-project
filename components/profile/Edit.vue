@@ -3,7 +3,6 @@ import { z } from "zod";
 // state
 const formState = reactive({
   userName: "",
-  email: "",
   phoneNumber: "",
   password: "",
   confirmPassword: "",
@@ -13,7 +12,6 @@ const formState = reactive({
 const schema = z
   .object({
     userName: z.string().min(1, "User Name is required"),
-    email: z.string().email("Invalid email format"),
     phoneNumber: z
       .string()
       .min(10, "mobile Number number must be at least 10 digits")
@@ -34,7 +32,6 @@ const schema = z
 // submit function
 const errorMsg = reactive({
   userName: "",
-  email: "",
   phoneNumber: "",
   password: "",
   confirmPassword: "",
@@ -43,10 +40,9 @@ const errMsg = ref("");
 const isLoading = ref(false);
 const isPasswordVisible = ref(false);
 const isConfirmPasswordVisible = ref(false);
-const user = useUserStore();
 const router = useRouter();
 
-async function signUp() {
+async function UpdateProfile() {
   try {
     isLoading.value = true;
     Object.keys(errorMsg).forEach((key) => (errorMsg[key] = null));
@@ -59,10 +55,9 @@ async function signUp() {
       });
       return;
     }
-    user.setEmail(formState.email);
-    await auth.signup(formState);
-    console.log("Email before redirect:", user.userEmail);
-    router.push("/auth/OTP");
+    console.log(formState);
+    await useApi('/user/updateProfile',"PATCH",formState);
+    router.push("/user/profile");
   } catch (error) {
     console.error("Signup error:", error);
     errMsg.value = error.message || "An unexpected error occurred";
@@ -70,22 +65,27 @@ async function signUp() {
     isLoading.value = false;
   }
 }
+
+const goToProfile = () => {
+  router.push('/user/profile')
+}
 </script>
 
 <template>
   <div class="w-full">
     <div class="mb-6 ms-0 md:ms-14 flex justify-between">
           <h2 class="text-xl md:text-3xl font-semibold">Edit Profile</h2>
-          <UButton class="text-xl" @click="display=!display">Save</UButton>
+          <UButton class="text-xl" @click="goToProfile">Cancel</UButton>
         </div>
     <ProfileWrapper class="py-12">
   
       <UForm :state="formState" :schema="schema" class="w-[80%] mx-auto" @submit="signUp">
-      <div class="mb-4 flex flex-col lg:gap-8 gap-4 md:flex-row justify-between">
+      <div class="md:mb-4 mb-6">
+        <p class="text-primary md:text-xl text-lg font-semibold">User Name :</p>
         <UFormGroup
           label="User Name"
           name="userName"
-          class="grow-1 flex flex-col h-[50px]"
+          class="flex flex-col"
         >
           <UInput
             v-model="formState.userName"
@@ -102,24 +102,8 @@ async function signUp() {
         </UFormGroup>
       </div>
   
-      <div class="mb-4 h-[50px]">
-        <UFormGroup label="Email" name="email">
-          <UInput
-            v-model="formState.email"
-            placeholder="Email"
-            class="w-full text-primary border-primary rounded-lg"
-          >
-            <template #leading>
-              <UIcon name="i-heroicons-envelope" class="w-5 h-5 text-primary" />
-            </template>
-          </UInput>
-          <p v-if="errorMsg.email" class="text-red-500 text-sm mt-1">
-            {{ errorMsg.email }}
-          </p>
-        </UFormGroup>
-      </div>
-  
-      <div class="mb-4 h-[50px]">
+      <div class="md:mb-4 mb-6 md:h-[80px] h-[100px]">
+        <p class="text-primary md:text-xl text-lg font-semibold">User Phone :</p>
         <UFormGroup label="mobile Number" name="phoneNumber">
           <UInput
             v-model="formState.phoneNumber"
@@ -136,7 +120,8 @@ async function signUp() {
         </UFormGroup>
       </div>
   
-      <div class="mb-4 h-[50px]">
+      <div class="md:mb-4 mb-6 md:h-[80px] h-[100px]">
+        <p class="text-primary md:text-xl text-lg font-semibold">Password :</p>
         <UFormGroup label="Password" name="password">
           <UInput
             v-model="formState.password"
@@ -163,7 +148,8 @@ async function signUp() {
         </UFormGroup>
       </div>
   
-      <div class="mb-4 h-[50px]">
+      <div class="md:mb-4 mb-6 md:h-[80px] h-[100px]">
+        <p class="text-primary md:text-xl text-lg font-semibold">Confirm Password :</p>
         <UFormGroup label="Confirm Password" name="confirmPassword">
           <UInput
             v-model="formState.confirmPassword"
@@ -199,11 +185,11 @@ async function signUp() {
         :loading="isLoading"
         type="submit"
         color="white"
-        class="duration-300 bg-primary text-white cursor-pointer text-lg"
+        class="duration-300 bg-primary text-white cursor-pointer text-lg md:mt-4 mt-0"
         block
-        @click.prevent="signUp"
+        @click.prevent="UpdateProfile"
       >
-        Sign Up
+        Update Profile
       </UButton>
     </UForm>
     

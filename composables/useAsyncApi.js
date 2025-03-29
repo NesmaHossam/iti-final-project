@@ -5,9 +5,13 @@ export const useAsyncApi = (request, method = "get", payload, moreHeaders) => {
     ...moreHeaders,
   };
 
+  console.log(token.value);
+  
   if (token.value) {
-    headers["Authorization"] = `Bearer ${token.value}`;
+    headers["authorization"] = `User ${token.value}`;
   }
+
+
 
   return useFetch(request, {
     lazy: true,

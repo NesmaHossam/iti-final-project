@@ -2,6 +2,7 @@ export const useAuth = () => {
   const router = useRouter();
   const token = useCookie("token");
   const refreshToken = useCookie("refreshToken");
+  const user = useUserStore();
 
   // sign up
   async function signup(data) {
@@ -20,6 +21,7 @@ export const useAuth = () => {
       const res = await useApi("/auth/signin", "POST", data);
       token.value = res.tokens.access_token;
       refreshToken.value = res.tokens.refresh_token;
+      user.setUserData(res)
       console.log(res);
       router.push("/");
       return res;
@@ -69,7 +71,6 @@ export const useAuth = () => {
   function logout() {
     token.value = null;
     refreshToken.value = null;
-    console.log(token , refreshToken);
     router.push("/auth/login")
   }
   
@@ -110,7 +111,7 @@ export const useAuth = () => {
   async function verifyOTP(email, code) {
     try {
       console.log(`Verifying OTP: ${code} for email: ${email}`);
-      const res = await useApi("/auth/confirmEmail", "POST", { email, code });
+      const res = await useApi("/auth/confirmEmail", "PATCH", { email, code });
       token.value = res.accessToken;
       refreshToken.value = res.refreshToken;
       isAuthenticated.value = true;

@@ -1,6 +1,6 @@
-// stores/userEmail.js
 export const useUserStore = defineStore('user', () => {
-  const userEmail = ref("mostafanegm0002@gmail.com")
+  const userEmail = ref("")
+  const userObj = ref(null)
   
   function setEmail(email) {
     console.log("Setting email in store:", email)
@@ -8,7 +8,13 @@ export const useUserStore = defineStore('user', () => {
     console.log("Email after setting:", userEmail.value)
   }
   
-  return { userEmail, setEmail }
+  function setUserData(obj) {
+    console.log("Setting user in store:", obj)
+    userObj.value = obj
+    console.log("obj after setting:", userObj.value)
+  }
+
+  return { userEmail, userObj, setEmail, setUserData }
 }, 
 {
   persist: {

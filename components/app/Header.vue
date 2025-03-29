@@ -2,6 +2,10 @@
 import { ref } from "vue";
 const auth = useAuth();
 const isMenuOpen = ref(false);
+// const user = useUserStore()
+// const userId = user.userObj.user.id
+// console.log(userId);
+
 </script>
 
 <template>
@@ -27,6 +31,9 @@ const isMenuOpen = ref(false);
         >
         <nuxt-link to="/user/ContactUs" class="navigate relative"
           >Contact Us</nuxt-link
+        >
+        <nuxt-link :to="`/user/profile`" class="navigate relative"
+          >Profile</nuxt-link
         >
       </div>
 

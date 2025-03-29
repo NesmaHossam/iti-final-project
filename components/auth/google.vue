@@ -5,13 +5,14 @@
 <script setup>
 const config = useRuntimeConfig();
 const auth = useAuth()
+const user = useUserStore();
 
 const signupWithGoogle = async (response) => {
   const idToken = response.credential;
   const headers = { "Content-Type": "application/json" };
-  await auth.loginWithGoogle({idToken} , headers)
-  const data = await res.json();
-  console.log("User Data:", data);
+  const res = await auth.loginWithGoogle({idToken} , headers)
+  user.setUserData(res)
+  console.log(res);
 };
 
 onMounted(() => {

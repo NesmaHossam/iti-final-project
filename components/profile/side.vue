@@ -21,11 +21,11 @@ const routeToPage = ( route) => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-8">
+  <div class="flex flex-row md:flex-col gap-8 justify-between md:justify-start flex-wrap">
     <div 
       v-for="item in menuItems" 
       :key="item.title" 
-      class="flex gap-6 items-center cursor-pointer" 
+      class="flex gap-6 items-center cursor-pointer md:mb-8 mb-0" 
       @click="routeToPage( item.route)"
     >
       <div 
