@@ -11,6 +11,10 @@ const user = reactive({
 
 <template>
   <div>
+    <div class="mb-6 ms-0 md:ms-14 flex justify-between">
+          <h2 class="text-xl md:text-3xl font-semibold">Profile Account</h2>
+          <UButton class="text-xl" @click="display=!display">Change Information</UButton>
+        </div>
     <ProfileWrapper class="mb-6">
       <div
         class="flex mt-8 flex-col md:flex-row justify-between items-start md:items-center w-full"
@@ -25,11 +29,11 @@ const user = reactive({
             <p>{{ user.name || "Mostafa Negm" }}</p>
           </div>
           <div>
-            <h4 class="text-xl font-bold">Email Address :</h4>
+            <h4 class="text-xl font-bold">Phone Number :</h4>
             <p>{{ user.phone || "+201152184250" }}</p>
           </div>
           <div>
-            <h4 class="text-xl font-bold">Email Address :</h4>
+            <h4 class="text-xl font-bold">Password :</h4>
             <p>{{ user.password || "password" }}</p>
           </div>
         </div>

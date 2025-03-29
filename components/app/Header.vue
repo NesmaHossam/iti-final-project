@@ -50,8 +50,8 @@ const isMenuOpen = ref(false);
       </div>
 
       <button
-        @click="isMenuOpen = !isMenuOpen"
         class="md:hidden focus:outline-none"
+        @click="isMenuOpen = !isMenuOpen"
       >
         <span class="text-3xl ">&#9776;</span>
       </button>
@@ -64,8 +64,8 @@ const isMenuOpen = ref(false);
   >
     <UContainer class="flex flex-col p-5 h-full">
       <button
-        @click="isMenuOpen = false"
         class="absolute top-4 right-6 text-3xl"
+        @click="isMenuOpen = false"
       >
         &times;
       </button>
@@ -74,7 +74,7 @@ const isMenuOpen = ref(false);
         src="../../assets/images/Logo.png"
         alt="logo image"
         class="w-[60%] md:w-[100%] max-w-[150px] mb-6"
-      />
+      >
 
       <nuxt-link to="/" class="py-4 text-xl" @click="isMenuOpen = false"
         >Home</nuxt-link
@@ -107,13 +107,12 @@ const isMenuOpen = ref(false);
       <div class="mt-auto w-full">
         <appAuthChecker>
           <template #auth>
-            <nuxt-link
-              to="#"
+            <p
               class="block py-4 text-2xl underline text-center underline-offset-4"
               @click="auth.logout"
             >
               Log Out
-            </nuxt-link>
+            </p>
           </template>
           <template #unAuth>
             <nuxt-link to="/auth/Login" class="block py-4 text-2xl text-center">
