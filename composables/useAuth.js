@@ -18,8 +18,9 @@ export const useAuth = () => {
   async function login(data) {
     try {
       const res = await useApi("/auth/signin", "POST", data);
-      token.value = res.accessToken;
-      refreshToken.value = res.refreshToken;
+      token.value = res.tokens.access_token;
+      refreshToken.value = res.tokens.refresh_token;
+      console.log(res);
       router.push("/");
       return res;
     } catch (error) {
@@ -31,8 +32,8 @@ export const useAuth = () => {
   async function loginWithGoogle({ idToken }, headers) {
     try {
       const res = await useApi("/auth/loginWithGmail", "POST", { idToken }, headers);
-      token.value = res.accessToken;
-      refreshToken.value = res.refreshToken;
+      token.value = res.tokens.access_token;
+      refreshToken.value = res.tokens.refresh_token;
       router.push("/");
       return res;
     } catch (error) {
@@ -65,10 +66,11 @@ export const useAuth = () => {
   }
 
   // logout
-  async function logout() {
+  function logout() {
     token.value = null;
     refreshToken.value = null;
-    router.push("/auth/Login");
+    console.log(token , refreshToken);
+    router.push("/auth/login")
   }
   
   // forget password
