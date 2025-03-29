@@ -42,7 +42,7 @@ const isMenuOpen = ref(false);
             </nuxt-link>
           </template>
           <template #unAuth>
-            <nuxt-link to="/auth/Login" class="navigate relative text-primary bg-white px-4 py-2 border border-white rounded-2xl">
+            <nuxt-link to="/auth/Login" class="relative text-primary bg-white px-4 py-2 border border-white rounded-2xl">
               Sign in
             </nuxt-link>
           </template>
