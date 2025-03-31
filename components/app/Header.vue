@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from "vue";
 const auth = useAuth();
 const isMenuOpen = ref(false);
 // const user = useUserStore()
@@ -49,7 +48,7 @@ const items = ref<DropdownMenuItem[]>([
           >Reservation</nuxt-link
         >
         <nuxt-link to="/user/Menu" class="navigate relative">Menu</nuxt-link>
-        <nuxt-link to="/user/AboutUs" class="navigate relative"
+        <nuxt-link to="/user/OurStory" class="navigate relative"
           >Our Story</nuxt-link
         >
         <nuxt-link to="/user/ContactUs" class="navigate relative"
