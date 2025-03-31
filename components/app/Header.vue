@@ -141,7 +141,7 @@ const items = ref<DropdownMenuItem[]>([
         >Menu</nuxt-link
       >
       <nuxt-link
-        to="/user/AboutUs"
+        to="/user/OurStory"
         class="py-4 text-2xl"
         @click="isMenuOpen = false"
         >Our Story</nuxt-link

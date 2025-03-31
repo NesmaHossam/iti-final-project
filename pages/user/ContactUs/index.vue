@@ -1,3 +1,7 @@
 <template>
-    <h1>Contact</h1>
+    <div>
+        <ContactHeader/>
+        <ContactFirstSection/>
+        <ContactSecondSection/>
+    </div>
 </template>
