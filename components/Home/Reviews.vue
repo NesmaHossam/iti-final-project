@@ -35,7 +35,11 @@
                   {{ review.userName }}
                 </h2>
                 <h3>
-                  <img :src="review.rate" alt="star" class="w-[100px] h-[20px] inline" />
+                  <img
+                    :src="review.rate"
+                    alt="star"
+                    class="w-[100px] h-[20px] inline"
+                  />
                 </h3>
               </div>
               <div>
@@ -74,31 +78,52 @@ import Star from "../../assets/images/Home/stars.png";
 
 const reviews = ref([
   {
-    userName: "John Doe",
+    userName: "Nesma Hossam",
     rate: Star,
-    comment: "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
-    date: "2023-03-24",
-    time: "12:30 PM",
+    comment: "Amazing flavors and a warm ambiance! Eager to come back!",
+    date: "2023-03-20",
+    time: "2:30 PM",
   },
   {
-    userName: "Jane Smith",
+    userName: "Mostafa Negm",
     rate: Star,
-    comment: "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
-    date: "2023-03-23",
-    time: "11:00 AM",
+    comment: "Exceptional food in a delightful setting! Counting the days until I'm back!",
+    date: "2023-04-23",
+    time: "1:00 pM",
   },
   {
-    userName: "Alice Johnson",
+    userName: "Mohamed Refaat",
     rate: Star,
-    comment: "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
-    date: "2023-03-22",
-    time: "10:15 AM",
+    comment: "Incredible meal and a cozy vibe! Looking forward to my next visit!",
+    date: "2023-03-02",
+    time: "11:15 AM",
   },
   {
-    userName: "Alice Johnson",
+    userName: "Rahma Mandoh",
     rate: Star,
-    comment: "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
-    date: "2023-03-22",
+    comment: "Yummy food and a great vibe! Already planning my return!",
+    date: "2023-03-12",
+    time: "4:15 pM",
+  },
+  {
+    userName: "Mohamed Desoky",
+    rate: Star,
+    comment: "Great flavors and a nice atmosphere! Eager to visit again soon!",
+    date: "2023-02-20",
+    time: "12:00 pM",
+  },
+  {
+    userName: "Nourhan Ibrahem",
+    rate: Star,
+    comment: "Tasty food in a warm atmosphere! Already excited for my next meal!",
+    date: "2023-03-14",
+    time: "9:15 pM",
+  },
+  {
+    userName: "Aya Bayoumi",
+    rate: Star,
+    comment: "Wonderful dishes in a charming vibe! Counting down the days until I'm back!",
+    date: "2023-03-19",
     time: "10:15 AM",
   },
 ]);
