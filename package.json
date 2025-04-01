@@ -19,9 +19,11 @@
     "@nuxt/ui": "^3.0.0",
     "@pinia/nuxt": "^0.10.1",
     "jsonwebtoken": "^9.0.2",
+    "leaflet": "^1.9.4",
     "nuxt": "^3.16.0",
     "pinia": "^3.0.1",
     "uicon": "^2.0.1",
+    "vue-leaflet": "^0.1.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {

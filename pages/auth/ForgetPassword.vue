@@ -2,6 +2,7 @@
 import { z } from "zod";
 definePageMeta({
   layout: "auth",
+  name : "Forget Password"
 });
 
 // Get router
