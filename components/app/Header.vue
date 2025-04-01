@@ -30,7 +30,7 @@ const items =([
 <template>
   <header
     v-if="!isMenuOpen"
-    class="bg-primary text-playfair text-xl text-amber-50 fixed top-0 left-0 right-0 z-1 py-4"
+    class="bg-primary text-playfair text-xl text-amber-50 fixed top-0 left-0 right-0 z-4 py-4"
   >
     <UContainer class="flex justify-between items-center">
       <div>
