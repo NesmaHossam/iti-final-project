@@ -1,3 +1,9 @@
+<script setup>
+  definePageMeta({
+    name : "Our Story"
+  })
+</script>
+
 <template>
   <div>
     <StoryHeader/>
