@@ -1,8 +1,11 @@
 <script setup>
 const auth = useAuth();
 const isMenuOpen = ref(false);
-const user = useUserStore()
-const userName = user.userObj.user.userName
+const token = useCookie("token")
+if(token) {
+  // const user = useUserStore()
+  // const userName = user.userObj.user.userName
+}
 // const userId = user.userObj.user.id
 // console.log(userId);
 
@@ -73,7 +76,7 @@ const items =([
             >
               <UButton
                 size="xl"
-                :label= "userName"
+                :label= "userName || 'User Name'"
                 icon="i-lucide-user"
                 variant="outline"
                 class="text-white cursor-pointer"
