@@ -1,16 +1,15 @@
 <script setup>
 const auth = useAuth();
 const isMenuOpen = ref(false);
-const token = useCookie("token")
-if(token) {
+const token = useCookie("token");
+if (token) {
   // const user = useUserStore()
   // const userName = user.userObj.user.userName
 }
 // const userId = user.userObj.user.id
 // console.log(userId);
 
-
-const items =([
+const items = [
   {
     label: "Profile",
     icon: "i-lucide-user",
@@ -24,7 +23,7 @@ const items =([
       auth.logout();
     },
   },
-]);
+];
 </script>
 
 <template>
@@ -35,7 +34,7 @@ const items =([
     <UContainer class="flex justify-between items-center">
       <div>
         <nuxt-link to="/">
-          <img src="../../assets/images/Logo.png" alt="logo image">
+          <img src="../../assets/images/Logo.png" alt="logo image" />
         </nuxt-link>
       </div>
 
@@ -76,13 +75,12 @@ const items =([
             >
               <UButton
                 size="xl"
-                :label= "userName || 'User Name'"
+                :label="userName || 'User Name'"
                 icon="i-lucide-user"
                 variant="outline"
                 class="text-white cursor-pointer"
               />
             </UDropdownMenu>
-          <NuxtLink to="/user/Cart"><UIcon name="i-heroicons-shopping-cart" class="w-8 h-8 ms-4" /></NuxtLink>  
           </template>
 
           <template #unAuth>
@@ -121,7 +119,7 @@ const items =([
         src="../../assets/images/Logo.png"
         alt="logo image"
         class="w-[60%] md:w-[100%] max-w-[150px] mb-6"
-      >
+      />
 
       <nuxt-link to="/" class="py-4 text-xl" @click="isMenuOpen = false"
         >Home</nuxt-link
