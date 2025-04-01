@@ -34,7 +34,7 @@ const reservations = ref([
   </div>
 
   <ProfileWrapper
-    v-for="(reservation ,index) in reservations"
+    v-for="(reservation) in reservations"
     :key="reservation.id"
     class="flex flex-col rounded-lg mb-4"
   >
@@ -88,12 +88,12 @@ const reservations = ref([
       }"
     >
       <UButton
-        @click="reservation.showModal = true"
+        v-if="reservation.status === 'Pending'"
+        class="bg-primary text-white px-4 py-2 mt-5 rounded cursor-pointer mx-auto block hover:bg-primary"
         label="Open"
         color="neutral"
         variant="subtle"
-        v-if="reservation.status === 'Pending'"
-        class="bg-primary text-white px-4 py-2 mt-5 rounded cursor-pointer mx-auto block hover:bg-primary"
+        @click="reservation.showModal = true"
       >
         Cancel Reservation
       </UButton>
