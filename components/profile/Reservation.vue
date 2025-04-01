@@ -43,7 +43,7 @@ const reservations = ref([
     </h2>
     <h4 class="text-center my-2">Guest Name</h4>
     <h3 class="text-center font-bold text-lg md:text-xl">
-      {{ reservation.userName }}
+      {{ reservation.userName || "Unknown Name" }}
     </h3>
     <div class="my-4 w-[80%]">
       <div class="flex justify-between items-center">
@@ -54,29 +54,29 @@ const reservations = ref([
               ? 'text-red-500 font-bold md:text-lg'
               : 'text-green-500 font-bold md:text-lg'
           "
-          >{{ reservation.status }}</span
+          >{{ reservation.status || "Unknown Status" }}</span
         >
       </div>
 
       <div class="flex justify-between items-center">
         <h2 class="font-bold md:text-lg">Reservation Date:</h2>
-        <span class="md:text-lg">{{ reservation.reservationDate }}</span>
+        <span class="md:text-lg">{{ reservation.reservationDate || "Unknown Date" }}</span>
       </div>
       <div class="flex justify-between items-center">
         <h2 class="font-bold md:text-lg">Meal Type:</h2>
-        <span class="md:text-lg">{{ reservation.mealType }}</span>
+        <span class="md:text-lg">{{ reservation.mealType || "Unknown Type" }}</span>
       </div>
       <div class="flex justify-between items-center">
         <h2 class="font-bold md:text-lg">Reservation Time:</h2>
-        <span class="md:text-lg">{{ reservation.reservationTime }}</span>
+        <span class="md:text-lg">{{ reservation.reservationTime || "Unknown Time" }}</span>
       </div>
       <div class="flex justify-between items-center">
         <h2 class="font-bold md:text-lg">Table Setting:</h2>
-        <span class="md:text-lg">{{ reservation.tableSetting }}</span>
+        <span class="md:text-lg">{{ reservation.tableSetting || "Unknown Setting" }}</span>
       </div>
       <div class="flex justify-between items-center">
         <h2 class="font-bold md:text-lg">Table For:</h2>
-        <span class="md:text-lg">{{ reservation.tableFor }}</span>
+        <span class="md:text-lg">{{ reservation.tableFor || "Unknown For" }}</span>
       </div>
     </div>
 

@@ -79,14 +79,13 @@ const items = ref<DropdownMenuItem[]>([
               }"
             >
               <UButton
-                size="xl"
-                label="UserName"
+                
+                label="userName"
                 icon="i-lucide-user"
                 variant="outline"
-                class="bg-white text-primary cursor-pointer hover:bg-white"
+                class="text-white  cursor-pointer "
               />
             </UDropdownMenu>
-          <NuxtLink to="/user/Cart"><UIcon name="i-heroicons-shopping-cart" class="w-8 h-8  ml-2" /></NuxtLink>  
           </template>
           <template #unAuth>
             <nuxt-link
