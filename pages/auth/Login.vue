@@ -3,6 +3,7 @@ import { z } from "zod";
 
 definePageMeta({
   layout: "auth",
+  name : "Login"
 });
 // state
 const formState = reactive({

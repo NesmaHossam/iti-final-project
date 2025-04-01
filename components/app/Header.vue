@@ -1,20 +1,16 @@
-<script setup lang="ts">
-import { ref } from "vue";
+<script setup>
 const auth = useAuth();
 const isMenuOpen = ref(false);
-// const user = useUserStore()
+const token = useCookie("token")
+if(token) {
+  // const user = useUserStore()
+  // const userName = user.userObj.user.userName
+}
 // const userId = user.userObj.user.id
 // console.log(userId);
 
-//dropdown menu
-interface DropdownMenuItem {
-  label: string;
-  icon: string;
-  to?: string;
-  onSelect?: () => void;
-}
 
-const items = ref<DropdownMenuItem[]>([
+const items =([
   {
     label: "Profile",
     icon: "i-lucide-user",
@@ -34,22 +30,22 @@ const items = ref<DropdownMenuItem[]>([
 <template>
   <header
     v-if="!isMenuOpen"
-    class="bg-primary text-playfair text-xl text-amber-50 fixed top-0 left-0 right-0 z-1 py-4"
+    class="bg-primary text-playfair text-xl text-amber-50 fixed top-0 left-0 right-0 z-4 py-4"
   >
     <UContainer class="flex justify-between items-center">
       <div>
         <nuxt-link to="/">
-          <img src="../../assets/images/Logo.png" alt="logo image" />
+          <img src="../../assets/images/Logo.png" alt="logo image">
         </nuxt-link>
       </div>
 
-      <div class="hidden md:flex gap-[40px] nav">
+      <div class="hidden lg:flex gap-[40px] nav">
         <nuxt-link to="/" class="navigate relative">Home</nuxt-link>
         <nuxt-link to="/user/Tables/BookTable" class="navigate relative"
           >Reservation</nuxt-link
         >
         <nuxt-link to="/user/Menu" class="navigate relative">Menu</nuxt-link>
-        <nuxt-link to="/user/AboutUs" class="navigate relative"
+        <nuxt-link to="/user/OurStory" class="navigate relative"
           >Our Story</nuxt-link
         >
         <nuxt-link to="/user/ContactUs" class="navigate relative"
@@ -57,7 +53,7 @@ const items = ref<DropdownMenuItem[]>([
         >
       </div>
 
-      <div class="hidden md:block">
+      <div class="hidden lg:block">
         <appAuthChecker>
           <template #auth>
             <!-- <nuxt-link
@@ -79,14 +75,16 @@ const items = ref<DropdownMenuItem[]>([
               }"
             >
               <UButton
-                
-                label="userName"
+                size="xl"
+                :label= "userName || 'User Name'"
                 icon="i-lucide-user"
                 variant="outline"
-                class="text-white  cursor-pointer "
+                class="text-white cursor-pointer"
               />
             </UDropdownMenu>
+          <NuxtLink to="/user/Cart"><UIcon name="i-heroicons-shopping-cart" class="w-8 h-8 ms-4" /></NuxtLink>  
           </template>
+
           <template #unAuth>
             <nuxt-link
               to="/auth/Login"
@@ -99,7 +97,7 @@ const items = ref<DropdownMenuItem[]>([
       </div>
 
       <button
-        class="md:hidden focus:outline-none"
+        class="block lg:hidden focus:outline-none"
         @click="isMenuOpen = !isMenuOpen"
       >
         <span class="text-3xl">&#9776;</span>
@@ -109,7 +107,7 @@ const items = ref<DropdownMenuItem[]>([
 
   <div
     v-if="isMenuOpen"
-    class="fixed top-0 left-0 h-screen w-[70%] bg-[#233866] text-white z-20"
+    class="fixed top-0 left-0 h-screen w-[70%] bg-primary text-white z-20"
   >
     <UContainer class="flex flex-col p-5 h-full">
       <button
@@ -123,7 +121,7 @@ const items = ref<DropdownMenuItem[]>([
         src="../../assets/images/Logo.png"
         alt="logo image"
         class="w-[60%] md:w-[100%] max-w-[150px] mb-6"
-      />
+      >
 
       <nuxt-link to="/" class="py-4 text-xl" @click="isMenuOpen = false"
         >Home</nuxt-link
@@ -141,7 +139,7 @@ const items = ref<DropdownMenuItem[]>([
         >Menu</nuxt-link
       >
       <nuxt-link
-        to="/user/AboutUs"
+        to="/user/OurStory"
         class="py-4 text-2xl"
         @click="isMenuOpen = false"
         >Our Story</nuxt-link
@@ -151,6 +149,12 @@ const items = ref<DropdownMenuItem[]>([
         class="py-4 text-2xl"
         @click="isMenuOpen = false"
         >Contact Us</nuxt-link
+      >
+      <nuxt-link
+        to="/user/Profile"
+        class="py-4 text-2xl"
+        @click="isMenuOpen = false"
+        >Profile</nuxt-link
       >
 
       <div class="mt-auto w-full">

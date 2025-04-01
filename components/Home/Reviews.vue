@@ -11,7 +11,7 @@
         </h1>
       </div>
 
-      <div class="relative mt-8 overflow-hidden">
+      <div class="relative mt-8 overflow-hidden w-[100%]">
         <div
           class="flex transition-transform duration-500 ease-in-out gap-5"
           :style="{

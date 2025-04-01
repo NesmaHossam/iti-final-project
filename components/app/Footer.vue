@@ -20,7 +20,7 @@
           <nuxt-link to="/user/Menu">Menu</nuxt-link>
         </div>
         <div class="flex flex-col gap-2 lg:gap-3">
-          <nuxt-link to="/user/AboutUs">Our Story</nuxt-link>
+          <nuxt-link to="/user/OurStory">Our Story</nuxt-link>
           <nuxt-link to="/user/ContactUs">Contact Us</nuxt-link>
         </div>
       </div>

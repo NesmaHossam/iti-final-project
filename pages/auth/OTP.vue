@@ -3,6 +3,7 @@ import { z } from "zod";
 
 definePageMeta({
   layout: "auth",
+  name : "OTP"
 });
 
 // State

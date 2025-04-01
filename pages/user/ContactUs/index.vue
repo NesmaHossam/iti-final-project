@@ -1,3 +1,13 @@
+<script setup>
+  definePageMeta({
+    name : "Contact Us"
+  })
+</script>
+
 <template>
-    <h1>Contact</h1>
+    <div>
+        <ContactHeader/>
+        <ContactFirstSection/>
+        <ContactSecondSection/>
+    </div>
 </template>
