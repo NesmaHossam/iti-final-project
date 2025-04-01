@@ -1,3 +1,14 @@
+<script setup>
+definePageMeta({
+    name : "Menu"
+})
+</script>
+
 <template>
-    <h1>Menu</h1>
+    <div>
+        <MenuHeader/>
+        <div class="flex gap-8">
+
+        </div>
+    </div>
 </template>
