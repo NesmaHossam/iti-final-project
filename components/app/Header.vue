@@ -34,13 +34,13 @@ const items = [
     <UContainer class="flex justify-between items-center">
       <div>
         <nuxt-link to="/">
-          <img src="../../assets/images/Logo.png" alt="logo image" />
+          <img src="../../assets/images/Logo.png" alt="logo image" class="w-35" />
         </nuxt-link>
       </div>
 
       <div class="hidden lg:flex gap-[40px] nav">
         <nuxt-link to="/" class="navigate relative">Home</nuxt-link>
-        <nuxt-link to="/user/Tables/BookTable" class="navigate relative"
+        <nuxt-link to="/user/Tables" class="navigate relative"
           >Reservation</nuxt-link
         >
         <nuxt-link to="/user/Menu" class="navigate relative">Menu</nuxt-link>
@@ -125,7 +125,7 @@ const items = [
         >Home</nuxt-link
       >
       <nuxt-link
-        to="/user/Tables/BookTable"
+        to="/user/Tables"
         class="py-4 text-2xl"
         @click="isMenuOpen = false"
         >Reservation</nuxt-link

@@ -1,3 +1,15 @@
+<script setup>
+definePageMeta({
+  layout: "reservation",
+  
+});
+</script>
+
 <template>
-    <h1>View Tables</h1>
+  <!-- <ReservationMealType/> -->
+  <!-- <ReservationTotalAttendance/> -->
+   <!-- <ReservationDateAndTime/> -->
+    <ReservationInformation/>
+     <!-- <ReservationPayments/> -->
+
 </template>
