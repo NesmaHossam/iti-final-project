@@ -9,7 +9,7 @@ definePageMeta({
   <!-- <ReservationMealType/> -->
   <!-- <ReservationTotalAttendance/> -->
    <!-- <ReservationDateAndTime/> -->
-    <ReservationInformation/>
-     <!-- <ReservationPayments/> -->
+    <!-- <ReservationInformation/> -->
+     <ReservationPayments/>
 
 </template>
