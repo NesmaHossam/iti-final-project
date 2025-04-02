@@ -1,19 +1,26 @@
 <template>
-  <div>
+  <div >
     <UContainer
       class="py-8 flex flex-col md:flex-row justify-between gap-8 md:items-center items-start"
     >
       <div>
         <h2 class="lg:text-4xl md:text-3xl text-xl text-primary mb-6">
-          A Taste of <br>
-          Tradition, Made with Love
+          Dinner, <br>
+          Events or Party?
         </h2>
         <p class="text-sm md:text-lg lg:text-xl text-primary">
-          Our menu is inspired by rich culinary traditions, offering a variety <br>
-          of dishes crafted with passion and care. Whether you're in the mood <br>
-          for a comforting classic or an exciting new flavor, we take pride in <br>
-          serving meals that bring people together.
+          Planning a special night out, a celebration, or a <br>
+          private event? Whether it's a cozy dinner, a  
+          birthday <br> party, or a corporate gathering, we’ve 
+          got the perfect <br> space  for you. Book your table 
+          now and let us make your occasion unforgettable!
         </p>
+        <UButton
+            to="/user/tables"
+            class="bg-primary text-amber-50 px-6 py-3 rounded-lg duration-300 hover:border-primary hover:border hover:text-primary flex items-center justify-center gap-2  w-auto mt-4"
+          >
+            Book Your Table Now!
+          </UButton>
       </div>
 
       <div class="flex justify-center order-first md:order-0">

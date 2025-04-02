@@ -10,5 +10,6 @@
     <StoryFirstSection/>
     <StorySecondSection/>
     <StoryThirdSection/>
+    <StoryFourthSection/>
   </div>
 </template>
