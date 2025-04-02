@@ -22,7 +22,7 @@
         </p>
 
         <NuxtLink
-          to="/user/AboutUs"
+          to="/user/OurStory"
           class="text-primary text-lg md:text-xl mt-2 md:mt-4 mx-auto md:mx-0 underline underline-offset-8"
         >
           View More Details About Us
