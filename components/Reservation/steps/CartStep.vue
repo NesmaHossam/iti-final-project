@@ -154,7 +154,7 @@
             >
               <div class="flex flex-col h-full">
                 <div class="relative h-48">
-                  <img :src="item.image" :alt="item.title" class="h-full w-full object-cover">
+                  <img :src="item.image" :alt="item.title" class="h-full w-full object-contain">
                   <div class="absolute top-0 right-0 m-2 px-3 py-1 rounded-full text-xs font-semibold bg-primary/80 text-white">
                     ${{ item.price.toFixed(2) }}
                   </div>
@@ -200,7 +200,7 @@
         <div class="border-t border-gray-200 bg-white p-4 sticky bottom-0 shadow-md">
           <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div v-if="cartItems.length > 0" class="flex items-center">
-              <div class="bg-primary/10 text-primary rounded-full px-3 py-1 mr-3 font-medium">
+              <div class="bg-primary/10 text-primary rounded-full px-3 py-1 mr-3 font-medium" >
                 {{ getTotalItems() }} items
               </div>
               <div class="font-bold text-lg">
@@ -285,14 +285,6 @@ function disablePreOrder() {
     items: [],
     preOrder: false 
   });
-  
-  // Auto-trigger next step transition after delay
-  // In a real app, you would trigger the next step in your parent component
-  // This is just visual indication for this demo
-  setTimeout(() => {
-    // This would typically be handled by your parent component
-    // which would detect the preOrder: false value and advance
-  }, 500);
 }
 
 // Reset pre-order option (return to initial choice)
@@ -465,6 +457,7 @@ function getTotalItems() {
     return total + item.quantity;
   }, 0);
 }
+
 </script>
 
 <style scoped>

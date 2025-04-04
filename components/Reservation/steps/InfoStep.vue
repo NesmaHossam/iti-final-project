@@ -38,6 +38,7 @@
           <label class="text-gray-500 text-sm mb-1"> User Name </label>
           <UInput
             v-model="formDataLocal.name"
+            
             placeholder="User Name"
             @update:model-value="updateField('name', $event)"
           >

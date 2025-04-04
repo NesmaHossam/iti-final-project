@@ -34,9 +34,10 @@
       <div class="mt-6 flex flex-col gap-4">
         <div
           class="flex items-center cursor-pointer   backdrop-blur-md shadow-lg rounded-2xl  text-primary font-bold transform hover:-translate-y-1 transition duration-300 ease-in-out"
+          :class="{ 'border-2 border-primary': selectedMeal === 'breakfast' }"
           @click="selectMealType('breakfast')"
         >
-          <img src="/assets/images/Reservation/img1.png" class="w-30 p-2" />
+          <img src="/assets/images/Reservation/img1.png" class="w-30 p-2" >
           <div class="p-4 w-full">
             <h2>Breakfast</h2>
             <h3>08:00 AM - 11:30 AM</h3>
@@ -45,9 +46,10 @@
 
         <div
           class="flex items-center cursor-pointer   backdrop-blur-md shadow-lg rounded-2xl  text-primary font-bold transform hover:-translate-y-1 transition duration-300 ease-in-out"
+          :class="{ 'border-2 border-primary': selectedMeal === 'dinner' }"
           @click="selectMealType('dinner')"
         >
-          <img src="/assets/images/Reservation/img2.png" class="w-30 p-2" />
+          <img src="/assets/images/Reservation/img2.png" class="w-30 p-2">
           <div class="p-4 w-full">
             <h2 >Dinner</h2>
             <h3>12:00 PM - 12:00 AM</h3>
@@ -71,8 +73,11 @@ defineProps({
 });
 
 const emit = defineEmits(["update-data"]);
+const selectedMeal = ref(null);
+
 
 function selectMealType(type) {
+  selectedMeal.value = type;
   emit("update-data", "mealType", type);
 }
 </script>
