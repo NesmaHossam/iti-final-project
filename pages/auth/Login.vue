@@ -1,6 +1,5 @@
 <script setup>
 import { z } from "zod";
-
 definePageMeta({
   layout: "auth",
   name : "Login"

@@ -1,44 +1,178 @@
-<script setup lang="ts">
-import type { StepperItem } from '@nuxt/ui'
-
-const items = ref<StepperItem[]>([
-  {
-    title: 'Meal Type',
-    description: 'Choose your reservation type',
-    icon: 'i-lucide-utensils'
-  },
-  {
-    title: 'Total Attendance',
-    description: 'How many guests will be attending?',
-    icon: 'i-lucide-users',
-   
-  },
-  {
-    title: 'Date and Time',
-    description: 'Choose booking date and time',
-    icon: 'i-lucide-calendar'
-  },
-  {
-    title: 'Reservation Information',
-    description: 'Provide reservation details?',
-    icon: 'i-lucide-bookmark'
-  }
-
-  ,
-  {
-    title: 'Cart',
-    description: 'Cart check out and total cast',
-    icon: 'i-lucide-shopping-cart'
-  },
-  
-  {
-    title: 'Payment',
-    description: 'Confirm payment method and checkout',
-    icon: 'i-lucide-credit-card'
-  },
-])
-</script>
-
 <template>
-  <UStepper color="neutral" :items="items" class="w-full  mt-[12%]" />
-</template>
+     <RereservationLayout>
+           <!-- Custom Stepper -->
+           <template #steps>
+            <ol class="flex items-center w-full text-sm font-medium text-center text-gray-500 sm:text-base">
+            <li 
+                v-for="(step, index) in steps" 
+                :key="index"
+                class="flex md:w-full items-center" 
+                :class="index < steps.length - 1 ? 'sm:after:content-[\'\'] sm:after:w-full sm:after:h-1 sm:after:border-b sm:after:border-gray-200 sm:after:border-1 sm:after:mx-6 sm:after:inline-block' : ''"
+            >
+                <span class="flex items-center justify-center" :class="{'after:content-[\'>\'] after:mx-2 after:font-medium sm:after:hidden': index < steps.length - 1}">
+                <span 
+                    class="mr-2 flex items-center justify-center w-8 h-8 rounded-full shrink-0 border"
+                    :class="{
+                    'bg-primary text-white border-primary': currentStep === index,
+                    'bg-green-500 text-white border-green-500': currentStep > index,
+                    'bg-gray-100 text-gray-600 border-gray-300': currentStep < index
+                    }"
+                >
+                    <template v-if="currentStep > index">
+                    <!-- Checkmark icon -->
+                    <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+                    </svg>
+                    </template>
+                    <template v-else>
+                    {{ index + 1 }}
+                    </template>
+                </span>
+                <span 
+                    class="hidden sm:inline-flex sm:ml-2"
+                    :class="{
+                    'text-primary': currentStep === index,
+                    'text-green-500': currentStep > index,
+                    'text-gray-500': currentStep < index
+                    }"
+                >
+                    {{ step.title }}
+                </span>
+                </span>
+            </li>
+            </ol>
+        </template>
+    
+       <template #content>
+             <!-- Step Content -->
+        <div class=" bg-slate-200/10 backdrop-blur-md shadow-lg mb-8 md:mb-12 p-6 lg:p-12 overflow-hidden relative z-2 rounded-tl-[30%] rounded-br-[30%] border border-slate-100 w-full">
+            <div>
+            <component 
+            :is="steps[currentStep].component" 
+            :form-data="formData"
+            @update-data="updateFormData"
+            />
+            </div>
+    
+        <!-- Navigation Buttons -->
+        <div class="flex justify-between mb-4 me-8">
+            <button
+            v-if="currentStep > 0"
+            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 flex items-center"
+            @click="previousStep"
+            >
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Previous
+            </button>
+            
+            <div class="ml-auto">
+            <button
+                v-if="currentStep < steps.length - 1"
+                class="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                :disabled="!isStepValid"
+                @click="nextStep"
+            >
+                Next
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+            
+            <button
+                v-if="currentStep === steps.length - 1"
+                class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center"
+                @click="submitForm"
+            >
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                Submit Reservation
+            </button>
+            </div>
+        </div>
+    </div>
+    </template>
+     </RereservationLayout>
+  </template>
+  
+  <script setup>
+  import MealTypeStep from './steps/MealTypeStep.vue';
+  import DateStep from './steps/DateStep.vue';
+  import GuestsStep from './steps/GuestsStep.vue';
+  import InfoStep from './steps/InfoStep.vue';
+  import CartStep from './steps/CartStep.vue';
+  import PaymentStep from './steps/PaymentStep.vue';
+  import ReviewStep from './steps/ReviewStep.vue';
+  import RereservationLayout from '../../layouts/reservation';
+
+  definePageMeta({
+    layout : "reservation"
+  })
+  
+  const currentStep = ref(0);
+  const formData = ref({
+    mealType: null,
+    date: null,
+    time: null,
+    guests: 1,
+    info : {},
+    cart:[],
+    paymentMethod: null
+  });
+  
+  const steps = [
+    { title: 'Meal Type', component: MealTypeStep, required: ['mealType'] },
+    { title: 'Date', component: DateStep, required: ['date'] },
+    { title: 'Guests', component: GuestsStep, required: ['guests'] },
+    { title: 'User Info', component: InfoStep, required: ['info'] },
+    { title: 'Cart', component: CartStep, required: ['cart'] },
+    { title: 'Payment', component: PaymentStep, required: ['paymentMethod'] },
+    { title: 'Review', component: ReviewStep, required: [] }
+  ];
+  
+  const isStepValid = computed(() => {
+    const requiredFields = steps[currentStep.value].required;
+    return requiredFields.every(field => {
+      const value = formData.value[field];
+      return value !== null && value !== undefined && value !== '';
+    });
+  });
+  
+  function updateFormData(field, value) {
+    formData.value[field] = value;
+  }
+  
+  function nextStep() {
+    if (currentStep.value < steps.length - 1 && isStepValid.value) {
+      currentStep.value++;
+    }
+  }
+  
+  function previousStep() {
+    if (currentStep.value > 0) {
+      currentStep.value--;
+    }
+  }
+  
+  async function submitForm() {
+    try {
+      console.log('Submitting reservation data:', formData.value);
+      // Replace with your API call
+      // const response = await fetch('/api/reservations', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(formData.value)
+      // });
+      
+      // if (response.ok) {
+      //   alert('Reservation submitted successfully!');
+      // } else {
+      //   alert('Error submitting reservation');
+      // }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+  }
+  </script>

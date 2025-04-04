@@ -1,5 +1,6 @@
 <script setup>
 import { z } from "zod";
+const userData = useCookie("userData")
 // state
 const formState = reactive({
   userName: "",
@@ -57,6 +58,8 @@ async function UpdateProfile() {
     }
     console.log(formState);
     await useApi('/user/updateProfile',"PATCH",formState);
+    userData.value = {userName:formState.userName,phoneNumber:formState.phoneNumber }
+    console.log(userData);
     router.push("/user/profile");
   } catch (error) {
     console.error("Signup error:", error);
@@ -79,7 +82,7 @@ const goToProfile = () => {
         </div>
     <ProfileWrapper class="py-12">
   
-      <UForm :state="formState" :schema="schema" class="w-[80%] mx-auto" @submit="signUp">
+      <UForm :state="formState" :schema="schema" class="w-[80%] mx-auto" @submit="UpdateProfile">
       <div class="md:mb-4 mb-6">
         <p class="text-primary md:text-xl text-lg font-semibold">User Name :</p>
         <UFormGroup

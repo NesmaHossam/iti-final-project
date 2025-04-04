@@ -2,7 +2,8 @@ export const useAuth = () => {
   const router = useRouter();
   const token = useCookie("token");
   const refreshToken = useCookie("refreshToken");
-  const user = useUserStore();
+  const userData = useCookie("userData")
+  // const user = useUserStore();
 
   // sign up
   async function signup(data) {
@@ -21,8 +22,10 @@ export const useAuth = () => {
       const res = await useApi("/auth/signin", "POST", data);
       token.value = res.tokens.access_token;
       refreshToken.value = res.tokens.refresh_token;
-      user.setUserData(res)
+      userData.value = res.user
+      // user.setUserData(res)
       console.log(res);
+      console.log(userData);
       router.push("/");
       return res;
     } catch (error) {
@@ -71,6 +74,7 @@ export const useAuth = () => {
   function logout() {
     token.value = null;
     refreshToken.value = null;
+    userData.value = null;
     router.push("/auth/login")
   }
   
