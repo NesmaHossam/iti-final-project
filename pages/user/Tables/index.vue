@@ -1,7 +1,6 @@
 <script setup>
 definePageMeta({
-  layout: "reservation",
-  
+  name : "Reservation"
 });
 </script>
 
@@ -10,6 +9,6 @@ definePageMeta({
   <!-- <ReservationTotalAttendance/> -->
    <!-- <ReservationDateAndTime/> -->
     <!-- <ReservationInformation/> -->
-     <ReservationPayments/>
-
+     <!-- <ReservationPayments/> -->
+     <ReservationStepper/>
 </template>
