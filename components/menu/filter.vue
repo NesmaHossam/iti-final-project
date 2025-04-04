@@ -30,3 +30,27 @@
     </div>
   </div>
 </template>
+
+
+<!-- /////////////////////// -->
+
+
+<!-- <template>
+  <div class="bg-slate-200/10 backdrop-blur-md shadow-lg overflow-hidden rounded-tl-[30%] rounded-br-[30%] border border-slate-100 p-6 pt-8">
+    <h2 class="text-primary text-2xl font-bold">Filter</h2>
+    <div class="mt-6 flex flex-col gap-4">
+      <div v-for="category in categories" :key="category">
+        <input :id="category" type="checkbox" :value="category" v-model="selectedFilters" />
+        <label :for="category" class="ms-4 text-lg text-primary">{{ category }}</label>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { defineProps, defineEmits } from "vue";
+
+const categories = ["All", "Breakfast", "Dinner", "Dessert", "Drinks"];
+
+const selectedFilters = defineModel("selectedFilters");
+</script> -->
