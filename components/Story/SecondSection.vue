@@ -17,7 +17,7 @@
         </p>
         <UButton
             to="/user/tables"
-            class="bg-primary text-amber-50 px-6 py-3 rounded-lg duration-300 hover:border-primary hover:border hover:text-primary flex items-center justify-center gap-2  w-auto mt-4"
+            class="bg-primary text-amber-50 px-6 py-3 rounded-lg duration-300 hover:border-primary hover:border  flex items-center justify-center gap-2  w-auto mt-4"
           >
             Book Your Table Now!
           </UButton>

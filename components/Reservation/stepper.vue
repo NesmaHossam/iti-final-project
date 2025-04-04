@@ -55,10 +55,10 @@
             </div>
     
         <!-- Navigation Buttons -->
-        <div class="flex justify-between mb-4 me-8">
+        <div class="flex justify-between mb-4 me-9 mt-4">
             <button
             v-if="currentStep > 0"
-            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 flex items-center"
+            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 cursor-pointer flex items-center"
             @click="previousStep"
             >
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -67,10 +67,10 @@
             Previous
             </button>
             
-            <div class="ml-auto">
+            <div class="ml-auto ">
             <button
                 v-if="currentStep < steps.length - 1"
-                class="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                class="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
                 :disabled="!isStepValid"
                 @click="nextStep"
             >
@@ -82,10 +82,10 @@
             
             <button
                 v-if="currentStep === steps.length - 1"
-                class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center"
+                class="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary cursor-pointer flex items-center mr-5"
                 @click="submitForm"
             >
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                 </svg>
                 Submit Reservation

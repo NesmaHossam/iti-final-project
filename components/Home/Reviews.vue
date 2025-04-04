@@ -87,14 +87,16 @@ const reviews = ref([
   {
     userName: "Mostafa Negm",
     rate: Star,
-    comment: "Exceptional food in a delightful setting! Counting the days until I'm back!",
+    comment:
+      "Exceptional food in a delightful setting! Counting the days until I'm back!",
     date: "2023-04-23",
     time: "1:00 pM",
   },
   {
     userName: "Mohamed Refaat",
     rate: Star,
-    comment: "Incredible meal and a cozy vibe! Looking forward to my next visit!",
+    comment:
+      "Incredible meal and a cozy vibe! Looking forward to my next visit!",
     date: "2023-03-02",
     time: "11:15 AM",
   },
@@ -115,14 +117,16 @@ const reviews = ref([
   {
     userName: "Nourhan Ibrahem",
     rate: Star,
-    comment: "Tasty food in a warm atmosphere! Already excited for my next meal!",
+    comment:
+      "Tasty food in a warm atmosphere! Already excited for my next meal!",
     date: "2023-03-14",
     time: "9:15 pM",
   },
   {
     userName: "Aya Bayoumi",
     rate: Star,
-    comment: "Wonderful dishes in a charming vibe! Counting down the days until I'm back!",
+    comment:
+      "Wonderful dishes in a charming vibe! Counting down the days until I'm back!",
     date: "2023-03-19",
     time: "10:15 AM",
   },
