@@ -39,6 +39,7 @@ export const useAuth = () => {
       const res = await useApi("/auth/loginWithGmail", "POST", { idToken }, headers);
       token.value = res.tokens.access_token;
       refreshToken.value = res.tokens.refresh_token;
+      userData.value = res.user
       router.push("/");
       return res;
     } catch (error) {
