@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   colorMode: {
     preference: "light",
   },
+  
   css: ["~/assets/css/main.css", "@mdi/font/css/materialdesignicons.css"],
   ui: {
     theme: {
