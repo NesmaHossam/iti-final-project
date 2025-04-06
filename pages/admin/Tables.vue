@@ -1,9 +1,10 @@
 <script setup>
-    definePageMeta({
-        layout : "admin"
-    })
+definePageMeta({
+  layout: "admin",
+  name: "Tables Reservation",
+});
 </script>
 
 <template>
-    <h1>Tables</h1>
+  <AdminTablesReservations />
 </template>
