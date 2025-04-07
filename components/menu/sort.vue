@@ -1,71 +1,72 @@
 <template>
-    <div class="bg-slate-200/10 backdrop-blur-md shadow-lg  overflow-hidden rounded-tl-[30%] rounded-br-[30%] border border-slate-100 p-6 pt-8">
-        <h2 class="text-primary text-2xl font-bold">Sorting</h2>
-        <div class="mt-6 flex flex-col gap-4">
-            <div class="mb-6">
-                <h4 class="text-xl font-semibold mb-2 text-primary">Alphabetical</h4>
-                <div>
-                    <input id="alphaUP" type="radio" name="alpha">
-                    <label for="alphaUP" class="ms-4 text-lg text-primary">A to Z</label>
-                </div>
-                <div>
-                    <input id="alphaDown" type="radio" name="alpha">
-                    <label for="alphaDown" class="ms-4 text-lg text-primary">Z to A</label>
-                </div>
-            </div>
-            <div class="mb-6">
-                <h4 class="text-xl font-semibold mb-2 text-primary">Pricing</h4>
-                <div>
-                    <input id="priceUP" type="radio" name="price">
-                    <label for="priceUP" class="ms-4 text-lg text-primary">Lowest to Highest</label>
-                </div>
-                <div>
-                    <input id="priceDown" type="radio" name="price">
-                    <label for="priceDown" class="ms-4 text-lg text-primary"> Highest to Lowest</label>
-                </div>
-            </div>
+  <div class="bg-slate-200/10 backdrop-blur-md shadow-lg rounded-xl border border-slate-100 p-6">
+    <h2 class="text-primary text-2xl font-bold mb-6">Sort By</h2>
+    <div class="space-y-4">
+      <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">Name</h3>
+        <div class="space-y-2">
+          <label class="flex items-center space-x-3 cursor-pointer">
+            <input
+              type="radio"
+              name="sort"
+              value="asc"
+              :checked="modelValue === 'asc'"
+              class="text-primary focus:ring-primary"
+              @change="$emit('update:modelValue', 'asc')"
+            >
+            <span>A to Z</span>
+          </label>
+          <label class="flex items-center space-x-3 cursor-pointer">
+            <input
+              type="radio"
+              name="sort"
+              value="desc"
+              :checked="modelValue === 'desc'"
+              class="text-primary focus:ring-primary"
+              @change="$emit('update:modelValue', 'desc')"
+            >
+            <span>Z to A</span>
+          </label>
         </div>
-    </div>
-</template>
-<!-- ///////////////////////////////// -->
-
-
-<!-- <template>
-    <div class="bg-slate-200/10 backdrop-blur-md shadow-lg overflow-hidden rounded-tl-[30%] rounded-br-[30%] border border-slate-100 p-6 pt-8">
-      <h2 class="text-primary text-2xl font-bold">Sorting</h2>
-      <div class="mt-6 flex flex-col gap-4">
-        <div class="mb-6">
-          <h4 class="text-xl font-semibold mb-2 text-primary">Alphabetical</h4>
-          <div>
-            <input id="alphaUP" type="radio" name="alpha" value="asc" v-model="sortOrder" />
-            <label for="alphaUP" class="ms-4 text-lg text-primary">A to Z</label>
-          </div>
-          <div>
-            <input id="alphaDown" type="radio" name="alpha" value="desc" v-model="sortOrder" />
-            <label for="alphaDown" class="ms-4 text-lg text-primary">Z to A</label>
-          </div>
-        </div>
-        <div class="mb-6">
-          <h4 class="text-xl font-semibold mb-2 text-primary">Pricing</h4>
-          <div>
-            <input id="priceUP" type="radio" name="price" value="low-high" v-model="sortOrder" />
-            <label for="priceUP" class="ms-4 text-lg text-primary">Lowest to Highest</label>
-          </div>
-          <div>
-            <input id="priceDown" type="radio" name="price" value="high-low" v-model="sortOrder" />
-            <label for="priceDown" class="ms-4 text-lg text-primary">Highest to Lowest</label>
-          </div>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">Price</h3>
+        <div class="space-y-2">
+          <label class="flex items-center space-x-3 cursor-pointer">
+            <input
+              type="radio"
+              name="sort"
+              value="low-high"
+              :checked="modelValue === 'low-high'"
+              class="text-primary focus:ring-primary"
+              @change="$emit('update:modelValue', 'low-high')"
+            >
+            <span>Low to High</span>
+          </label>
+          <label class="flex items-center space-x-3 cursor-pointer">
+            <input
+              type="radio"
+              name="sort"
+              value="high-low"
+              :checked="modelValue === 'high-low'"
+              class="text-primary focus:ring-primary"
+              @change="$emit('update:modelValue', 'high-low')"
+            >
+            <span>High to Low</span>
+          </label>
         </div>
       </div>
     </div>
-  </template>
-  
-  <script setup>
-  import { defineProps, defineEmits } from "vue";
-  
-  const props = defineProps(["sortOrder"]);
-  const emit = defineEmits(["updateSort"]);
-  
-  const sortOrder = defineModel("sortOrder");
-  </script>
-   -->
+  </div>
+</template>
+
+<script setup>
+defineProps({
+  modelValue: {
+    type: String,
+    default: ''
+  }
+});
+
+defineEmits(['update:modelValue']);
+</script>

@@ -1,3 +1,5 @@
+import { defineStore } from 'pinia'
+
 export const useUserStore = defineStore('user', () => {
   const userEmail = ref("")
   const userObj = ref(null)

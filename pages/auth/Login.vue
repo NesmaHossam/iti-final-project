@@ -51,11 +51,12 @@ async function login() {
     await auth.login(formState);
   } catch (error) {
     console.log(error.message);
-    if (error.message.includes("Invalid credentials")) {
-      errorMsg.value = "Invalid username or password. Please try again.";
-    } else {
-      errorMsg.value = "An unexpected error occurred. Please try again.";
-    }
+    // if (error.message.includes("Invalid credentials")) {
+    //   errorMsg.value = "Invalid username or password. Please try again.";
+    // } else {
+    //   errorMsg.value = "An unexpected error occurred. Please try again.";
+    // }
+    errorMsg.value = error.message
     console.log("Login error:", error);
   } finally {
     isLoading.value = false;
