@@ -1,9 +1,13 @@
 <template>
   <div
-    class="sidebar bg-primary text-white fixed h-[100vh] w-[90px] hover:w-[30%] overflow-hidden z-10"
+    class="sidebar bg-primary text-white fixed h-[100vh] md:w-[100px] w-[80px] hover:w-[30%] overflow-hidden z-10"
   >
     <div class="logo text-center py-[30px] px-0">
-      <img src="../../assets/images/LOGO.png" alt="logo" class="w-20 md:w-35 mx-auto" />
+      <img
+        src="../../assets/images/LOGO.png"
+        alt="logo"
+        class="w-20 md:w-35 mx-auto"
+      />
     </div>
     <ul class="second-nav list-none p-0 m-0">
       <li
@@ -197,7 +201,6 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 const auth = useAuth();
 </script>
 

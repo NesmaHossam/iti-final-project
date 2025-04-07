@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { TableColumn, DropdownMenuItem } from "@nuxt/ui";
 
-
 const toast = useToast();
 
 interface User {
@@ -109,10 +108,10 @@ const columnFilters = ref([
 </script>
 
 <template>
-  <div class="flex flex-col gap-8 w-full my-6 ">
+  <div class="flex flex-col gap-8 w-full my-8 mx-[20%] lg:mx-[10%]"">
     <div class="flex justify-between items-center">
       <div class="flex justify-between flex-col">
-        <h2 class="text-primary text-2xl font-bold">Users Information</h2>
+        <h2 class="text-primary text-xl md:text-3xl font-bold">Users Information</h2>
         <p>{{ data.length }} users</p>
       </div>
 

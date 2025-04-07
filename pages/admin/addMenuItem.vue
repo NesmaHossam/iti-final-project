@@ -1,10 +1,12 @@
 <script setup>
 definePageMeta({
   layout: "admin",
-  name: "Users Info",
+  name: "Add Menu Item",
 });
 </script>
 
 <template>
-<AdminUsersInfo/>
+  
+    <AdminNewItem />
+  
 </template>

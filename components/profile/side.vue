@@ -15,8 +15,13 @@ watchEffect(() => {
   activeIcon.value = currentItem ? currentItem.title : "";
 });
 
-const routeToPage = ( route) => {
-  router.push(route);
+// const routeToPage = ( route) => {
+//   router.push(route);
+// };
+const routeToPage = (path) => {
+  router.push(path).catch((err) => {
+    console.error("Navigation error:", err);
+  });
 };
 </script>
 
