@@ -1,41 +1,52 @@
-<script setup></script>
-
 <template>
-  <div class="my-6">
-    <div class="h-[180px]">
+  <div class="my-6 recipe-card">
+    <div class="h-[180px] overflow-hidden rounded-t-lg">
       <img
-        src="../../assets/images/Home/Menu1.png"
-        alt="card image"
-        class="relative z-2"
-      />
+        :src="item.image || '/images/Home/Menu1.png'"
+        :alt="item.name"
+        class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+        loading="lazy"
+      >
     </div>
-    <div
-      class="bg-slate-200/10 backdrop-blur-md shadow-lg rounded-tl-[30%] rounded-br-[30%] border border-slate-100 py-10 px-6"
-    >
+    <div class="bg-slate-200/10 backdrop-blur-md shadow-lg rounded-b-lg border border-slate-100 py-6 px-6">
       <div>
-        <div class="flex justify-between items-center mt-2">
-          <h2 class="text-2xl text-primary my-4 font-bold">Meal Name</h2>
-          <span class="font-bold text-primary text-xl">150$</span>
+        <div class="flex justify-between items-center">
+          <h2 class="text-2xl text-primary font-bold">{{ item.name }}</h2>
+          <span class="font-bold text-primary text-xl">${{ item.price.toFixed(2) }}</span>
         </div>
-        <p class="text-[#777] lh-lg">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse repellat
-          <br />
+        <p class="text-[#777] mt-2 line-clamp-2">
+          {{ item.description || "No description available" }}
         </p>
       </div>
-      <div>
-        <!-- <nuxt-link to="/user/menu" class=" underline underline-offset-2 text-primary">View More</nuxt-link> -->
-        <UButton
-          class="bg-primary cursor-pointer text-amber-50 px-6 py-3 rounded-lg duration-300 border-primary hover:bg-white hover:border hover:text-primary flex items-center justify-center w-full mt-3"
-        >
-
-
-
-        <!-- :to="`/Menu/${Menu.id}`" -->
-          <nuxt-link > View More </nuxt-link>
-        
-        
-        </UButton>
-      </div>
+      <UButton
+        class="bg-primary text-white hover:bg-primary/90 mt-4 w-full"
+        :to="`/menu/${item.id || item._id}`"
+        tag="nuxt-link"
+      >
+        View More
+      </UButton>
     </div>
   </div>
 </template>
+
+<script setup>
+defineProps({
+  item: {
+    type: Object,
+    required: true,
+    validator: (item) => {
+      return item.name && typeof item.price === 'number'
+    }
+  }
+});
+</script>
+
+<style scoped>
+.recipe-card {
+  transition: all 0.3s ease;
+}
+.recipe-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+</style>

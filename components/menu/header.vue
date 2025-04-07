@@ -1,13 +1,14 @@
 <template>
   <div class="bg-primary">
-    <UContainer class="py-8">
-      <h2 class="lg:text-4xl md:text-3xl text-xl text-white mb-6">
-        Zayton’s Menu
-      </h2>
-      <p class="text-sm md:text-lg lg:text-xl text-white">
-        Experience the rich flavors of authentic global cuisine – crafted with
-        tradition, served with passion!
-      </p>
+    <UContainer class="py-12">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+          Zayton's Menu
+        </h1>
+        <p class="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
+          Experience the rich flavors of authentic global cuisine – crafted with tradition, served with passion!
+        </p>
+      </div>
     </UContainer>
   </div>
 </template>
