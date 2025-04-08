@@ -1,8 +1,8 @@
 <script setup>
 definePageMeta({
-  layout : "profile",
-  name : "Reservation"
-})
+  layout: "profile",
+  name: "Reservation History",
+});
 </script>
 
 <template>

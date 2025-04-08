@@ -6,5 +6,5 @@ definePageMeta({
 </script>
 
 <template>
-  <AdminUsersInfo />
+<AdminUsersInfo/>
 </template>
