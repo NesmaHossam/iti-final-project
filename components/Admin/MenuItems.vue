@@ -1,6 +1,8 @@
 <script setup>
 import img1 from "../../assets/images/Home/Menu1.png";
 const open = ref(false);
+// items select
+const items = ref(["Dinner", "Lunch", "Breakfast"]);
 
 const page = ref(1);
 const itemsPerPage = 2;
@@ -87,12 +89,60 @@ const paginatedData = computed(() => {
           placeholder="Search..."
           v-model="globalFilter"
         />
-
+        <!-- 
         <nuxt-link to="/admin/addMenuItem"
           ><UButton class="md:text-xl text-sm cursor-pointer"
             >Add New Item to Menu</UButton
           ></nuxt-link
+        > -->
+
+        <UModal
+          title="Add New Item to Menu"
+          :close="{
+            color: 'primary',
+            variant: 'outline',
+            class: 'rounded-full cursor-pointer ',
+          }"
         >
+          <UButton
+            label="Add New Item"
+            color="neutral"
+            variant="subtle"
+            class="bg-primary text-white hover:text-primary cursor-pointer flex items-center justify-center"
+          />
+
+          <template #body>
+            <Placeholder class="h-48" />
+            <div>
+              <UForm>
+                <div>
+                  <h2 class="text-primary text-3xl font-bold">New Item</h2>
+                  <p class="text-gray-500 text-xl">Add new items to menu!</p>
+                </div>
+
+                <div class="flex flex-col gap-2 my-6">
+                  <UInput placeholder="Item Name" type="text" />
+                  <UInputMenu placeholder="Item Type" :items="items" />
+
+                  <UInput placeholder="Item Price" type="number" />
+                  <UInput type="file" placeholder="Item Image" />
+                  <UTextarea placeholder="Item Description..." />
+                </div>
+
+                <div class="flex flex-col md:flex-row justify-between gap-5">
+                  <UButton
+                    class="md:text-xl text-sm px-16 cursor-pointer bg-transparent text-primary border border-primary flex items-center justify-center hover:text-white"
+                    >Cancel</UButton
+                  >
+                  <UButton
+                    class="md:text-xl text-sm px-16 cursor-pointer flex justify-center items-center"
+                    >Save Item</UButton
+                  >
+                </div>
+              </UForm>
+            </div>
+          </template>
+        </UModal>
       </div>
     </div>
 
@@ -123,7 +173,56 @@ const paginatedData = computed(() => {
         </div>
 
         <div class="flex justify-between gap-5">
-          <UButton class="md:text-xl text-sm cursor-pointer">Edit</UButton>
+          <!-- <UButton class="md:text-xl text-sm cursor-pointer">Edit</UButton> -->
+
+          <UModal
+            title="Edit Menu Item"
+            :close="{
+              color: 'primary',
+              variant: 'outline',
+              class: 'rounded-full cursor-pointer',
+            }"
+          >
+            <UButton
+              label="Edit"
+              color="neutral"
+              variant="subtle"
+              class="bg-primary text-white hover:text-primary cursor-pointer"
+            />
+
+            <template #body>
+              <Placeholder class="h-48" />
+              <div>
+                <UForm>
+                  <div>
+                    <h2 class="text-primary text-3xl font-bold">Edit Item</h2>
+                    <p class="text-gray-500 text-xl">Edit your item in menu!</p>
+                  </div>
+
+                  <div class="flex flex-col gap-2 my-6">
+                    <UInput placeholder="Item Name" type="text" />
+                    <UInputMenu placeholder="Item Type" :items="items" />
+
+                    <UInput placeholder="Item Price" type="number" />
+                    <UInput type="file" placeholder="Item Image" />
+                    <UTextarea placeholder="Item Description..." />
+                  </div>
+
+                  <div class="flex flex-col md:flex-row justify-between gap-5">
+                    <UButton
+                      class="md:text-xl text-sm px-16 cursor-pointer bg-transparent text-primary border border-primary flex items-center justify-center hover:text-white"
+                      >Cancel</UButton
+                    >
+                    <UButton
+                      class="md:text-xl text-sm px-16 cursor-pointer flex justify-center items-center"
+                      >Save Edit</UButton
+                    >
+                  </div>
+                </UForm>
+              </div>
+            </template>
+          </UModal>
+
           <!-- <UButton class="md:text-xl text-sm cursor-pointer">Delete</UButton> -->
           <UModal
             v-model:open="open"
@@ -157,7 +256,7 @@ const paginatedData = computed(() => {
                     Cancel
                   </UButton>
                   <UButton
-                    class="px-2 py-1 md:px-16 md:py-2 text-sm bg-transparent text-primary border boreder-primary rounded cursor-pointer"
+                    class="px-2 py-1 md:px-16 md:py-2 text-sm bg-transparent text-primary border boreder-primary rounded cursor-pointer hover:text-white"
                   >
                     Delete
                   </UButton>

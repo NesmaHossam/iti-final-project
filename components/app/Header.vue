@@ -64,7 +64,7 @@ const items = [
                 align: 'start',
               }"
               :ui="{
-                content: 'w-48 ',
+                content: 'w-48 cursor-pointer ',
               }"
             >
               <UButton
