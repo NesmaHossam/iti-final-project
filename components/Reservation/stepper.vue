@@ -161,7 +161,7 @@
   async function submitForm() {
     try {
       console.log('Submitting reservation data:', formData.value);
-      router.push("/")
+      // router.push("/")
       // Replace with your API call
       // const response = await fetch('/api/reservations', {
       //   method: 'POST',

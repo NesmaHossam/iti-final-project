@@ -1,12 +1,11 @@
-import { ref, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
 
-export default function useMenuApi() {
+
+export default function useMenuApi(menuGridRef = ref(null)) {
   const menu = ref([])
   const error = ref(null)
   const status = ref('idle')
   const searchQuery = ref('')
-  const selectedFilters = ref(['All'])
+  const selectedFilters = ref('All');
   const sortOrder = ref('')
   const pagination = ref({
     currentPage: 1,
@@ -44,8 +43,9 @@ export default function useMenuApi() {
     try {
       const params = getQueryParams(categoryFilter, page, search)
       const endpoint = `/menu/getMenu${params ? `?${params}` : ''}`
-      
+      console.log(categoryFilter , page , search);
       const { data, error: apiError } = await useAsyncApi(endpoint)
+      console.log(data);
       
       if (apiError.value) {
         throw new Error(apiError.value?.message || 'Failed to fetch menu')
@@ -119,24 +119,29 @@ export default function useMenuApi() {
       throw err
     }
   }
-
   const goToPage = async (page) => {
-    if (page < 1 || page > pagination.value.totalPages) return
-
-    const category = selectedFilters.value.includes('All') 
-      ? 'all' 
-      : selectedFilters.value[0]?.toLowerCase()
-    const search = searchQuery.value || ''
-
+    if (page < 1 || page > pagination.value.totalPages) return;
+  
+    const currentQueryPage = parseInt(route.query.page) || 1;
+    if (page === currentQueryPage) return; // Avoid refetching same page
+  
     await router.push({
       query: {
         ...route.query,
         page: page > 1 ? page : undefined
       }
-    })
-
-    await fetchMenu(category, page, search)
-  }
+    });
+  
+    // fetchMenu will auto-trigger from the watcher
+    nextTick(() => {
+      if (menuGridRef.value) {
+        menuGridRef.value.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  };
+  
 
   const resetFilters = () => {
     selectedFilters.value = ['All']
