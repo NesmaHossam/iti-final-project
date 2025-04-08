@@ -82,7 +82,7 @@
             
             <button
                 v-if="currentStep === steps.length - 1"
-                class="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary cursor-pointer flex items-center mr-5"
+                class=" px-1 md:px-4 py-2 bg-primary text-white rounded-md hover:bg-primary cursor-pointer flex items-center mr-5 "
                 @click="submitForm"
             >
                 <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

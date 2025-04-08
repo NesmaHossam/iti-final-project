@@ -1,29 +1,29 @@
 <template>
-  <div class="flex flex-col md:flex-row items-center w-full py-8">
-    <div class="px-8 md:w-[40%]">
+  <div class="flex flex-col lg:flex-row items-center w-full py-8">
+    <div class="px-8 lg:w-[40%]">
       <div>
-        <h1 class="text-2xl font-bold mb-4 text-dark-blue cursor-default">
-          Pre-Order <br>
+        <h1 class="text-xl md:text-2xl font-bold mb-4 text-dark-blue cursor-default w-full lg:w-[60%]">
+          Pre-Order 
           Your Meal
         </h1>
 
-        <p class="text-gray-500 cursor-default">
+        <p class="text-gray-500 cursor-default hidden md:block">
           Would you like to pre-order your meal? This will save you time and ensure 
           your food is ready when you arrive.
         </p>
       </div>
-      <div class="mt-7">
+      <div class="mt-7 hidden lg:block">
         <h3 class="font-bold cursor-default">Need help?</h3>
         <h4>Call +20 100 506 6611</h4>
       </div>
     </div>
 
-    <USeparator color="primary" type="solid" orientation="vertical" class="h-48 hidden md:block" />
+    <USeparator color="primary" type="solid" orientation="vertical"  class="h-48 hidden lg:block" />
 
-    <div class="px-8 md:w-[60%]">
+    <div class="px-8 lg:w-[60%] flex flex-col">
       <!-- Initial Choice -->
       <div v-if="!formData.cart.preOrder && !proceedingToNext">
-        <h1 class="text-2xl font-bold mb-4 text-dark-blue cursor-default">
+        <h1 class="text-xl md:text-2xl font-bold mb-4 text-primary cursor-default">
           Pre-Order Options
         </h1>
         
@@ -31,7 +31,7 @@
           <div class="flex flex-col space-y-4">
             <UButton
               label="Yes, I'd like to pre-order"
-              class="bg-primary text-white cursor-pointer hover:text-primary w-full md:w-[50%]"
+              class="bg-primary text-white cursor-pointer hover:text-white w-full md:w-[50%]"
               @click="enablePreOrder"
             />
             <UButton
@@ -46,7 +46,7 @@
       
       <!-- Next Step Indicator -->
       <div v-if="proceedingToNext" class="mt-6">
-        <h1 class="text-2xl font-bold mb-4 text-dark-blue cursor-default">
+        <h1 class="text-xl md:text-2xl font-bold mb-4 text-primary cursor-default">
           Proceeding to Next Step
         </h1>
         <div class="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
@@ -64,15 +64,15 @@
       
       <!-- Cart Summary (only visible when items selected but menu closed) -->
       <div v-if="formData.cart.preOrder && cartItems.length > 0 && !showMenu" class="mt-6">
-        <h1 class="text-2xl font-bold mb-4 text-dark-blue cursor-default">
+        <h1 class="text-2xl font-bold mb-4 text-primary cursor-default">
           Your Pre-Order
         </h1>
         
         <div class="bg-white border border-gray-200 rounded-lg shadow-md p-4">
           <div class="flex justify-between items-center mb-4">
             <h3 class="font-bold text-lg flex items-center">
-              <span class="mr-2">Your Order</span>
-              <span class="bg-primary text-white text-xs rounded-full px-2 py-1">{{ getTotalItems() }} items</span>
+              <span class="mr-2 cursor-default">Your Order</span>
+              <span class="bg-primary text-white text-xs rounded-full px-2 py-1 cursor-default">{{ getTotalItems() }} items</span>
             </h3>
             <UButton
               icon="i-heroicons-pencil"
@@ -80,31 +80,36 @@
               variant="ghost"
               @click="showMenu = true"
               label="Edit Order"
+              class="cursor-pointer"
             />
           </div>
           
           <div class="max-h-60 overflow-y-auto mb-4">
             <div v-for="item in cartItems" :key="item.id" class="flex justify-between py-2 border-b border-gray-100 last:border-0">
               <div class="flex items-center">
-                <div class="bg-primary/10 text-primary rounded-full h-6 w-6 flex items-center justify-center mr-3">
+                <div class="bg-primary/10 text-primary rounded-full h-6 w-6 flex items-center justify-center mr-3 cursor-default">
                   {{ item.quantity }}
                 </div>
                 <div>
-                  <p class="font-medium">{{ item.title }}</p>
-                  <p class="text-sm text-gray-500">${{ item.price.toFixed(2) }} each</p>
+                  <p class="font-medium cursor-default">{{ item.title }}</p>
+                  <p class="text-sm text-gray-500 cursor-default">${{ item.price.toFixed(2) }} each</p>
                 </div>
               </div>
-              <p class="font-semibold">${{ (item.price * item.quantity).toFixed(2) }}</p>
+              <p class="font-semibold cursor-default">${{ (item.price * item.quantity).toFixed(2) }}</p>
             </div>
           </div>
           
-          <div class="font-bold flex justify-between text-lg border-t border-gray-200 pt-3">
+          <div class="font-bold flex justify-between text-lg border-t border-gray-200 pt-3 cursor-default">
             <p>Total</p>
             <p class="text-primary">${{ calculateTotal().toFixed(2) }}</p>
           </div>
         </div>
       </div>
     </div>
+    <div class="mt-7 flex justify-between lg:hidden w-full">
+        <h3 class="font-bold cursor-default">Need help?</h3>
+        <h4>Call +20 100 506 6611</h4>
+      </div>
   </div>
 
   <!-- Full Screen Menu Modal -->
