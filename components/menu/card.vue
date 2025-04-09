@@ -19,7 +19,7 @@
         </p>
       </div>
       <UButton
-        class="bg-primary text-white hover:bg-primary/90 mt-4 w-full"
+        class="bg-primary text-white hover:bg-primary/90 mt-4 w-full flex items-center justify-center"
         :to="`/menu/${item.id || item._id}`"
         tag="nuxt-link"
       >

@@ -11,17 +11,23 @@
         >
           Experience the Art of Flavor at Zaytona
         </h1>
-        <p class="text-base md:text-xl text-white mt-3 w-full  md:w-[90%] lg:w-[70%]">
+        <p
+          class="text-base md:text-xl text-white mt-3 w-full md:w-[90%] lg:w-[70%]"
+        >
           Enjoy exquisite flavors crafted with passion. Fresh ingredients,
           authentic recipes, and warm hospitality await you!
         </p>
-        <div class="mt-4 flex flex-col gap-3 md:flex-row">
-          <UButton
-            to="/auth/signUp"
-            class="bg-white text-primary px-6 py-3 font-semibold rounded-lg w-full md:w-auto text-[10px] md:text-base flex items-center justify-center hover:bg-primary hover:text-white hover:border hover:border-white"
-          >
-            Sign Up Now!
-          </UButton>
+        <div class="mt-4 flex flex-col  md:flex-row">
+          <AppAuthChecker>
+            <template #unAuth>
+              <UButton
+                to="/auth/signUp"
+                class="bg-white text-primary px-6 py-3 font-semibold rounded-lg w-full md:w-auto text-[10px] md:text-base flex items-center justify-center hover:bg-primary hover:text-white hover:border hover:border-white md:mr-3"
+              >
+                Sign Up Now!
+              </UButton>
+            </template>
+          </AppAuthChecker>
 
           <UButton
             to="/user/tables"
@@ -36,7 +42,7 @@
         <img
           src="../../assets/images/Home/Group 4.png"
           alt="hero image"
-          class="w-[80%] md:w-[100%]  max-w-[800px] absolute top-[0%] right-0"
+          class="w-[80%] md:w-[100%] max-w-[800px] absolute top-[0%] right-0"
         />
       </div>
     </UContainer>

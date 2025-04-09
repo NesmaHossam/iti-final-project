@@ -9,10 +9,10 @@
           </client-only>
         </div>
         <div class="md:w-1/2">
-          <h2 class="lg:text-4xl md:text-3xl text-xl text-primary mb-6">
+          <h2 class="lg:text-4xl md:text-3xl text-xl text-primary mb-6 cursor-default">
             Find Us Here
           </h2>
-          <p class="text-sm md:text-lg lg:text-xl text-primary">
+          <p class="text-sm md:text-lg lg:text-xl text-primary cursor-default">
             You can find us at 12 Nile Street, Zamalek, Cairo, in the heart of the <br>
             city. Whether you're visiting for a casual meal or a special <br>
             occasion, our doors are always open to welcome you. Come and experience great <br>
