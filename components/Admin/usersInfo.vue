@@ -1,72 +1,33 @@
-<script setup lang="ts">
-import type { TableColumn, DropdownMenuItem } from "@nuxt/ui";
-
+<script setup>
 const toast = useToast();
 
-interface User {
-  id: number;
-  userName: string;
-  email: string;
-  phoneNumber: string;
-}
+const data = ref([]);
 
-const data = ref<User[]>([
+const columns = [
   {
-    id: 122,
-    userName: "Nesma Hossam",
-    email: "nesma4467@gmail.com",
-    phoneNumber: "0123456789",
-  },
-  {
-    id: 123,
-    userName: "Moustafa Negm",
-    email: "moustafa@gmail.com",
-    phoneNumber: "0123456789",
-  },
-  {
-    id: 124,
-    userName: "Rahma Mandouh",
-    email: "rahma@gmail.com",
-    phoneNumber: "0123456789",
-  },
-  {
-    id: 125,
-    userName: "Mohamed Refaat",
-    email: "mohamed@gmail.com",
-    phoneNumber: "0123456789",
-  },
-]);
-
-const columns: TableColumn<User>[] = [
-  {
-    accessorKey: "id",
+    accessorKey: "_id",
     header: "#ID",
-
-    cell: ({ row }) => `#${row.getValue("id")}`,
+    cell: ({ row }) => `#${row.getValue("_id")}`,
   },
-
   {
     accessorKey: "userName",
     header: "User Name",
   },
-
   {
     accessorKey: "email",
     header: "Email",
   },
   {
-    accessorKey: "phoneNumber",
+    accessorKey: "phoneNumberRaw",
     header: "Phone Number",
   },
-
   {
     header: "Action",
-
     id: "action",
   },
 ];
 
-function getDropdownActions(user: User): DropdownMenuItem[][] {
+function getDropdownActions(user) {
   return [
     [
       {
@@ -97,7 +58,6 @@ function getDropdownActions(user: User): DropdownMenuItem[][] {
 }
 
 const table = useTemplateRef("table");
-
 const page = ref();
 const columnFilters = ref([
   {
@@ -105,6 +65,25 @@ const columnFilters = ref([
     value: "",
   },
 ]);
+
+onMounted(async () => {
+  try {
+    const response = await useApi('/user/allProfiles', "get");
+    console.log(response);
+    
+    if (response?.users) {
+      data.value = response.users;
+    }
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    toast.add({
+      title: "Failed to load users",
+      description: error.message,
+      color: "error",
+      icon: "i-lucide-alert-circle",
+    });
+  }
+});
 </script>
 
 <template>
@@ -119,7 +98,7 @@ const columnFilters = ref([
 
       <div>
         <UInput
-          :model-value="table?.tableApi?.getColumn('email')?.getFilterValue() as string"
+          :model-value="table?.tableApi?.getColumn('email')?.getFilterValue()"
           icon="i-lucide-search"
           class="max-w-sm"
           size="md"
@@ -157,7 +136,7 @@ const columnFilters = ref([
 
     <div class="flex justify-between items-center">
       <div>
-        <p class="text-sm text-gray-500">Showing 125-30 of 250</p>
+        <p class="text-sm text-gray-500">Showing {{ data.length }} users</p>
       </div>
 
       <div>

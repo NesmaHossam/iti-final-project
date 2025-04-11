@@ -2,7 +2,7 @@
   <div class="my-6 recipe-card">
     <div class="h-[180px] overflow-hidden rounded-t-lg">
       <img
-        :src="item.image || '/images/Home/Menu1.png'"
+        :src="item.image.secure_url || '/images/Home/Menu1.png'"
         :alt="item.name"
         class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
         loading="lazy"
@@ -20,7 +20,7 @@
       </div>
       <UButton
         class="bg-primary text-white hover:bg-primary/90 mt-4 w-full flex items-center justify-center"
-        :to="`/menu/${item.id || item._id}`"
+        :to="`/user/menu/${item.id || item._id}`"
         tag="nuxt-link"
       >
         View More

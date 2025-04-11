@@ -131,6 +131,7 @@ export default function useMenuApi(menuGridRef = ref(null)) {
         page: page > 1 ? page : undefined
       }
     });
+
   
     // fetchMenu will auto-trigger from the watcher
     nextTick(() => {

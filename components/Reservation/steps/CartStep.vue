@@ -564,6 +564,18 @@ function getTotalItems() {
     return total + item.quantity;
   }, 0);
 }
+
+
+onMounted(async () => {
+  try {
+    const response = await useApi('/menu/getMenu', "get");
+    console.log(response.results);
+
+  } catch (error) {
+    console.error('Error fetching reservations:', error);
+  }
+});
+
 </script>
 
 <style scoped>

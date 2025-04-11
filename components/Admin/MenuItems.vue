@@ -1,52 +1,16 @@
 <script setup>
-import img1 from "../../assets/images/Home/Menu1.png";
 const open = ref(false);
+const toast = useToast();
+
 // items select
-const items = ref(["Dinner", "Lunch", "Breakfast"]);
+const items = ref(["dinner", "lunch", "breakfast" , "drink" , 'desert' ]);
 
 const page = ref(1);
-const itemsPerPage = 2;
+const itemsPerPage = 8;
 
 const globalFilter = ref("");
 
-const data = ref([
-  {
-    id: 1,
-    name: "Ceasar Salad",
-    category: "Breakfast",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    image: img1,
-    price: "12$",
-  },
-  {
-    id: 2,
-    name: "Greek Salad",
-    category: "Dinner",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    image: img1,
-    price: "15$",
-  },
-  {
-    id: 3,
-    name: "Fruit Salad",
-    category: "Lunch",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    image: img1,
-    price: "10$",
-  },
-  {
-    id: 4,
-    name: "Pasta",
-    category: "Dinner",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    image: img1,
-    price: "20$",
-  },
-]);
+const data = ref([]);
 
 watch(globalFilter, () => {
   page.value = 1;
@@ -70,6 +34,37 @@ const paginatedData = computed(() => {
 
   return filteredData.value.slice(start, end);
 });
+
+
+onMounted(async () => {
+  try {
+    const response = await useApi('/menu/getMenu', "get");
+    console.log(response);
+    
+    if (response?.results) {
+      data.value = response.results.data;
+      console.log(data);
+      
+    }
+  } catch (error) {
+    console.error('Error fetching results:', error);
+    toast.add({
+      title: "Failed to load results",
+      description: error.message,
+      color: "error",
+      icon: "i-lucide-alert-circle",
+    });
+  }
+});
+
+
+const deleteItem = async (itemId) => {
+const response =   await useApi(`/menu/deleteMenuItem/${itemId}` , 'delete')
+console.log(response);
+open.value = true
+  
+}
+
 </script>
 
 <template>
@@ -152,7 +147,7 @@ const paginatedData = computed(() => {
         :key="MenuItem.id"
         class="flex md:flex-row flex-col flex-wrap border border-gray-300 rounded-md items-center gap-4 p-4 justify-around"
       >
-        <img :src="MenuItem.image" alt="" class="w-[150px] md:w-[200px]" />
+        <img :src="MenuItem.image.secure_url" alt="" class="w-[150px] md:w-[200px]">
         <div>
           <h2 class="text-primary text-2xl font-bold cursor-default">
             {{ MenuItem.name }}
@@ -256,7 +251,8 @@ const paginatedData = computed(() => {
                     Cancel
                   </UButton>
                   <UButton
-                    class="px-2 py-1 md:px-16 md:py-2 text-sm bg-transparent text-primary border boreder-primary rounded cursor-pointer hover:text-white"
+                    class="px-2 py-1 md:px-16 md:py-2 text-sm bg-transparent text-primary border border-primary rounded cursor-pointer hover:text-white"
+                    @click="deleteItem(MenuItem._id)"
                   >
                     Delete
                   </UButton>
