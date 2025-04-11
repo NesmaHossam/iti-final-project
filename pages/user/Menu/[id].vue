@@ -14,7 +14,7 @@
       <div v-if="error" class="text-red-500 text-center text-lg font-semibold p-10">
         {{ error }}
         <div class="mt-4">
-          <UButton color="primary" @click="router.push('/menu')">Back to Menu</UButton>
+          <UButton color="primary" @click="router.push('/user/menu')">Back to Menu</UButton>
         </div>
       </div>
 
@@ -36,7 +36,7 @@
             <div class="mt-8">
               <UButton
                 class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90"
-                @click="router.push('/menu')"
+                @click="router.push('/user/menu')"
               >
                 Back to Menu
               </UButton>
@@ -45,7 +45,7 @@
 
           <div class="md:w-1/2">
             <img
-              :src="item.image || '../../assets/images/Home/Menu1.png'"
+              :src="item.image.secure_url || '../../assets/images/Home/Menu1.png'"
               :alt="item.name"
               class="rounded-lg shadow-lg w-full max-h-[400px] object-cover"
             >
@@ -66,17 +66,17 @@ const item = ref(null);
 const loading = ref(true);
 const error = ref(null);
 
-const { fetchMenuItemById } = useMenuApi();
 
 const fetchItemDetails = async () => {
   loading.value = true;
   error.value = null;
   
   try {
-    const data = await fetchMenuItemById(itemId);
+    const data = await useApi(`/menu/getMenuItem/${itemId}` , "get");
+    console.log(data);
     
     if (data) {
-      item.value = data;
+      item.value = data.results;
     } else {
       error.value = "Item not found";
     }

@@ -221,7 +221,7 @@ function previousStep() {
 async function submitForm() {
   try {
     console.log("Submitting reservation data:", formData.value);
-    router.push("/");
+    // router.push("/");
     // Replace with your API call
     // const response = await fetch('/api/reservations', {
     //   method: 'POST',
@@ -234,6 +234,10 @@ async function submitForm() {
     // } else {
     //   alert('Error submitting reservation');
     // }
+
+    const response = await useApi('/checkOut/addCheckout' ,'post' , formData.value)
+    console.log(response);
+    
   } catch (error) {
     console.error("Error submitting form:", error);
   }
