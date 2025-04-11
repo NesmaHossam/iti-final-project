@@ -22,7 +22,7 @@
             <template #unAuth>
               <UButton
                 to="/auth/signUp"
-                class="bg-white text-primary px-6 py-3 font-semibold rounded-lg w-full md:w-auto text-[10px] md:text-base flex items-center justify-center hover:bg-primary hover:text-white hover:border hover:border-white md:mr-3"
+                class="bg-white text-primary px-6 py-3 font-semibold rounded-lg w-full md:w-auto text-[10px] md:text-base flex items-center justify-center hover:bg-primary hover:text-white hover:border hover:border-white md:mr-3 mt-3"
               >
                 Sign Up Now!
               </UButton>
@@ -31,7 +31,7 @@
 
           <UButton
             to="/user/tables"
-            class="border border-white text-white px-6 py-3 rounded-lg w-full md:w-auto hover:bg-white hover:text-primary text-[10px] md:text-base flex items-center justify-center"
+            class="border border-white text-white px-6 py-3 rounded-lg w-full md:w-auto hover:bg-white hover:text-primary text-[10px] md:text-base flex items-center justify-center mt-3"
           >
             Book Your Table
           </UButton>

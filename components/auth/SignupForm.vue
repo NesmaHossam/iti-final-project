@@ -1,4 +1,1 @@
-
-<template>
-    j
-</template>
+<template></template>

@@ -6,5 +6,6 @@
 </script>
 
 <template>
-    <AdminMenuItems />
+    <!-- <AdminMenuItems /> -->
+     <AdminTestMenu/>
 </template>
