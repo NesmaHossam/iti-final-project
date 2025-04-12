@@ -1,51 +1,19 @@
-
-
-export default function useMenuApi(menuGridRef = ref(null)) {
+export default function useMenuApi() {
   const menu = ref([])
   const error = ref(null)
   const status = ref('idle')
   const searchQuery = ref('')
-  const selectedFilters = ref('All');
+  const selectedFilters = ref('All')
   const sortOrder = ref('')
-  const pagination = ref({
-    currentPage: 1,
-    totalPages: 1,
-    totalItems: 0,
-    itemsPerPage: 10,
-    nextPage: null,
-    prevPage: null
-  })
 
-  const categories = ref(["Breakfast", "Dinner", "Dessert", "Drinks"])
-  const route = useRoute()
-  const router = useRouter()
-
-  const getQueryParams = (categoryFilter, page = 1, search = '') => {
-    const params = new URLSearchParams()
-    
-    if (categoryFilter && categoryFilter !== 'all') {
-      params.append('category', categoryFilter.toLowerCase())
-    }
-    
-    params.append('page', page.toString())
-    
-    if (search && search.trim() !== '') {
-      params.append('keyword', search.trim())
-    }
-    
-    return params.toString()
-  }
-
-  const fetchMenu = async (categoryFilter = 'all', page = 1, search = '') => {
+  const fetchMenu = async () => {
     status.value = 'pending'
     error.value = null
     
     try {
-      const params = getQueryParams(categoryFilter, page, search)
-      const endpoint = `/menu/getMenu${params ? `?${params}` : ''}`
-      console.log(categoryFilter , page , search);
+      // Simplified API call - just get all menu items at once
+      const endpoint = '/menu/getMenu'
       const { data, error: apiError } = await useAsyncApi(endpoint)
-      console.log(data);
       
       if (apiError.value) {
         throw new Error(apiError.value?.message || 'Failed to fetch menu')
@@ -60,52 +28,12 @@ export default function useMenuApi(menuGridRef = ref(null)) {
       // Handle successful response
       if (response.success && response.results) {
         // Extract items from different response structures
-        const items = Array.isArray(response.results) 
+        menu.value = Array.isArray(response.results) 
           ? response.results 
           : response.results.items || response.results.data || []
-
-        menu.value = items
-
-        // Update pagination from response
-        if (response.results.pagination) {
-          pagination.value = {
-            currentPage: Number(response.results.pagination.currentPage) || page,
-            totalPages: Number(response.results.pagination.totalPages) || 1,
-            totalItems: Number(response.results.pagination.totalItems) || items.length,
-            itemsPerPage: Number(response.results.pagination.itemsPerPage) || 10,
-            nextPage: response.results.pagination.nextPage !== undefined 
-              ? response.results.pagination.nextPage 
-              : (page < (response.results.pagination.totalPages || 1) ? page + 1 : null),
-            prevPage: response.results.pagination.prevPage !== undefined 
-              ? response.results.pagination.prevPage 
-              : (page > 1 ? page - 1 : null)
-          }
-          console.log(pagination);
-          
-        } else {
-          // Default pagination if not provided
-          pagination.value = {
-            currentPage: page,
-            totalPages: 1,
-            totalItems: items.length,
-            itemsPerPage: items.length,
-            nextPage: null,
-            prevPage: null
-          }
-          console.log(pagination);
-        }
       } else if (Array.isArray(response)) {
         // Handle simple array response
         menu.value = response
-        pagination.value = {
-          currentPage: page,
-          totalPages: 1,
-          totalItems: response.length,
-          itemsPerPage: response.length,
-          nextPage: null,
-          prevPage: null
-        }
-        console.log(pagination);
       } else {
         throw new Error('Invalid response format from server')
       }
@@ -116,36 +44,11 @@ export default function useMenuApi(menuGridRef = ref(null)) {
       error.value = err.message
       status.value = 'error'
       console.error('Menu API Error:', err)
-      throw err
     }
   }
-  const goToPage = async (page) => {
-    if (page < 1 || page > pagination.value.totalPages) return;
-  
-    const currentQueryPage = parseInt(route.query.page) || 1;
-    if (page === currentQueryPage) return; // Avoid refetching same page
-  
-    await router.push({
-      query: {
-        ...route.query,
-        page: page > 1 ? page : undefined
-      }
-    });
-
-  
-    // fetchMenu will auto-trigger from the watcher
-    nextTick(() => {
-      if (menuGridRef.value) {
-        menuGridRef.value.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    });
-  };
-  
 
   const resetFilters = () => {
-    selectedFilters.value = ['All']
+    selectedFilters.value = 'All'
     searchQuery.value = ''
     sortOrder.value = ''
   }
@@ -156,11 +59,10 @@ export default function useMenuApi(menuGridRef = ref(null)) {
     let filtered = [...menu.value]
 
     // Client-side filtering
-    if (selectedFilters.value.length > 0 && !selectedFilters.value.includes('All')) {
+    if (selectedFilters.value !== 'All') {
       filtered = filtered.filter(item => 
-        selectedFilters.value.some(filter => 
-          item.category && item.category.toLowerCase() === filter.toLowerCase()
-        )
+        item.category && 
+        item.category.toLowerCase() === selectedFilters.value.toLowerCase()
       )
     }
 
@@ -199,9 +101,6 @@ export default function useMenuApi(menuGridRef = ref(null)) {
     sortOrder,
     filteredMenu,
     sortedMenu,
-    pagination,
-    categories,
-    goToPage,
     fetchMenu,
     resetFilters
   }

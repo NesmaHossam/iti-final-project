@@ -1,10 +1,10 @@
 <template>
-  <div class="my-6 recipe-card">
+  <div class="my-6 recipe-card flex flex-col justify-between">
     <div class="h-[180px] overflow-hidden rounded-t-lg">
       <img
         :src="item.image.secure_url || '/images/Home/Menu1.png'"
         :alt="item.name"
-        class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+        class="h-full w-full object-contain transition-transform duration-300 hover:scale-105"
         loading="lazy"
       >
     </div>

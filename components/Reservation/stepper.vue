@@ -74,7 +74,10 @@
         class="bg-slate-200/10 backdrop-blur-md shadow-lg mb-8 md:mb-12 p-6 lg:p-12 overflow-hidden relative z-2 md:rounded-tl-[30%] md:rounded-br-[30%] border border-slate-100 w-full"
       >
         <div>
-          <component
+          <p v-if="errorMessage" class="text-red-500 bg-red-100 p-2 rounded mb-4">
+              {{ errorMessage }}
+          </p>          
+            <component
             :is="steps[currentStep].component"
             :form-data="formData"
             @update-data="updateFormData"
@@ -167,12 +170,11 @@ import PaymentStep from "./steps/PaymentStep.vue";
 import ReviewStep from "./steps/ReviewStep.vue";
 import RereservationLayout from "../../layouts/reservation";
 
-const router = useRouter();
-
 definePageMeta({
   layout: "reservation",
 });
-
+const errorMessage = ref("")
+const router = useRouter();
 const currentStep = ref(0);
 const formData = ref({
   mealType: null,
@@ -220,26 +222,26 @@ function previousStep() {
 
 async function submitForm() {
   try {
+    errorMessage.value = ""
     console.log("Submitting reservation data:", formData.value);
-    // router.push("/");
-    // Replace with your API call
-    // const response = await fetch('/api/reservations', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(formData.value)
-    // });
-
-    // if (response.ok) {
-    //   alert('Reservation submitted successfully!');
-    // } else {
-    //   alert('Error submitting reservation');
-    // }
-
     const response = await useApi('/checkOut/addCheckout' ,'post' , formData.value)
     console.log(response);
-    
+    if (formData.value.paymentMethod == 'creditCard') {
+      window.location.href = response.url;
+    } else {
+        router.push('/user/profile/reservations')
+    }
   } catch (error) {
     console.error("Error submitting form:", error);
+
+    if (error?.data?.message) {
+    errorMessage.value = error.data.message;
+  } else if (error?.response?.data?.message) {
+    errorMessage.value = error.response.data.message;
+  } else {
+    errorMessage.value = "Something went wrong while submitting the form.";
+  }
+
   }
 }
 </script>

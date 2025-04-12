@@ -23,9 +23,7 @@ export const useAuth = () => {
       token.value = res.tokens.access_token;
       refreshToken.value = res.tokens.refresh_token;
       userData.value = res.user
-      // user.setUserData(res)
       console.log(res);
-      console.log(userData);
       router.push("/");
       return res;
     } catch (error) {
