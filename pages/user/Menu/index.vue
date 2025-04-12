@@ -63,15 +63,6 @@
                 <span>Previous</span>
               </button>
               
-              <!-- First Page (always show) -->
-              <button
-                v-if="showFirstPageButton"
-                class="min-w-8 h-8 flex items-center justify-center rounded-full mx-1"
-                :class="currentPage === 1 ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100'"
-                @click="handlePageChange(1)"
-              >
-                <span>1</span>
-              </button>
               
               <!-- Ellipsis if needed -->
               <span v-if="showLeftEllipsis" class="mx-1">...</span>
@@ -193,9 +184,6 @@ const visiblePageNumbers = computed(() => {
 });
 
 // Logic for showing ellipsis and first/last buttons
-const showFirstPageButton = computed(() => {
-  return totalPages.value > 2;
-});
 
 const showLastPageButton = computed(() => {
   return totalPages.value > 2 && !visiblePageNumbers.value.includes(totalPages.value);

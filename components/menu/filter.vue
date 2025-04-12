@@ -38,7 +38,7 @@ const props = defineProps({
   }
 });
 
-const categories = ["Breakfast", "Dinner", "Dessert", "Drinks"];
+const categories = ["Breakfast", "Dinner","Lunch", "Dessert", "Drinks"];
 
 const emit = defineEmits(['update:modelValue', 'change']);
 const localSelectedFilter = ref(props.modelValue);

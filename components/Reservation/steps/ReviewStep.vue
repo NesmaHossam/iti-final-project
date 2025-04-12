@@ -1,7 +1,7 @@
 <template>
-  <div class="px-8 flex flex-col py-6">
+  <div class="md:px-8 px-1 flex flex-col py-6">
     <div class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Food Cart</h2>
+      <h2 class="text-2xl font-bold mb-4 text-center">Food Cart</h2>
       <div v-if="!formData.cart?.preOrder || !formData.cart?.items || formData.cart.items.length === 0" class="flex flex-col items-center justify-center text-center py-6">
         <img
           src="/assets/images/emptyCart.png"
@@ -9,8 +9,8 @@
           class="w-64 mb-4"
         >
         <p class="text-lg font-semibold">Your cart is empty</p>
-        <p class="text-gray-500" v-if="formData.cart?.preOrder === false">You've chosen to order at the restaurant.</p>
-        <p class="text-gray-500" v-else>No items were added to your cart.</p>
+        <p v-if="formData.cart?.preOrder === false" class="text-gray-500">You've chosen to order at the restaurant.</p>
+        <p v-else class="text-gray-500">No items were added to your cart.</p>
       </div>
 
       <div v-else class="bg-gray-50 p-4 rounded-lg shadow-sm">
@@ -23,21 +23,21 @@
               </div>
               <div>
                 <p class="font-medium">{{ item.name }}</p>
-                <p class="text-sm text-gray-500">${{ item.price.toFixed(2) }} each</p>
+                <p class="text-sm text-gray-500">{{ item.price }} EGP each</p>
               </div>
             </div>
-            <p class="font-semibold">${{ (item.price * item.quantity).toFixed(2) }}</p>
+            <p class="font-semibold">{{ (item.price * item.quantity) }} EGP</p>
           </div>
           <div class="border-t border-gray-300 pt-3 mt-3 font-bold flex justify-between text-lg">
             <p>Total</p>
-            <p class="text-primary">${{ calculateTotal().toFixed(2) }}</p>
+            <p class="text-primary">{{ calculateTotal() }} EGP</p>
           </div>
         </div>
       </div>
     </div>
 
     <div class="mt-4">
-      <h2 class="text-2xl font-bold mb-6 cursor-default">Review Your Reservation</h2>
+      <h2 class="text-2xl font-bold mb-6 cursor-default text-center">Review Your Reservation</h2>
       <div
         class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden"
       >
@@ -68,7 +68,7 @@
             </div>
           </div>
 
-          <hr class="border-t border-gray-200" />
+          <hr class="border-t border-gray-200" >
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
@@ -113,7 +113,7 @@
             </div>
           </div>
 
-          <hr class="border-t border-gray-200" />
+          <hr class="border-t border-gray-200" >
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>

@@ -5,6 +5,10 @@ const addModalOpen = ref(false);
 const toast = useToast();
 const currentItemId = ref(null);
 
+// Loading states for buttons
+const isEditLoading = ref(false);
+const isAddLoading = ref(false);
+
 // For edit form
 const editForm = ref({
   name: '',
@@ -128,6 +132,7 @@ const deleteItem = async () => {
 
 // Open edit modal and populate form with item data
 const openEditModal = (item) => {
+  // Set the form data first
   editForm.value = {
     name: item.name || '',
     category: item.category || '',
@@ -135,7 +140,9 @@ const openEditModal = (item) => {
     description: item.description || '',
     image: null
   };
+  // Set the current item ID
   currentItemId.value = item._id;
+  // Then open the modal
   editModalOpen.value = true;
 };
 
@@ -144,7 +151,12 @@ const submitEditItem = async (event) => {
   // Prevent default form submission behavior
   if (event) event.preventDefault();
   
+  // Return early if already processing
+  if (isEditLoading.value) return;
+  
   try {
+    isEditLoading.value = true;
+    
     // Validate required fields
     if (!editForm.value.name || !editForm.value.category || !editForm.value.price) {
       toast.add({
@@ -187,6 +199,8 @@ const submitEditItem = async (event) => {
       
       // Refresh data after update
       await fetchMenuItems();
+      
+      // Explicitly close the modal
       editModalOpen.value = false;
     } else {
       throw new Error(response?.message || "Failed to update item");
@@ -199,6 +213,8 @@ const submitEditItem = async (event) => {
       color: "error",
       icon: "i-lucide-alert-circle",
     });
+  } finally {
+    isEditLoading.value = false;
   }
 };
 
@@ -207,7 +223,12 @@ const submitAddItem = async (event) => {
   // Prevent default form submission behavior
   if (event) event.preventDefault();
   
+  // Return early if already processing
+  if (isAddLoading.value) return;
+  
   try {
+    isAddLoading.value = true;
+    
     // Validate required fields
     if (!newItem.value.name || !newItem.value.category || !newItem.value.price) {
       toast.add({
@@ -216,6 +237,7 @@ const submitAddItem = async (event) => {
         color: "error",
         icon: "i-lucide-alert-circle",
       });
+      isAddLoading.value = false;
       return;
     }
     
@@ -253,6 +275,8 @@ const submitAddItem = async (event) => {
       
       // Refresh data after adding
       await fetchMenuItems();
+      
+      // Explicitly close the modal
       addModalOpen.value = false;
     } else {
       throw new Error(response?.message || "Failed to add item");
@@ -265,6 +289,8 @@ const submitAddItem = async (event) => {
       color: "error",
       icon: "i-lucide-alert-circle",
     });
+  } finally {
+    isAddLoading.value = false;
   }
 };
 
@@ -303,11 +329,6 @@ const handleAddImageUpload = (event) => {
         <UModal 
           v-model="addModalOpen"
           title="Add New Item to Menu"
-          :close="{
-            color: 'primary',
-            variant: 'outline',
-            class: 'rounded-full cursor-pointer',
-          }"
         >
           <UButton
             label="Add New Item"
@@ -338,11 +359,16 @@ const handleAddImageUpload = (event) => {
                     type="button"
                     class="md:text-xl text-sm px-16 cursor-pointer bg-transparent text-primary border border-primary flex items-center justify-center hover:text-white"
                     @click="addModalOpen = false"
+                    :disabled="isAddLoading"
                   >Cancel</UButton>
                   <UButton
                     type="submit"
                     class="md:text-xl text-sm px-16 cursor-pointer flex justify-center items-center"
-                  >Save Item</UButton>
+                    :loading="isAddLoading"
+                    :disabled="isAddLoading"
+                  >
+                    {{ isAddLoading ? 'Saving...' : 'Save Item' }}
+                  </UButton>
                 </div>
               </form>
             </div>
@@ -355,8 +381,8 @@ const handleAddImageUpload = (event) => {
     <div class="flex flex-wrap gap-3 mt-2">
       <UButton
         :class="selectedCategory === 'all' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
-        @click="selectedCategory = 'all'"
         class="px-4 py-2 rounded-md"
+        @click="selectedCategory = 'all'"
       >
         All
       </UButton>
@@ -364,8 +390,8 @@ const handleAddImageUpload = (event) => {
         v-for="category in items"
         :key="category"
         :class="selectedCategory === category ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
-        @click="selectedCategory = category"
         class="px-4 py-2 rounded-md"
+        @click="selectedCategory = category"
       >
         {{ category.charAt(0).toUpperCase() + category.slice(1) }}
       </UButton>
@@ -402,14 +428,10 @@ const handleAddImageUpload = (event) => {
         </div>
 
         <div class="flex justify-between gap-5">
+          <!-- Edit Modal -->
           <UModal
             v-model="editModalOpen"
             title="Edit Menu Item"
-            :close="{
-              color: 'primary',
-              variant: 'outline',
-              class: 'rounded-full cursor-pointer',
-            }"
           >
             <UButton
               label="Edit"
@@ -440,11 +462,16 @@ const handleAddImageUpload = (event) => {
                       type="button"
                       class="md:text-xl text-sm px-16 cursor-pointer bg-transparent text-primary border border-primary flex items-center justify-center hover:text-white"
                       @click="editModalOpen = false"
+                      :disabled="isEditLoading"
                     >Cancel</UButton>
                     <UButton
                       type="submit"
                       class="md:text-xl text-sm px-16 cursor-pointer flex justify-center items-center"
-                    >Save Edit</UButton>
+                      :loading="isEditLoading"
+                      :disabled="isEditLoading"
+                    >
+                      {{ isEditLoading ? 'Saving...' : 'Save Edit' }}
+                    </UButton>
                   </div>
                 </form>
               </div>

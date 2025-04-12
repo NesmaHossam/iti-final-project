@@ -12,7 +12,7 @@ export default function useMenuApi() {
     
     try {
       // Simplified API call - just get all menu items at once
-      const endpoint = '/menu/getMenu'
+      const endpoint = '/menu/getMenuStatic'
       const { data, error: apiError } = await useAsyncApi(endpoint)
       
       if (apiError.value) {

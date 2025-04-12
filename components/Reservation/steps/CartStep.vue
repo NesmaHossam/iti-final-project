@@ -129,12 +129,12 @@
                 <div>
                   <p class="font-medium cursor-default">{{ item.name }}</p>
                   <p class="text-sm text-gray-500 cursor-default">
-                    ${{ item.price.toFixed(2) }} each
+                    {{ item.price }} EGP each
                   </p>
                 </div>
               </div>
               <p class="font-semibold cursor-default">
-                ${{ (item.price * item.quantity).toFixed(2) }}
+                {{ (item.price * item.quantity) }} EGP
               </p>
             </div>
           </div>
@@ -143,7 +143,7 @@
             class="font-bold flex justify-between text-lg border-t border-gray-200 pt-3 cursor-default"
           >
             <p>Total</p>
-            <p class="text-primary">${{ calculateTotal().toFixed(2) }}</p>
+            <p class="text-primary">{{ calculateTotal() }} EGP</p>
           </div>
         </div>
       </div>
@@ -217,7 +217,7 @@
                   <div
                     class="absolute top-0 right-0 m-2 px-3 py-1 rounded-full text-xs font-semibold bg-primary/80 text-white cursor-default"
                   >
-                    ${{ item.price.toFixed(2) }}
+                    {{ item.price }} EGP
                   </div>
                 </div>
                 <div class="p-4 flex flex-col flex-grow">
@@ -266,7 +266,7 @@
           </div>
           
           <!-- Pagination Controls -->
-          <div class="flex justify-center mt-8" v-if="totalPages > 1">
+          <div v-if="totalPages > 1" class="flex justify-center mt-8">
             <div class="flex space-x-2">
               <UButton
                 icon="i-heroicons-chevron-left"
@@ -316,7 +316,7 @@
               <div class="font-bold text-lg">
                 <span class="mr-2 cursor-default">Total:</span>
                 <span class="text-primary cursor-default"
-                  >${{ calculateTotal().toFixed(2) }}</span
+                  >{{ calculateTotal() }} EGP</span
                 >
               </div>
             </div>

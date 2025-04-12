@@ -24,7 +24,11 @@ export const useAuth = () => {
       refreshToken.value = res.tokens.refresh_token;
       userData.value = res.user
       console.log(res);
-      router.push("/");
+      if (res.user.role == "User") {
+        router.push("/");
+      } else {
+        router.push("/admin")
+      }
       return res;
     } catch (error) {
       console.error("Login error:", error);
@@ -38,7 +42,11 @@ export const useAuth = () => {
       token.value = res.tokens.access_token;
       refreshToken.value = res.tokens.refresh_token;
       userData.value = res.user
-      router.push("/");
+      if (res.user.role == "User") {
+        router.push("/");
+      } else {
+        router.push("/admin")
+      }
       return res;
     } catch (error) {
       console.error("Google login error:", error);
@@ -74,7 +82,8 @@ export const useAuth = () => {
     token.value = null;
     refreshToken.value = null;
     userData.value = null;
-    router.push("/auth/login")
+    // router.push("/auth/login")
+    window.location.href = `http://localhost:3000/auth/login`
   }
   
   // forget password

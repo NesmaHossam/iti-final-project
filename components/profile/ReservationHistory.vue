@@ -29,6 +29,7 @@ const cancelReservation = async (reservationId) => {
     const response = await useApi(`/checkOut/cancelCheckOut/${reservationId}`, 'delete')
     if (response?.success) {
       reservations.value = reservations.value.filter(res => res._id !== reservationId)
+      open.value = false
       toast.add({ title: 'Reservation cancelled', color: 'green' })
     } else {
       toast.add({ title: 'Failed to cancel reservation', color: 'red' })

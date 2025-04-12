@@ -1,11 +1,10 @@
 <script setup>
-definePageMeta({
-  layout: "admin",
-});
+    definePageMeta({
+        layout : "admin",
+        name : "Menu Items"
+    })
 </script>
 
 <template>
-  <div>
-    <h1>DashBoard</h1>
-  </div>
+    <AdminMenuItems />
 </template>

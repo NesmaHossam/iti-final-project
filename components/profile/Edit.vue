@@ -1,6 +1,7 @@
 <script setup>
 import { z } from "zod";
 const userData = useCookie("userData")
+const token = useCookie("token")
 // state
 const formState = reactive({
   userName: "",
@@ -58,8 +59,10 @@ async function UpdateProfile() {
     }
     console.log(formState);
     await useApi('/user/updateProfile',"PATCH",formState);
-    userData.value = {userName:formState.userName,phoneNumber:formState.phoneNumber }
+    userData.value.userName =formState.userName;
+    userData.value.phoneNumber=formState.phoneNumber;
     console.log(userData);
+    console.log(token);
     router.push("/user/profile");
   } catch (error) {
     console.error("Signup error:", error);

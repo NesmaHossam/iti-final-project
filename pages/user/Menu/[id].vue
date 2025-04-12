@@ -23,13 +23,13 @@
       <!-- Content when loaded -->
       <div v-if="item && !loading" class="p-2 sm:p-4">
         <!-- Mobile layout (stacked) -->
-        <div class="flex flex-col lg:flex-row gap-8">
+        <div class="flex flex-col lg:flex-row gap-8 justify-between">
           <!-- Image for mobile (top position) -->
-          <div class="lg:hidden w-full">
+          <div class="lg:hidden w-full text-center flex justify-center">
             <img
               :src="item.image.secure_url || '../../assets/images/Home/Menu1.png'"
               :alt="item.name"
-              class="rounded-xl shadow-md w-full h-64 sm:h-80 object-contain"
+              class="rounded-xl  w-1/2  object-contain"
             >
           </div>
 
@@ -41,7 +41,7 @@
               <span class="inline-block px-3 py-1 bg-slate-100 text-slate-800 rounded-full text-sm font-medium">
                 {{ item.category || 'UnCategorized' }}
               </span>
-              <span class="font-semibold text-xl sm:text-2xl text-primary">${{ item.price.toFixed(2) }}</span>
+              <span class="font-semibold text-xl sm:text-2xl text-primary">{{ item.price }} EGP</span>
             </div>
             
             <div class="mt-4 flex-grow">
@@ -53,7 +53,7 @@
             
             <div class="mt-6 sm:mt-8">
               <UButton
-                class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-all duration-300 w-full sm:w-auto"
+                class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-all duration-300 w-full sm:w-auto flex justify-center"
                 @click="router.push('/user/menu')"
               >
                 <span class="flex items-center justify-center">
@@ -64,12 +64,12 @@
           </div>
 
           <!-- Image for desktop (right position) -->
-          <div class="hidden lg:block lg:w-1/2">
+          <div class="hidden lg:w-1/4 lg:flex justify-center items-center">
             <div class="sticky top-24">
               <img
                 :src="item.image.secure_url || '../../assets/images/Home/Menu1.png'"
                 :alt="item.name"
-                class="rounded-xl shadow-lg w-full h-80 xl:h-96 object-contain transform hover:scale-[1.02] transition-transform duration-300"
+                class="rounded-xl w-full  object-contain transform hover:scale-[1.02] transition-transform duration-300"
               >
             </div>
           </div>

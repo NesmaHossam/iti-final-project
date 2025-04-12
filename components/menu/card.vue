@@ -12,7 +12,7 @@
       <div>
         <div class="flex justify-between items-center">
           <h2 class="text-2xl text-primary font-bold">{{ item.name }}</h2>
-          <span class="font-bold text-primary text-xl">${{ item.price.toFixed(2) }}</span>
+          <span class="font-bold text-primary text-xl text-center ms-4">{{ item.price }} EGP</span>
         </div>
         <p class="text-[#777] mt-2 line-clamp-2">
           {{ item.description || "No description available" }}

@@ -8,10 +8,12 @@ export const useApi = (request, method, payload, moreHeaders) => {
 
   if (token.value && user.value.role == 'User') {
     headers["authorization"] = `User ${token.value}`;
+    console.log("User")
     
   }
   if (token.value && user.value.role == 'Admin') {
     headers["authorization"] = `Admin ${token.value}`;
+    console.log("Admin")
   }
 
 

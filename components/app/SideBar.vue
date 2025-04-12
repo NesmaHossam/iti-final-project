@@ -23,27 +23,32 @@
             height="25"
             x="0"
             y="0"
-            viewBox="0 0 24 24"
+            viewBox="0 0 513.029 513.029"
             style="enable-background: new 0 0 512 512"
             xml:space="preserve"
           >
             <g>
-              <g fill="#000">
-                <path
-                  d="M19 10.75h-2c-2.42 0-3.75-1.33-3.75-3.75V5c0-2.42 1.33-3.75 3.75-3.75h2c2.42 0 3.75 1.33 3.75 3.75v2c0 2.42-1.33 3.75-3.75 3.75zm-2-8c-1.58 0-2.25.67-2.25 2.25v2c0 1.58.67 2.25 2.25 2.25h2c1.58 0 2.25-.67 2.25-2.25V5c0-1.58-.67-2.25-2.25-2.25zM7 22.75H5c-2.42 0-3.75-1.33-3.75-3.75v-2c0-2.42 1.33-3.75 3.75-3.75h2c2.42 0 3.75 1.33 3.75 3.75v2c0 2.42-1.33 3.75-3.75 3.75zm-2-8c-1.58 0-2.25.67-2.25 2.25v2c0 1.58.67 2.25 2.25 2.25h2c1.58 0 2.25-.67 2.25-2.25v-2c0-1.58-.67-2.25-2.25-2.25zM6 10.75c-2.62 0-4.75-2.13-4.75-4.75S3.38 1.25 6 1.25 10.75 3.38 10.75 6 8.62 10.75 6 10.75zm0-8C4.21 2.75 2.75 4.21 2.75 6S4.21 9.25 6 9.25 9.25 7.79 9.25 6 7.79 2.75 6 2.75zM18 22.75c-2.62 0-4.75-2.13-4.75-4.75s2.13-4.75 4.75-4.75 4.75 2.13 4.75 4.75-2.13 4.75-4.75 4.75zm0-8c-1.79 0-3.25 1.46-3.25 3.25s1.46 3.25 3.25 3.25 3.25-1.46 3.25-3.25-1.46-3.25-3.25-3.25z"
-                  fill="#FFFFFF"
-                  opacity="1"
-                  data-original="#000000"
-                ></path>
-              </g>
+              <path
+                d="M148.684 65.029h220.331V20.015C369.015 8.611 359.677 0 349.046 0c-2.07 0-4.187.326-6.296 1.022zM409.015 95.029h-305c-11.046 0-20 8.954-20 20v378c0 11.046 8.954 20 20 20h305c11.046 0 20-8.954 20-20v-378c0-11.045-8.955-20-20-20zm-252.5 180.324h4.345c6.466-41.398 39.257-74.189 80.655-80.655v-7.516c0-8.284 6.716-15 15-15s15 6.716 15 15v7.516c41.398 6.466 74.189 39.257 80.655 80.655h4.345c8.284 0 15 6.716 15 15s-6.716 15-15 15h-200c-8.284 0-15-6.716-15-15s6.715-15 15-15zm92.817 85.524c0 8.284-6.716 15-15 15h-72c-8.284 0-15-6.716-15-15s6.716-15 15-15h72c8.284 0 15 6.716 15 15zm103.433 75h-192.5c-8.284 0-15-6.716-15-15s6.716-15 15-15h192.5c8.284 0 15 6.716 15 15s-6.716 15-15 15z"
+                fill="#FFFFFF"
+                opacity="1"
+                data-original="#000000"
+              ></path>
+              <path
+                d="M321.636 275.353c-6.827-29.645-33.434-51.818-65.121-51.818s-58.294 22.174-65.121 51.818z"
+                fill="#FFFFFF"
+                opacity="1"
+                data-original="#000000"
+              ></path>
             </g>
           </svg>
           <span
             class="text-[1.1em] font[500] opacity-[0.8] transition-[0.3s] hover:opacity-[1]"
-            >Dashboard</span
+            >Menu Items</span
           >
         </nuxt-link>
       </li>
+
       <li
         class="nav-item relative py-[15px] px-[25px] my-[8px] mx-[15px] rounded-[8px] cursor-pointer transition-[0.3s] whitespace-nowrap"
       >
@@ -77,44 +82,7 @@
           >
         </nuxt-link>
       </li>
-      <li
-        class="nav-item relative py-[15px] px-[25px] my-[8px] mx-[15px] rounded-[8px] cursor-pointer transition-[0.3s] whitespace-nowrap"
-      >
-        <nuxt-link to="/admin/Menu" class="inline-flex items-center gap-4">
-          <svg
-            class="text-[1.5em] mr-[20px]"
-            xmlns="http://www.w3.org/2000/svg"
-            version="1.1"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            width="25"
-            height="25"
-            x="0"
-            y="0"
-            viewBox="0 0 513.029 513.029"
-            style="enable-background: new 0 0 512 512"
-            xml:space="preserve"
-          >
-            <g>
-              <path
-                d="M148.684 65.029h220.331V20.015C369.015 8.611 359.677 0 349.046 0c-2.07 0-4.187.326-6.296 1.022zM409.015 95.029h-305c-11.046 0-20 8.954-20 20v378c0 11.046 8.954 20 20 20h305c11.046 0 20-8.954 20-20v-378c0-11.045-8.955-20-20-20zm-252.5 180.324h4.345c6.466-41.398 39.257-74.189 80.655-80.655v-7.516c0-8.284 6.716-15 15-15s15 6.716 15 15v7.516c41.398 6.466 74.189 39.257 80.655 80.655h4.345c8.284 0 15 6.716 15 15s-6.716 15-15 15h-200c-8.284 0-15-6.716-15-15s6.715-15 15-15zm92.817 85.524c0 8.284-6.716 15-15 15h-72c-8.284 0-15-6.716-15-15s6.716-15 15-15h72c8.284 0 15 6.716 15 15zm103.433 75h-192.5c-8.284 0-15-6.716-15-15s6.716-15 15-15h192.5c8.284 0 15 6.716 15 15s-6.716 15-15 15z"
-                fill="#FFFFFF"
-                opacity="1"
-                data-original="#000000"
-              ></path>
-              <path
-                d="M321.636 275.353c-6.827-29.645-33.434-51.818-65.121-51.818s-58.294 22.174-65.121 51.818z"
-                fill="#FFFFFF"
-                opacity="1"
-                data-original="#000000"
-              ></path>
-            </g>
-          </svg>
-          <span
-            class="text-[1.1em] font[500] opacity-[0.8] transition-[0.3s] hover:opacity-[1]"
-            >Menu Items</span
-          >
-        </nuxt-link>
-      </li>
+     
       <li
         class="nav-item relative py-[15px] px-[25px] my-[8px] mx-[15px] rounded-[8px] cursor-pointer transition-[0.3s] whitespace-nowrap"
       >
@@ -154,7 +122,10 @@
         <nuxt-link
           to="#"
           class="inline-flex items-center gap-4"
-          @click="auth.logout"
+          @click="() => {
+            auth.logout()
+            console.log('logout')
+            }"
         >
           <svg
             class="text-[1.5em] mr-[20px]"
@@ -202,6 +173,8 @@
 
 <script setup>
 const auth = useAuth();
+console.log(auth.logout);
+
 </script>
 
 <style scoped>

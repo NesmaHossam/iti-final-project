@@ -5,10 +5,5 @@ definePageMeta({
 </script>
 
 <template>
-  <!-- <ReservationMealType/> -->
-  <!-- <ReservationTotalAttendance/> -->
-   <!-- <ReservationDateAndTime/> -->
-    <!-- <ReservationInformation/> -->
-     <!-- <ReservationPayments/> -->
      <ReservationStepper/>
 </template>
