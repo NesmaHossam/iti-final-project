@@ -108,16 +108,16 @@
               icon="i-heroicons-pencil"
               color="primary"
               variant="ghost"
-              @click="showMenu = true"
               label="Edit Order"
               class="cursor-pointer"
+              @click="showMenu = true"
             />
           </div>
 
           <div class="max-h-60 overflow-y-auto mb-4">
             <div
               v-for="item in cartItems"
-              :key="item.id"
+              :key="item.menuItemId"
               class="flex justify-between py-2 border-b border-gray-100 last:border-0"
             >
               <div class="flex items-center">
@@ -127,7 +127,7 @@
                   {{ item.quantity }}
                 </div>
                 <div>
-                  <p class="font-medium cursor-default">{{ item.title }}</p>
+                  <p class="font-medium cursor-default">{{ item.name }}</p>
                   <p class="text-sm text-gray-500 cursor-default">
                     ${{ item.price.toFixed(2) }} each
                   </p>
@@ -196,24 +196,24 @@
               :variant="selectedCategory === category ? 'solid' : 'outline'"
               color="primary"
               class="whitespace-nowrap cursor-pointer"
-              @click="selectedCategory = category"
+              @click="selectCategory(category)"
             />
           </div>
 
           <!-- Menu Cards -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div
-              v-for="(item, index) in filteredMenuByCategory"
+              v-for="(item, index) in paginatedMenuItems"
               :key="index"
               class="border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 bg-white"
             >
               <div class="flex flex-col h-full">
                 <div class="relative h-48">
                   <img
-                    :src="item.image"
-                    :alt="item.title"
+                    :src="item.image?.secure_url || item.image"
+                    :alt="item.title || item.name"
                     class="h-full w-full object-contain"
-                  />
+                  >
                   <div
                     class="absolute top-0 right-0 m-2 px-3 py-1 rounded-full text-xs font-semibold bg-primary/80 text-white cursor-default"
                   >
@@ -222,7 +222,7 @@
                 </div>
                 <div class="p-4 flex flex-col flex-grow">
                   <h3 class="font-bold text-lg mb-2 cursor-default">
-                    {{ item.title }}
+                    {{ item.title || item.name }}
                   </h3>
                   <p class="text-gray-600 mb-auto cursor-default">
                     {{ item.description }}
@@ -231,7 +231,7 @@
                   <!-- Quantity Controls -->
                   <div class="flex items-center justify-end mt-4">
                     <div
-                      v-if="getCartItem(item.id)"
+                      v-if="getCartItem(item._id)"
                       class="flex items-center space-x-3 border border-gray-200 rounded-lg px-2 py-1"
                     >
                       <UButton
@@ -242,7 +242,7 @@
                         @click="decreaseQuantity(item)"
                       />
                       <span class="text-lg font-medium w-6 text-center">{{
-                        getCartItem(item.id).quantity
+                        getCartItem(item._id).quantity
                       }}</span>
                       <UButton
                         icon="i-heroicons-plus"
@@ -262,6 +262,40 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          
+          <!-- Pagination Controls -->
+          <div class="flex justify-center mt-8" v-if="totalPages > 1">
+            <div class="flex space-x-2">
+              <UButton
+                icon="i-heroicons-chevron-left"
+                color="primary"
+                variant="ghost"
+                class="cursor-pointer"
+                :disabled="currentPage === 1"
+                @click="currentPage--"
+              />
+              <div class="flex space-x-1">
+                <UButton
+                  v-for="page in paginationRange"
+                  :key="page"
+                  :variant="currentPage === page ? 'solid' : 'outline'"
+                  color="primary"
+                  class="w-10 h-10 cursor-pointer"
+                  @click="currentPage = page"
+                >
+                  {{ page }}
+                </UButton>
+              </div>
+              <UButton
+                icon="i-heroicons-chevron-right"
+                color="primary"
+                variant="ghost"
+                class="cursor-pointer"
+                :disabled="currentPage === totalPages"
+                @click="currentPage++"
+              />
             </div>
           </div>
         </div>
@@ -315,8 +349,6 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-
 const props = defineProps({
   formData: {
     type: Object,
@@ -328,6 +360,13 @@ const emit = defineEmits(["update-data"]);
 const showMenu = ref(false);
 const selectedCategory = ref("All");
 const proceedingToNext = ref(false);
+const menuItems = ref([]);
+const loading = ref(false);
+const error = ref(null);
+
+// Pagination
+const currentPage = ref(1);
+const itemsPerPage = 6; // Show 6 items per page
 
 // Initialize cart if not already done
 if (!props.formData.cart) {
@@ -337,19 +376,123 @@ if (!props.formData.cart) {
   });
 }
 
+// Fetch menu items on component mount
+onMounted(async () => {
+  try {
+    loading.value = true;
+    const response = await useApi('/menu/getMenu', "get");
+    console.log('API Response:', response); 
+    if (response && response.results) {
+      menuItems.value = response.results;
+    }
+  } catch (err) {
+    console.error('Error fetching menu items:', err);
+    error.value = 'Failed to load menu items';
+  } finally {
+    loading.value = false;
+  }
+});
+
+// Watch category changes to reset pagination
+watch(selectedCategory, () => {
+  currentPage.value = 1;
+});
+
 // Categories for menu filtering
 const categories = computed(() => {
   const all = ["All"];
+  // Use menuItems from API if available
+  const itemsToFilter = menuItems.value.length > 0 ? menuItems.value : [];
   const uniqueCategories = [
-    ...new Set(filteredMenu.value.map((item) => item.category)),
+    ...new Set(itemsToFilter.map((item) => item.category)),
   ];
   return [...all, ...uniqueCategories].filter(Boolean);
 });
 
-// Watch for changes in cart items to update formData
+// Cart items computed property
 const cartItems = computed(() => {
   return props.formData.cart?.items || [];
 });
+
+// REMOVED: The meal type filtering - now we just return all menu items
+// No more filtering based on mealType
+const filteredMenu = computed(() => {
+  return menuItems.value; // Return all menu items without meal type filtering
+});
+
+// Filter menu items by selected category
+const filteredMenuByCategory = computed(() => {
+  if (selectedCategory.value === "All") return filteredMenu.value;
+  return filteredMenu.value.filter(
+    (item) => item.category === selectedCategory.value
+  );
+});
+
+// Calculate total pages for pagination
+const totalPages = computed(() => {
+  return Math.ceil(filteredMenuByCategory.value.length / itemsPerPage);
+});
+
+// Create pagination range (for display)
+const paginationRange = computed(() => {
+  const range = [];
+  const maxVisible = 5; // Max number of page buttons to show
+  
+  if (totalPages.value <= maxVisible) {
+    // Show all pages
+    for (let i = 1; i <= totalPages.value; i++) {
+      range.push(i);
+    }
+  } else {
+    // Always show first page
+    range.push(1);
+    
+    // Calculate start and end of central range
+    let start = Math.max(2, currentPage.value - 1);
+    let end = Math.min(totalPages.value - 1, currentPage.value + 1);
+    
+    // Adjust when at edges
+    if (currentPage.value <= 2) {
+      end = 4;
+    } else if (currentPage.value >= totalPages.value - 1) {
+      start = totalPages.value - 3;
+    }
+    
+    // Add page numbers
+    for (let i = start; i <= end; i++) {
+      range.push(i);
+    }
+    
+    // Always show last page
+    if (!range.includes(totalPages.value)) {
+      range.push(totalPages.value);
+    }
+  }
+  
+  return range;
+});
+
+// Get paginated menu items for current page
+const paginatedMenuItems = computed(() => {
+  const startIndex = (currentPage.value - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const result = filteredMenuByCategory.value.slice(startIndex, endIndex);
+  console.log('Paginated items:', {
+    currentPage: currentPage.value,
+    startIndex,
+    endIndex,
+    totalItems: filteredMenuByCategory.value.length,
+    showingItems: result.length,
+    items: result
+  });
+  return result;
+});
+
+// Handle category selection
+function selectCategory(category) {
+  selectedCategory.value = category;
+  currentPage.value = 1; // Reset to first page when changing category
+}
 
 // Enable pre-order option
 function enablePreOrder() {
@@ -385,113 +528,20 @@ function confirmSelection() {
   showMenu.value = false;
 }
 
-// Menu items filtered by meal type
-const menu = [
-  // Breakfast items
-  {
-    id: "b1",
-    type: "breakfast",
-    category: "American",
-    title: "American Breakfast",
-    description: "Eggs, bacon, toast, and hash browns with fresh orange juice",
-    price: 12.99,
-    image: new URL(
-      "@/assets/images/Menu/Appetizer/ChickenWings.png",
-      import.meta.url
-    ).href,
-  },
-  {
-    id: "b2",
-    type: "breakfast",
-    category: "Continental",
-    title: "Continental Breakfast",
-    description: "Assorted pastries, fruits, yogurt, and coffee",
-    price: 9.99,
-    image: new URL(
-      "@/assets/images/Menu/Appetizer/GarlicBread.png",
-      import.meta.url
-    ).href,
-  },
-  {
-    id: "b3",
-    type: "breakfast",
-    category: "American",
-    title: "Pancake Stack",
-    description: "Fluffy pancakes with maple syrup and fresh berries",
-    price: 10.99,
-    image: new URL(
-      "@/assets/images/Menu/Main/GrilledChickenFillet.png",
-      import.meta.url
-    ).href,
-  },
-  // Dinner items
-  {
-    id: "d1",
-    type: "dinner",
-    category: "Seafood",
-    title: "Grilled Salmon",
-    description: "Fresh salmon with lemon butter sauce and seasonal vegetables",
-    price: 24.99,
-    image: new URL(
-      "@/assets/images/Menu/Main/StuffedSeaBass.png",
-      import.meta.url
-    ).href,
-  },
-  {
-    id: "d2",
-    type: "dinner",
-    category: "Steak",
-    title: "Ribeye Steak",
-    description:
-      "12oz ribeye with garlic mashed potatoes and grilled asparagus",
-    price: 29.99,
-    image: new URL(
-      "@/assets/images/Menu/Pasta/SpaghettiBolognese.png",
-      import.meta.url
-    ).href,
-  },
-  {
-    id: "d3",
-    type: "dinner",
-    category: "Pasta",
-    title: "Pasta Primavera",
-    description: "Fresh pasta with seasonal vegetables in a light cream sauce",
-    price: 18.99,
-    image: new URL(
-      "@/assets/images/Menu/Pasta/TagliatelleFruitt.png",
-      import.meta.url
-    ).href,
-  },
-];
-
-// Filter menu items based on selected meal type
-const filteredMenu = computed(() => {
-  if (!props.formData.mealType) return [];
-  return menu.filter((item) => item.type === props.formData.mealType);
-});
-
-// Further filter menu items by selected category
-const filteredMenuByCategory = computed(() => {
-  if (selectedCategory.value === "All") return filteredMenu.value;
-  return filteredMenu.value.filter(
-    (item) => item.category === selectedCategory.value
-  );
-});
-
 // Find an item in the cart by ID
 function getCartItem(id) {
   if (!props.formData.cart?.items) return null;
-  return props.formData.cart.items.find((item) => item.id === id);
+  return props.formData.cart.items.find((item) => item.menuItemId === id);
 }
 
-// Add an item to the cart
+// Add an item to the cart with the structure expected by the backend
 function addToCart(item) {
   const currentCart = props.formData.cart?.items || [];
   const updatedCart = [
     ...currentCart,
     {
-      id: item.id,
-      title: item.title,
+      menuItemId: item._id, // Use _id instead of id to match MongoDB
+      name: item.name || item.title, // Use name or title, depending on what's available
       price: item.price,
       quantity: 1,
     },
@@ -508,7 +558,7 @@ function addToCart(item) {
 function increaseQuantity(item) {
   const currentCart = [...props.formData.cart.items];
   const itemIndex = currentCart.findIndex(
-    (cartItem) => cartItem.id === item.id
+    (cartItem) => cartItem.menuItemId === item._id
   );
 
   if (itemIndex !== -1) {
@@ -528,7 +578,7 @@ function increaseQuantity(item) {
 function decreaseQuantity(item) {
   const currentCart = [...props.formData.cart.items];
   const itemIndex = currentCart.findIndex(
-    (cartItem) => cartItem.id === item.id
+    (cartItem) => cartItem.menuItemId === item._id
   );
 
   if (itemIndex !== -1) {
@@ -564,18 +614,6 @@ function getTotalItems() {
     return total + item.quantity;
   }, 0);
 }
-
-
-onMounted(async () => {
-  try {
-    const response = await useApi('/menu/getMenu', "get");
-    console.log(response.results);
-
-  } catch (error) {
-    console.error('Error fetching reservations:', error);
-  }
-});
-
 </script>
 
 <style scoped>

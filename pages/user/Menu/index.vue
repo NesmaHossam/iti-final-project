@@ -1,14 +1,14 @@
 <template>
   <div>
-    <MenuHeader />
+    <MenuHeader/>
     <UContainer>
-      <div class="flex flex-col md:flex-row gap-8 mt-8">
+      <div id="menuGrid" ref="menuGridRef"  class="flex flex-col md:flex-row gap-8 mt-8">
         <div class="w-full md:w-[30%] flex flex-col gap-6">
-          <MenuFilter v-model="selectedFilters" :model-value="'ALL'" @change="handleFilterChange" />
+          <MenuFilter v-model="selectedFilters" @change="handleFilterChange" />
           <MenuSort v-model="sortOrder" />
         </div>
         
-        <div class="w-full md:w-[70%]">
+        <div  class="w-full md:w-[70%]">
           <MenuSearch
             v-model="searchQuery"
             class="w-full mb-6"
@@ -25,9 +25,7 @@
           >
             {{ error }}
             <div class="mt-4">
-              <UButton color="primary" @click="handleResetFilters"
-                >Reset Filters</UButton
-              >
+              <UButton color="primary" @click="handleResetFilters">Reset Filters</UButton>
             </div>
           </div>
 
@@ -39,84 +37,80 @@
             <p class="text-gray-500 mb-4">
               Try changing your filters or search criteria
             </p>
-            <UButton color="primary" @click="handleResetFilters"
-              >Reset Filters</UButton
-            >
+            <UButton color="primary" @click="handleResetFilters">Reset Filters</UButton>
           </div>
 
           <div v-else>
-            
-              <div ref="menuGridRef">
-                <div  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <MenuCard
-                    v-for="item in sortedMenu"
-                    :key="item.id || item._id"
-                    :item="item"
-                  />
-                </div>
+            <div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <MenuCard
+                  v-for="item in paginatedItems"
+                  :key="item.id || item._id"
+                  :item="item"
+                />
               </div>
-
-            <div 
-                v-if= "showPagination"
-                class="mt-8 flex justify-center items-center gap-2" @click="console.log(sortedMenu.length)">
-              <UButton 
-                class="bg-primary text-white" 
-                :disabled="pagination.currentPage === 1"
-                @click="goToPage(pagination.currentPage - 1)"
-              >
-                Previous
-              </UButton>
-              
-              <div class="flex gap-1">
-                <button
-                  v-for="page in getPaginationRange()"
-                  :key="page"
-                  type="button"
-                  class="w-8 h-8 flex items-center justify-center rounded-full"
-                  :class="page === pagination.currentPage ? 'bg-primary text-white' : 'text-primary hover:bg-gray-100'"
-                  @click="goToPage(page)"
-                >
-                  {{ page }}
-                </button>
-              </div>
-              
-              <UButton 
-                class="bg-primary text-white" 
-                :disabled="pagination.currentPage === pagination.totalPages"
-                @click="goToPage(pagination.currentPage + 1)"
-              >
-                Next
-              </UButton>
-
             </div>
-            <!-- <UPagination
-            v-if="pagination.totalPages > 1"
-            v-model="pagination.currentPage"
-            :page-count="pagination.itemsPerPage"
-            :total="pagination.totalItems"
-            :ui="{
-              wrapper: 'flex items-center gap-1',
-              base: 'min-w-8 w-8 h-8',
-              rounded: 'rounded-full',
-              default: {
-                activeButton: {
-                  variant: 'solid',
-                  color: 'primary'
-                },
-                inactiveButton: {
-                  variant: 'ghost',
-                  color: 'gray'
-                }
-              }
-              }"
-              @update:model-value="goToPage"
-              /> -->
-              <!-- <p @click="goToPage(pagination.currentPage + 1)">{{ pagination.currentPage }}</p>
-              <p>{{ pagination.totalPages }}</p>
-              <p>{{ pagination.totalItems }}</p>
-              <p>{{ pagination.nextPage}}</p>
-              <p @click="goToPage(pagination.currentPage - 1)">{{ pagination.prevPage}}</p> -->
+
+            <!-- Custom Pagination -->
+            <div v-if="totalPages > 1" class="flex items-center justify-center my-8">
+              <!-- Previous Button -->
+              <button 
+              :disabled="currentPage === 1"
+              class="min-w-8 h-8 flex items-center justify-center rounded-full mx-1"
+              :class="currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-gray-700 hover:bg-gray-100'"
+              @click="handlePageChange(currentPage - 1)"
+              >
+                <span>Previous</span>
+              </button>
+              
+              <!-- First Page (always show) -->
+              <button
+                v-if="showFirstPageButton"
+                class="min-w-8 h-8 flex items-center justify-center rounded-full mx-1"
+                :class="currentPage === 1 ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100'"
+                @click="handlePageChange(1)"
+              >
+                <span>1</span>
+              </button>
+              
+              <!-- Ellipsis if needed -->
+              <span v-if="showLeftEllipsis" class="mx-1">...</span>
+              
+              <!-- Middle Pages -->
+              <button
+                v-for="page in visiblePageNumbers"
+                :key="page"
+                class="min-w-8 h-8 flex items-center justify-center rounded-full mx-1"
+                :class="currentPage === page ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100'"
+                @click="handlePageChange(page)"
+              >
+                <span>{{ page }}</span>
+              </button>
+              
+              <!-- Ellipsis if needed -->
+              <span v-if="showRightEllipsis" class="mx-1">...</span>
+              
+              <!-- Last Page (always show if not in visible pages) -->
+              <button
+                v-if="showLastPageButton"
+                class="min-w-8 h-8 flex items-center justify-center rounded-full mx-1"
+                :class="currentPage === totalPages ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100'"
+                @click="handlePageChange(totalPages)"
+              >
+                <span>{{ totalPages }}</span>
+              </button>
+              
+              <!-- Next Button -->
+              <button 
+              :disabled="currentPage === totalPages"
+              class="min-w-8 h-8 flex items-center justify-center rounded-full mx-1"
+              :class="currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'text-gray-700 hover:bg-gray-100'"
+              @click="handlePageChange(currentPage + 1)"
+              >
+                <span>Next</span>
+              </button>
             </div>
+          </div>
         </div>
       </div>
     </UContainer>
@@ -124,10 +118,14 @@
 </template>
 
 <script setup>
-
 const route = useRoute();
 const router = useRouter();
 const menuGridRef = ref(null);
+
+// Pagination settings
+const currentPage = ref(1);
+const itemsPerPage = 6;
+const visiblePageCount = 5;
 
 const {
   error,
@@ -136,94 +134,144 @@ const {
   selectedFilters,
   sortOrder,
   sortedMenu,
-  pagination,
   fetchMenu,
-  goToPage,
   resetFilters,
-} = useMenuApi(menuGridRef);
+} = useMenuApi();
 
-const showPagination = computed(() => {
-  return pagination.value.itemsPerPage > 1 && sortedMenu.value.length > 0;
-});
+// Initialize with empty array to prevent undefined errors
+const safeSortedMenu = computed(() => sortedMenu.value || []);
 
-const getPaginationRange = () => {
-  const totalPages = pagination.value.totalPages;
-  const currentPage = pagination.value.currentPage;
-  
-  if (totalPages <= 7) {
-    return Array.from({ length: totalPages }, (_, i) => i + 1);
-  }
-  
-  if (currentPage <= 3) {
-    return [1, 2, 3, 4, '...', totalPages];
-  }
-  
-  if (currentPage >= totalPages - 2) {
-    return [1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
-  }
-  
-  return [
-    1, 
-    '...', 
-    currentPage - 1, 
-    currentPage, 
-    currentPage + 1, 
-    '...', 
-    totalPages
-  ];
+// Scroll to menu grid function
+const scrollToMenuGrid = () => {
+  nextTick(() => {
+    const target = menuGridRef.value || document.getElementById('menuGrid');
+    if (target) {
+      const offset = 100;
+      const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+      const scrollToPosition = targetPosition - offset;
+
+      window.scrollTo({
+        top: scrollToPosition,
+        behavior: 'smooth'
+      });
+    }
+  });
 };
 
+// Computed properties for pagination
+const totalPages = computed(() => {
+  return Math.max(1, Math.ceil(safeSortedMenu.value.length / itemsPerPage));
+});
 
+const paginatedItems = computed(() => {
+  const items = safeSortedMenu.value;
+  const startIndex = (currentPage.value - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  return items.slice(startIndex, endIndex);
+});
 
-// Immediate watcher for route changes
+// Custom pagination logic for visible page numbers
+const visiblePageNumbers = computed(() => {
+  const total = totalPages.value;
+  const current = currentPage.value;
+  const halfVisible = Math.floor(visiblePageCount / 2);
+  
+  // Simple case: if we have fewer pages than our display limit, show all
+  if (total <= visiblePageCount + 2) {
+    return Array.from({ length: total }, (_, i) => i + 1);
+  }
+  
+  let start = Math.max(2, current - halfVisible);
+  let end = Math.min(total - 1, start + visiblePageCount - 1);
+  
+  // Adjust start if we're near the end
+  if (end === total - 1) {
+    start = Math.max(2, end - visiblePageCount + 1);
+  }
+  
+  return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+});
+
+// Logic for showing ellipsis and first/last buttons
+const showFirstPageButton = computed(() => {
+  return totalPages.value > 2;
+});
+
+const showLastPageButton = computed(() => {
+  return totalPages.value > 2 && !visiblePageNumbers.value.includes(totalPages.value);
+});
+
+const showLeftEllipsis = computed(() => {
+  return visiblePageNumbers.value.length > 0 && visiblePageNumbers.value[0] > 2;
+});
+
+const showRightEllipsis = computed(() => {
+  return visiblePageNumbers.value.length > 0 && 
+         visiblePageNumbers.value[visiblePageNumbers.value.length - 1] < totalPages.value - 1;
+});
+
+// Watcher for route changes
 watch(
   () => route.query,
   async (newQuery) => {
-    const category = newQuery?.category || "all";
-    const page = parseInt(newQuery?.page) || 1;
-    const search = newQuery?.search || "";
+    try {
+      const category = newQuery?.category || "all";
+      const search = newQuery?.search || "";
 
-    // Update local state
-    selectedFilters.value =
-      category !== "all" ? [category.charAt(0).toUpperCase() + category.slice(1)] : ["All"];
-    searchQuery.value = search;
-
-    await fetchMenu(category, page, search);
+      selectedFilters.value = category !== "all" 
+        ? category.charAt(0).toUpperCase() + category.slice(1)
+        : "All";
+      searchQuery.value = search;
+      
+      await fetchMenu();
+      currentPage.value = 1;
+      
+      if (paginatedItems.value.length > 0) {
+        scrollToMenuGrid();
+      }
+    } catch (err) {
+      console.error("Error handling route change:", err);
+      error.value = "Failed to load menu items";
+      status.value = "error";
+    }
   },
   { immediate: true }
 );
 
+// Watcher for sorted menu changes
+watch(safeSortedMenu, (newItems) => {
+  if (newItems.length === 0) {
+    status.value = status.value === 'success' ? 'empty' : status.value;
+  }
+  // Reset to first page if current page exceeds total pages
+  if (currentPage.value > totalPages.value) {
+    currentPage.value = 1;
+  }
+});
+
+// Filter change handler
 const handleFilterChange = async () => {
   try {
     const category = selectedFilters.value === 'All'
       ? 'all'
       : selectedFilters.value.toLowerCase();
 
-    // avoid unnecessary updates
     if (route.query.category === category) return;
-
-    // optional: set a timeout to show loader *if fetch takes long*
-    const loaderTimeout = setTimeout(() => {
-      status.value = "pending";
-    }, 300); // only show loader if fetch takes >300ms
 
     await router.push({
       query: {
         ...route.query,
         category,
-        page: 1,
       },
     });
-
-    clearTimeout(loaderTimeout);
   } catch (err) {
+    console.error("Filter change error:", err);
     error.value = "Failed to update filters";
     status.value = "error";
   }
 };
 
-
-
+// Search handler with debounce
 const debounce = (fn, delay) => {
   let timeoutId = null;
   return (...args) => {
@@ -234,26 +282,38 @@ const debounce = (fn, delay) => {
 
 const handleSearch = debounce(async () => {
   try {
-    status.value = "pending";
     await router.push({
       query: {
         ...route.query,
         search: searchQuery.value,
-        page: 1,
       },
     });
   } catch (err) {
+    console.error("Search error:", err);
     error.value = "Search failed";
     status.value = "error";
   }
 }, 500);
 
+// Page change handler
+const handlePageChange = (page) => {
+  // Validate that page is within bounds
+  if (page < 1 || page > totalPages.value || page === currentPage.value) {
+    return;
+  }
+  
+  currentPage.value = page;
+  scrollToMenuGrid();
+};
+
+// Reset filters handler
 const handleResetFilters = async () => {
   try {
-    status.value = "pending";
     resetFilters();
+    currentPage.value = 1;
     await router.push({ query: {} });
   } catch (err) {
+    console.error("Reset filter error:", err);
     error.value = "Failed to reset filters";
     status.value = "error";
   }

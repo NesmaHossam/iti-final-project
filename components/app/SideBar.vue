@@ -7,7 +7,7 @@
         src="../../assets/images/LOGO.png"
         alt="logo"
         class="w-20 md:w-35 mx-auto"
-      />
+      >
     </div>
     <ul class="second-nav list-none p-0 m-0">
       <li
