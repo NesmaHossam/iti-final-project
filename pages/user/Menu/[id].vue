@@ -15,7 +15,7 @@
       <!-- Error state -->
       <div v-if="error" class="text-red-500 text-center p-10 flex flex-col items-center">
         <div class="text-xl font-semibold mb-4">{{ error }}</div>
-        <UButton color="primary" size="lg" class="mt-4" @click="router.push('/user/menu')">
+        <UButton color="primary cursor-pointer" size="lg" class="mt-4" @click="router.push('/user/menu')">
           Back to Menu
         </UButton>
       </div>
@@ -53,7 +53,7 @@
             
             <div class="mt-6 sm:mt-8">
               <UButton
-                class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-all duration-300 w-full sm:w-auto flex justify-center"
+                class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-all duration-300 w-full sm:w-auto flex justify-center cursor-pointer"
                 @click="router.push('/user/menu')"
               >
                 <span class="flex items-center justify-center">

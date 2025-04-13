@@ -122,10 +122,10 @@ const page = ref(1);
   <div class="flex flex-col gap-8 w-full my-8 mx-[20%] lg:mx-[10%]">
     <div class="flex justify-between items-center">
       <div class="flex flex-col">
-        <h2 class="text-primary text-xl md:text-3xl font-bold">
+        <h2 class="text-primary text-xl md:text-3xl font-bold cursor-default">
           Tables Reservation
         </h2>
-        <p>{{ data.length }} Reservation</p>
+        <p class="cursor-default">{{ data.length }} Reservation</p>
       </div>
       <div>
         <UInput
@@ -164,7 +164,7 @@ const page = ref(1);
 
     <div class="flex justify-between items-center">
       <div>
-        <p class="text-sm text-gray-500">
+        <p class="text-sm text-gray-500 cursor-default">
           Showing 1-{{ data.length }} of {{ data.length }}
         </p>
       </div>

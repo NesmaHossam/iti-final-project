@@ -11,24 +11,24 @@ const isAddLoading = ref(false);
 
 // For edit form
 const editForm = ref({
-  name: '',
-  category: '',
-  price: '',
-  description: '',
-  image: null
+  name: "",
+  category: "",
+  price: "",
+  description: "",
+  image: null,
 });
 
 // For add form
 const newItem = ref({
-  name: '',
-  category: '',
-  price: '',
-  description: '',
-  image: null
+  name: "",
+  category: "",
+  price: "",
+  description: "",
+  image: null,
 });
 
 // items select for categories
-const items = ref(["dinner", "lunch", "breakfast", "drinks", 'dessert']);
+const items = ref(["dinner", "lunch", "breakfast", "drinks", "dessert"]);
 const selectedCategory = ref("all"); // Default to show all items
 
 const page = ref(1);
@@ -46,16 +46,17 @@ watch([globalFilter, selectedCategory], () => {
 const filteredData = computed(() =>
   data.value.filter((item) => {
     const searchTerm = globalFilter.value.toLowerCase();
-    const matchesSearch = 
+    const matchesSearch =
       item.name.toLowerCase().includes(searchTerm) ||
       item.category.toLowerCase().includes(searchTerm) ||
       item.description.toLowerCase().includes(searchTerm) ||
       item.price.toString().toLowerCase().includes(searchTerm);
-    
+
     // If "all" is selected or category matches the selected one
-    const matchesCategory = selectedCategory.value === "all" || 
-                            item.category === selectedCategory.value;
-    
+    const matchesCategory =
+      selectedCategory.value === "all" ||
+      item.category === selectedCategory.value;
+
     return matchesSearch && matchesCategory;
   })
 );
@@ -74,16 +75,16 @@ onMounted(async () => {
 
 const fetchMenuItems = async () => {
   try {
-    const response = await useApi('/menu/getMenu', "get");
+    const response = await useApi("/menu/getMenu", "get");
     console.log(response);
     console.log(data);
-    
+
     if (response?.results) {
       data.value = response.results;
       console.log(data);
     }
   } catch (error) {
-    console.error('Error fetching results:', error);
+    console.error("Error fetching results:", error);
     toast.add({
       title: "Failed to load menu items",
       description: error.message || "Could not load menu items",
@@ -102,8 +103,11 @@ const openDeleteModal = (itemId) => {
 // Handle delete item
 const deleteItem = async () => {
   try {
-    const response = await useApi(`/menu/deleteMenuItem/${currentItemId.value}`, 'delete');
-    
+    const response = await useApi(
+      `/menu/deleteMenuItem/${currentItemId.value}`,
+      "delete"
+    );
+
     if (response && response.success) {
       toast.add({
         title: "Success",
@@ -111,14 +115,14 @@ const deleteItem = async () => {
         color: "success",
         icon: "i-lucide-check-circle",
       });
-      
+
       // Refresh data after deletion
       await fetchMenuItems();
     } else {
       throw new Error(response?.message || "Failed to delete item");
     }
   } catch (error) {
-    console.error('Error deleting item:', error);
+    console.error("Error deleting item:", error);
     toast.add({
       title: "Failed to delete item",
       description: error.message || "Could not delete the item",
@@ -134,11 +138,11 @@ const deleteItem = async () => {
 const openEditModal = (item) => {
   // Set the form data first
   editForm.value = {
-    name: item.name || '',
-    category: item.category || '',
-    price: item.price || '',
-    description: item.description || '',
-    image: null
+    name: item.name || "",
+    category: item.category || "",
+    price: item.price || "",
+    description: item.description || "",
+    image: null,
   };
   // Set the current item ID
   currentItemId.value = item._id;
@@ -150,15 +154,19 @@ const openEditModal = (item) => {
 const submitEditItem = async (event) => {
   // Prevent default form submission behavior
   if (event) event.preventDefault();
-  
+
   // Return early if already processing
   if (isEditLoading.value) return;
-  
+
   try {
     isEditLoading.value = true;
-    
+
     // Validate required fields
-    if (!editForm.value.name || !editForm.value.category || !editForm.value.price) {
+    if (
+      !editForm.value.name ||
+      !editForm.value.category ||
+      !editForm.value.price
+    ) {
       toast.add({
         title: "Validation Error",
         description: "Please fill in all required fields",
@@ -167,16 +175,16 @@ const submitEditItem = async (event) => {
       });
       return;
     }
-    
+
     // Create form data for submission
     const formData = new FormData();
-    formData.append('name', editForm.value.name);
-    formData.append('category', editForm.value.category);
-    formData.append('price', editForm.value.price);
-    formData.append('description', editForm.value.description || '');
-    
+    formData.append("name", editForm.value.name);
+    formData.append("category", editForm.value.category);
+    formData.append("price", editForm.value.price);
+    formData.append("description", editForm.value.description || "");
+
     if (editForm.value.image) {
-      formData.append('image', editForm.value.image);
+      formData.append("image", editForm.value.image);
     }
 
     // Debug log for formData
@@ -184,11 +192,15 @@ const submitEditItem = async (event) => {
       name: editForm.value.name,
       category: editForm.value.category,
       price: editForm.value.price,
-      description: editForm.value.description
+      description: editForm.value.description,
     });
 
-    const response = await useApi(`/menu/updateMenuItem/${currentItemId.value}`, 'put', formData);
-    
+    const response = await useApi(
+      `/menu/updateMenuItem/${currentItemId.value}`,
+      "put",
+      formData
+    );
+
     if (response && response.success) {
       toast.add({
         title: "Success",
@@ -196,17 +208,17 @@ const submitEditItem = async (event) => {
         color: "success",
         icon: "i-lucide-check-circle",
       });
-      
+
       // Refresh data after update
       await fetchMenuItems();
-      
+
       // Explicitly close the modal
       editModalOpen.value = false;
     } else {
       throw new Error(response?.message || "Failed to update item");
     }
   } catch (error) {
-    console.error('Error updating item:', error);
+    console.error("Error updating item:", error);
     toast.add({
       title: "Failed to update item",
       description: error.message || "Could not update the item",
@@ -222,15 +234,19 @@ const submitEditItem = async (event) => {
 const submitAddItem = async (event) => {
   // Prevent default form submission behavior
   if (event) event.preventDefault();
-  
+
   // Return early if already processing
   if (isAddLoading.value) return;
-  
+
   try {
     isAddLoading.value = true;
-    
+
     // Validate required fields
-    if (!newItem.value.name || !newItem.value.category || !newItem.value.price) {
+    if (
+      !newItem.value.name ||
+      !newItem.value.category ||
+      !newItem.value.price
+    ) {
       toast.add({
         title: "Validation Error",
         description: "Please fill in all required fields",
@@ -240,22 +256,22 @@ const submitAddItem = async (event) => {
       isAddLoading.value = false;
       return;
     }
-    
+
     // Create form data for submission
     const formData = new FormData();
-    formData.append('name', newItem.value.name);
-    formData.append('category', newItem.value.category);
-    formData.append('price', newItem.value.price);
-    formData.append('description', newItem.value.description || '');
-    
+    formData.append("name", newItem.value.name);
+    formData.append("category", newItem.value.category);
+    formData.append("price", newItem.value.price);
+    formData.append("description", newItem.value.description || "");
+
     if (newItem.value.image) {
-      formData.append('image', newItem.value.image);
+      formData.append("image", newItem.value.image);
     }
 
     // Debug log
     console.log("Submitting new item with FormData");
-    const response = await useApi('/menu/addMenu', 'post', formData);
-    
+    const response = await useApi("/menu/addMenu", "post", formData);
+
     if (response && response.success) {
       toast.add({
         title: "Success",
@@ -263,26 +279,26 @@ const submitAddItem = async (event) => {
         color: "success",
         icon: "i-lucide-check-circle",
       });
-      
+
       // Reset form
       newItem.value = {
-        name: '',
-        category: '',
-        price: '',
-        description: '',
-        image: null
+        name: "",
+        category: "",
+        price: "",
+        description: "",
+        image: null,
       };
-      
+
       // Refresh data after adding
       await fetchMenuItems();
-      
+
       // Explicitly close the modal
       addModalOpen.value = false;
     } else {
       throw new Error(response?.message || "Failed to add item");
     }
   } catch (error) {
-    console.error('Error adding item:', error);
+    console.error("Error adding item:", error);
     toast.add({
       title: "Failed to add item",
       description: error.message || "Could not add the item",
@@ -312,8 +328,8 @@ const handleAddImageUpload = (event) => {
   <div class="flex flex-col gap-8 w-full my-6 mx-[20%] lg:mx-[10%]">
     <div class="flex justify-between items-center">
       <div class="flex justify-between flex-col">
-        <h2 class="text-primary text-xl md:text-3xl font-bold">Menu Items</h2>
-        <p>{{ filteredData.length }} Items</p>
+        <h2 class="text-primary text-xl md:text-3xl font-bold cursor-default">Menu Items</h2>
+        <p class="cursor-default">{{ filteredData.length }} Items</p>
       </div>
 
       <div class="flex flex-col gap-4">
@@ -326,10 +342,7 @@ const handleAddImageUpload = (event) => {
           placeholder="Search..."
         />
 
-        <UModal 
-          v-model="addModalOpen"
-          title="Add New Item to Menu"
-        >
+        <UModal v-model="addModalOpen" title="Add New Item to Menu">
           <UButton
             label="Add New Item"
             color="neutral"
@@ -347,11 +360,35 @@ const handleAddImageUpload = (event) => {
                 </div>
 
                 <div class="flex flex-col gap-2 my-6">
-                  <UInput v-model="newItem.name" placeholder="Item Name" type="text" required />
-                  <UInputMenu v-model="newItem.category" placeholder="Item Type" :items="items" required />
-                  <UInput v-model="newItem.price" placeholder="Item Price" type="number" required />
-                  <UInput type="file" placeholder="Item Image" required @change="handleAddImageUpload" />
-                  <UTextarea v-model="newItem.description" placeholder="Item Description..." required />
+                  <UInput
+                    v-model="newItem.name"
+                    placeholder="Item Name"
+                    type="text"
+                    required
+                  />
+                  <UInputMenu
+                    v-model="newItem.category"
+                    placeholder="Item Type"
+                    :items="items"
+                    required
+                  />
+                  <UInput
+                    v-model="newItem.price"
+                    placeholder="Item Price"
+                    type="number"
+                    required
+                  />
+                  <UInput
+                    type="file"
+                    placeholder="Item Image"
+                    required
+                    @change="handleAddImageUpload"
+                  />
+                  <UTextarea
+                    v-model="newItem.description"
+                    placeholder="Item Description..."
+                    required
+                  />
                 </div>
 
                 <div class="flex flex-col md:flex-row justify-between gap-5">
@@ -360,14 +397,15 @@ const handleAddImageUpload = (event) => {
                     class="md:text-xl text-sm px-16 cursor-pointer bg-transparent text-primary border border-primary flex items-center justify-center hover:text-white"
                     @click="addModalOpen = false"
                     :disabled="isAddLoading"
-                  >Cancel</UButton>
+                    >Cancel</UButton
+                  >
                   <UButton
                     type="submit"
                     class="md:text-xl text-sm px-16 cursor-pointer flex justify-center items-center"
                     :loading="isAddLoading"
                     :disabled="isAddLoading"
                   >
-                    {{ isAddLoading ? 'Saving...' : 'Save Item' }}
+                    {{ isAddLoading ? "Saving..." : "Save Item" }}
                   </UButton>
                 </div>
               </form>
@@ -378,10 +416,14 @@ const handleAddImageUpload = (event) => {
     </div>
 
     <!-- Category filter bar -->
-    <div class="flex flex-wrap gap-3 mt-2">
+    <div class="flex flex-wrap gap-3 mt-2 justify-center md:justify-start">
       <UButton
-        :class="selectedCategory === 'all' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
-        class="px-4 py-2 rounded-md"
+        :class="
+          selectedCategory === 'all'
+            ? 'bg-primary text-white'
+            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+        "
+        class="px-4 py-2 rounded-md cursor-pointer"
         @click="selectedCategory = 'all'"
       >
         All
@@ -389,8 +431,12 @@ const handleAddImageUpload = (event) => {
       <UButton
         v-for="category in items"
         :key="category"
-        :class="selectedCategory === category ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
-        class="px-4 py-2 rounded-md"
+        :class="
+          selectedCategory === category
+            ? 'bg-primary text-white'
+            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+        "
+        class="px-4 py-2 rounded-md cursor-pointer"
         @click="selectedCategory = category"
       >
         {{ category.charAt(0).toUpperCase() + category.slice(1) }}
@@ -403,11 +449,14 @@ const handleAddImageUpload = (event) => {
         :key="menuItem._id"
         class="flex md:flex-row flex-col flex-wrap border border-gray-300 rounded-md items-center gap-4 p-4 justify-around"
       >
-        <img 
-          :src="menuItem.image?.secure_url" 
-          alt="" 
-          class="w-[150px] md:w-[200px]"
-        >
+        <div class="md:w-[200px] md:h-[200px] w-[150px] h-[150px]">
+          <img
+            :src="menuItem.image?.secure_url"
+            alt=""
+            class="w-full h-full object-contain"
+          />
+        </div>
+
         <div>
           <h2 class="text-primary text-2xl font-bold cursor-default">
             {{ menuItem.name }}
@@ -417,7 +466,7 @@ const handleAddImageUpload = (event) => {
               {{ menuItem.category }}
             </h2>
             <h2 class="font-semibold text-xl mt-4 cursor-default">
-              {{ menuItem.price }}
+              {{ menuItem.price }} EGP
             </h2>
           </div>
           <p
@@ -429,10 +478,7 @@ const handleAddImageUpload = (event) => {
 
         <div class="flex justify-between gap-5">
           <!-- Edit Modal -->
-          <UModal
-            v-model="editModalOpen"
-            title="Edit Menu Item"
-          >
+          <UModal v-model="editModalOpen" title="Edit Menu Item">
             <UButton
               label="Edit"
               color="neutral"
@@ -450,11 +496,34 @@ const handleAddImageUpload = (event) => {
                   </div>
 
                   <div class="flex flex-col gap-2 my-6">
-                    <UInput v-model="editForm.name" placeholder="Item Name" type="text" required />
-                    <UInputMenu v-model="editForm.category" placeholder="Item Type" :items="items" required />
-                    <UInput v-model="editForm.price" placeholder="Item Price" type="number" required />
-                    <UInput type="file" placeholder="Item Image" @change="handleEditImageUpload" />
-                    <UTextarea v-model="editForm.description" placeholder="Item Description..." required />
+                    <UInput
+                      v-model="editForm.name"
+                      placeholder="Item Name"
+                      type="text"
+                      required
+                    />
+                    <UInputMenu
+                      v-model="editForm.category"
+                      placeholder="Item Type"
+                      :items="items"
+                      required
+                    />
+                    <UInput
+                      v-model="editForm.price"
+                      placeholder="Item Price"
+                      type="number"
+                      required
+                    />
+                    <UInput
+                      type="file"
+                      placeholder="Item Image"
+                      @change="handleEditImageUpload"
+                    />
+                    <UTextarea
+                      v-model="editForm.description"
+                      placeholder="Item Description..."
+                      required
+                    />
                   </div>
 
                   <div class="flex flex-col md:flex-row justify-between gap-5">
@@ -463,14 +532,15 @@ const handleAddImageUpload = (event) => {
                       class="md:text-xl text-sm px-16 cursor-pointer bg-transparent text-primary border border-primary flex items-center justify-center hover:text-white"
                       @click="editModalOpen = false"
                       :disabled="isEditLoading"
-                    >Cancel</UButton>
+                      >Cancel</UButton
+                    >
                     <UButton
                       type="submit"
                       class="md:text-xl text-sm px-16 cursor-pointer flex justify-center items-center"
                       :loading="isEditLoading"
                       :disabled="isEditLoading"
                     >
-                      {{ isEditLoading ? 'Saving...' : 'Save Edit' }}
+                      {{ isEditLoading ? "Saving..." : "Save Edit" }}
                     </UButton>
                   </div>
                 </form>
@@ -523,9 +593,9 @@ const handleAddImageUpload = (event) => {
         </div>
       </div>
     </div>
-    <div class="flex justify-between items-center">
+    <div class="flex justify-between items-center flex-col md:flex-row gap-3">
       <div>
-        <p class="text-sm text-gray-500">
+        <p class="text-sm text-gray-500 cursor-default">
           Showing {{ filteredData.length ? (page - 1) * itemsPerPage + 1 : 0 }}-
           {{ Math.min(page * itemsPerPage, filteredData.length) }} of
           {{ filteredData.length }}

@@ -4,7 +4,7 @@
       <img
         :src="item.image.secure_url || '/images/Home/Menu1.png'"
         :alt="item.name"
-        class="h-full w-full object-contain transition-transform duration-300 hover:scale-105"
+        class="h-full w-full object-contain transition-transform duration-300 hover:scale-105 py-2"
         loading="lazy"
       >
     </div>

@@ -109,6 +109,10 @@
 </template>
 
 <script setup>
+definePageMeta({
+  name : "Menu"
+})
+
 const route = useRoute();
 const router = useRouter();
 const menuGridRef = ref(null);
