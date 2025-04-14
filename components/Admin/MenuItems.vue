@@ -325,7 +325,7 @@ const handleAddImageUpload = (event) => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-8 w-full my-6 mx-[20%] lg:mx-[10%]">
+  <div class="flex flex-col gap-8 w-full my-6 ">
     <div class="flex justify-between items-center">
       <div class="flex justify-between flex-col">
         <h2 class="text-primary text-xl md:text-3xl font-bold cursor-default">Menu Items</h2>
@@ -470,7 +470,7 @@ const handleAddImageUpload = (event) => {
             </h2>
           </div>
           <p
-            class="mt-4 text-gray-500 cursor-default truncate whitespace-nowrap overflow-hidden text-overflow-ellipsis w-[300px] md:w-[500px]"
+            class="mt-4 text-gray-500 cursor-default truncate whitespace-nowrap overflow-hidden text-overflow-ellipsis w-[300px] md:w-[400px]"
           >
             {{ menuItem.description }}
           </p>
