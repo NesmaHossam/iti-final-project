@@ -1,7 +1,7 @@
 <template>
-  <div class="flex">
-    <appSideBar class="w-[30%]" />
-    <UContainer class="flex w-full">
+  <div class="flex flex-col md:flex-row justify-between">
+    <appSideBar />
+    <UContainer class="flex-1">
       <slot />
     </UContainer>
   </div>

@@ -28,7 +28,11 @@ const items = [
     <UContainer class="flex justify-between items-center">
       <div>
         <nuxt-link to="/">
-          <img src="../../assets/images/Logo.png" alt="logo image" class="w-35" />
+          <img
+            src="../../assets/images/Logo.png"
+            alt="logo image"
+            class="w-35"
+          />
         </nuxt-link>
       </div>
 
