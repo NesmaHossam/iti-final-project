@@ -3,15 +3,15 @@
     <!-- Custom Stepper -->
     <template #steps>
       <ol
-        class="flex items-center w-full text-sm font-medium text-center text-gray-500 sm:text-base"
+        class="flex items-center justify-center flex-wrap lg:flex-nowrap   w-full text-sm font-medium text-center text-gray-500 sm:text-base"
       >
         <li
           v-for="(step, index) in steps"
           :key="index"
-          class="flex md:w-full items-center"
+          class="flex lg:w-full items-center"
           :class="
             index < steps.length - 1
-              ? 'sm:after:content-[\'\'] sm:after:w-full sm:after:h-1 sm:after:border-b sm:after:border-gray-200 sm:after:border-1 sm:after:mx-6 sm:after:inline-block'
+              ? 'sm:after:content-[\'\'] sm:after:w-full sm:after:h-1 sm:after:border-b sm:after:border-gray-200 sm:after:border-1 sm:after:mx-5 sm:after:inline-block'
               : ''
           "
         >
@@ -71,7 +71,7 @@
     <template #content>
       <!-- Step Content -->
       <div
-        class="bg-slate-200/10 backdrop-blur-md shadow-lg mb-8 md:mb-12 p-2 lg:p-12 overflow-hidden relative z-2 md:rounded-tl-[30%] md:rounded-br-[30%] border border-slate-100 w-full"
+        class="bg-slate-200/10 backdrop-blur-md shadow-lg mb-8 md:mb-12 p-2 lg:p-12 overflow-hidden relative z-2 lg:rounded-tl-[30%] lg:rounded-br-[30%] border border-slate-100 w-full"
       >
         <div>
           <p v-if="errorMessage" class="text-red-500 bg-red-100 p-2 rounded mb-4 text-center">
