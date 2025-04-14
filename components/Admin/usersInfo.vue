@@ -1,18 +1,9 @@
 <script setup>
 const toast = useToast();
 const deleteModalOpen = ref(false);
-const editModalOpen = ref(false);
+const changeRoleModalOpen = ref(false);
+const selectedRole = ref("user");
 const currentUserId = ref(null);
-const selectedRole = ref("all"); // Default to show all users
-
-// For edit form
-const editForm = ref({
-  userName: "",
-  email: "",
-  phoneNumberRaw: "",
-  role: "",
-});
-
 const data = ref([]);
 
 const columns = [
@@ -43,38 +34,6 @@ const columns = [
   },
 ];
 
-function getDropdownActions(user) {
-  return [
-    [
-      {
-        label: "Copy user Id",
-        icon: "i-lucide-copy",
-        onSelect: () => {
-          navigator.clipboard.writeText(user._id.toString());
-          toast.add({
-            title: "User ID copied to clipboard!",
-            color: "success",
-            icon: "i-lucide-circle-check",
-          });
-        },
-      },
-    ],
-    [
-      {
-        label: "Edit",
-        icon: "i-lucide-edit",
-        onSelect: () => openEditModal(user),
-      },
-      {
-        label: "Delete",
-        icon: "i-lucide-trash",
-        color: "error",
-        onSelect: () => openDeleteModal(user._id),
-      },
-    ],
-  ];
-}
-
 const table = useTemplateRef("table");
 const page = ref(1);
 const itemsPerPage = ref(10);
@@ -88,11 +47,12 @@ const columnFilters = ref([
 // Data fetching function
 const fetchUsers = async () => {
   try {
-    const response = await useApi("/user/allProfiles", "get");
+    const response = await useApi("/admin/getUsers", "get");
     console.log("API Response:", response);
+    selectedRole.value = "user";
 
-    if (response?.users) {
-      data.value = response.users;
+    if (response?.results) {
+      data.value = response.results;
       console.log("Loaded users:", data.value);
     }
   } catch (error) {
@@ -106,6 +66,27 @@ const fetchUsers = async () => {
   }
 };
 
+const fetchAdmins = async () => {
+  try {
+    const response = await useApi("/admin/getAdmins", "get");
+    console.log("API Response:", response);
+
+    if (response?.results) {
+      data.value = response.results;
+      console.log("Loaded Admins:", data.value);
+      selectedRole.value = "admin";
+    }
+  } catch (error) {
+    console.error("Error fetching Admins:", error);
+    toast.add({
+      title: "Failed to load Admins",
+      description: error.message || "Could not load Admins",
+      color: "error",
+      icon: "i-lucide-alert-circle",
+    });
+  }
+};
+
 // Call fetchUsers on component mount
 onMounted(() => {
   fetchUsers();
@@ -113,10 +94,7 @@ onMounted(() => {
 
 // Filter function for role filtering
 const filteredData = computed(() => {
-  if (selectedRole.value === "all") {
-    return data.value;
-  }
-  return data.value.filter((user) => user.role === selectedRole.value);
+  return data.value;
 });
 
 // Open delete confirmation modal
@@ -129,10 +107,9 @@ const openDeleteModal = (userId) => {
 const deleteUser = async () => {
   try {
     const response = await useApi(
-      `/user/deleteProfile/${currentUserId.value}`,
+      `/admin/deleteUser/${currentUserId.value}`,
       "delete"
     );
-
     if (response && response.success) {
       toast.add({
         title: "Success",
@@ -159,84 +136,46 @@ const deleteUser = async () => {
   }
 };
 
-// Open edit modal and populate form with user data
-const openEditModal = (user) => {
-  // Make sure to populate the form with user data
-  editForm.value = {
-    userName: user.userName || "",
-    email: user.email || "",
-    phoneNumberRaw: user.phoneNumberRaw || "",
-    role: user.role || "user",
-  };
-
-  // Log to verify the data is being set correctly
-  console.log("Opening edit modal with data:", editForm.value);
-
-  currentUserId.value = user._id;
-  editModalOpen.value = true;
+// Open change role modal
+const openChangeRoleModal = (userId) => {
+  currentUserId.value = userId;
+  changeRoleModalOpen.value = true;
 };
 
-// Handle edit user submission
-const submitEditUser = async (event) => {
-  if (event) event.preventDefault();
-
+// Handle change role
+const changeRole = async () => {
   try {
-    // Validate required fields
-    if (!editForm.value.userName || !editForm.value.email) {
-      toast.add({
-        title: "Validation Error",
-        description: "Please fill in all required fields",
-        color: "error",
-        icon: "i-lucide-alert-circle",
-      });
-      return;
-    }
-
-    const userData = {
-      userName: editForm.value.userName,
-      email: editForm.value.email,
-      phoneNumberRaw: editForm.value.phoneNumberRaw,
-      role: editForm.value.role,
-    };
-
-    console.log("Submitting edit with data:", userData);
-
     const response = await useApi(
-      `/user/updateProfile/${currentUserId.value}`,
-      "put",
-      userData
+      `/admin/changeRole`,
+      "patch",
+      { userId: currentUserId.value ,role: "Admin" }
     );
 
     if (response && response.success) {
       toast.add({
         title: "Success",
-        description: "User updated successfully",
+        description: "User role changed to admin successfully",
         color: "success",
         icon: "i-lucide-check-circle",
       });
 
-      // Refresh data after update
+      // Refresh data after role change
       await fetchUsers();
-      editModalOpen.value = false;
     } else {
-      throw new Error(response?.message || "Failed to update user");
+      throw new Error(response?.message || "Failed to change user role");
     }
   } catch (error) {
-    console.error("Error updating user:", error);
+    console.error("Error changing user role:", error);
     toast.add({
-      title: "Failed to update user",
-      description: error.message || "Could not update the user",
+      title: "Failed to change user role",
+      description: error.message || "Could not change the user role",
       color: "error",
       icon: "i-lucide-alert-circle",
     });
+  } finally {
+    changeRoleModalOpen.value = false;
   }
 };
-
-// Role options for edit form
-const roleOptions = [
-  { value: "user", label: "User" },
-  { value: "admin", label: "Admin" },
-];
 </script>
 
 <template>
@@ -246,7 +185,13 @@ const roleOptions = [
         <h2 class="text-primary text-xl md:text-3xl font-bold cursor-default">
           Users Information
         </h2>
-        <p class="cursor-default ">{{ filteredData.length }} users</p>
+        <p class="cursor-default">
+          {{
+            `${filteredData.length} ${
+              selectedRole == "user" ? "users" : "admins"
+            }`
+          }}
+        </p>
       </div>
 
       <div>
@@ -268,14 +213,14 @@ const roleOptions = [
     <div class="flex flex-wrap gap-3 mt-2">
       <UButton
         :class="
-          selectedRole === 'all'
+          selectedRole === 'user'
             ? 'bg-primary text-white'
             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
         "
-        @click="selectedRole = 'all'"
         class="px-4 py-2 rounded-md cursor-pointer"
+        @click="fetchUsers"
       >
-        All Users
+        Regular Users
       </UButton>
       <UButton
         :class="
@@ -283,42 +228,115 @@ const roleOptions = [
             ? 'bg-primary text-white'
             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
         "
-        @click="selectedRole = 'admin'"
         class="px-4 py-2 rounded-md cursor-pointer"
+        @click="fetchAdmins"
       >
         Admins
-      </UButton>
-      <UButton
-        :class="
-          selectedRole === 'user'
-            ? 'bg-primary text-white'
-            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-        "
-        @click="selectedRole = 'user'"
-        class="px-4 py-2 rounded-md cursor-pointer"
-      >
-        Regular Users
       </UButton>
     </div>
 
     <div>
       <UTable
+        v-if="filteredData.length > 0"
         ref="table"
         v-model:column-filters="columnFilters"
         :data="filteredData"
         :columns="columns"
         class="flex-1"
-        v-if="filteredData.length > 0"
       >
-        <template #action-cell="{ row }">
-          <UDropdownMenu :items="getDropdownActions(row.original)">
+        <template v-if="selectedRole == 'user'" #action-cell="{ row }">
+          <div class="flex gap-2">
+            <UModal
+              v-model:open="changeRoleModalOpen"
+              title="Change User Role"
+              :ui="{ footer: 'justify-end' }"
+            >
+              <UButton
+                size="sm"
+                color="primary"
+                variant="soft"
+                @click="openChangeRoleModal(row.original._id)"
+              >
+                <template #leading>
+                  <UIcon name="i-lucide-user-cog" class="w-4 h-4" />
+                </template>
+                Change Role
+              </UButton>
+              <template #body>
+                <p>
+                  Are you sure you want to change this user's role to admin?
+                  This grants additional permissions.
+                </p>
+              </template>
+
+              <template #footer>
+                <div class="flex justify-center gap-4 mt-6">
+                  <UButton
+                    color="gray"
+                    variant="outline"
+                    class="px-4 py-2 border border-slate-600 rounded-3"
+                    @click="changeRoleModalOpen = false"
+                  >
+                    Cancel
+                  </UButton>
+                  <UButton
+                    class="px-4 py-2 bg-primary text-white rounded-3"
+                    @click="changeRole"
+                  >
+                    Confirm
+                  </UButton>
+                </div>
+              </template>
+            </UModal>
+
+
+
+            <UModal
+              v-model:open="deleteModalOpen"
+              title="Delete user"
+              :ui="{ footer: 'justify-end' }"
+            >
             <UButton
-              icon="i-lucide-ellipsis-vertical"
-              color="neutral"
-              variant="ghost"
-              aria-label="Actions"
-            />
-          </UDropdownMenu>
+              size="sm"
+              color="red"
+              variant="soft"
+              @click="openDeleteModal(row.original._id)"
+            >
+              <template #leading>
+                <UIcon name="i-lucide-trash" class="w-4 h-4" />
+              </template>
+              Delete
+            </UButton>
+              <template #body>
+                <p>
+            Are you sure you want to delete this user? This action cannot be
+            undone.
+          </p>
+
+              </template>
+
+              <template #footer>
+                <div class="flex justify-center gap-4 mt-6">
+            <UButton
+              color="gray"
+              variant="outline"
+              class="px-4 py-2 border border-slate-600 rounded-3"
+              @click="deleteModalOpen = false"
+            >
+              Cancel
+            </UButton>
+            <UButton
+              class="px-4 py-2 bg-red-700 text-white rounded-3"
+              color="red"
+              @click="deleteUser"
+            >
+              Delete
+            </UButton>
+          </div>
+              </template>
+            </UModal>
+
+          </div>
         </template>
       </UTable>
       <div
@@ -329,90 +347,6 @@ const roleOptions = [
       </div>
     </div>
 
-    <!-- Edit User Modal -->
-    <UModal
-      v-if="editModalOpen"
-      :model-value="editModalOpen"
-      @close="editModalOpen = false"
-    >
-      <UCard>
-        <template #header>
-          <div class="flex justify-between items-center">
-            <h3 class="text-xl font-bold">Edit User</h3>
-            <UButton
-              icon="i-lucide-x"
-              color="gray"
-              variant="ghost"
-              @click="editModalOpen = false"
-            />
-          </div>
-        </template>
-
-        <form @submit.prevent="submitEditUser">
-          <div class="space-y-4">
-            <UFormGroup label="User Name">
-              <UInput v-model="editForm.userName" type="text" required />
-            </UFormGroup>
-
-            <UFormGroup label="Email">
-              <UInput v-model="editForm.email" type="email" required />
-            </UFormGroup>
-
-            <UFormGroup label="Phone Number">
-              <UInput v-model="editForm.phoneNumberRaw" type="tel" />
-            </UFormGroup>
-
-            <UFormGroup label="Role">
-              <USelect
-                v-model="editForm.role"
-                :options="roleOptions"
-                required
-              />
-            </UFormGroup>
-          </div>
-
-          <div class="flex justify-end gap-3 mt-6">
-            <UButton
-              type="button"
-              color="gray"
-              variant="outline"
-              @click="editModalOpen = false"
-            >
-              Cancel
-            </UButton>
-            <UButton type="submit" color="primary"> Save Changes </UButton>
-          </div>
-        </form>
-      </UCard>
-    </UModal>
-
-    <!-- Delete User Modal -->
-    <UModal
-      v-if="deleteModalOpen"
-      :model-value="deleteModalOpen"
-      @close="deleteModalOpen = false"
-    >
-      <UCard>
-        <div class="text-center p-4">
-          <h3 class="text-lg font-medium mb-4">Confirm Deletion</h3>
-          <p>
-            Are you sure you want to delete this user? This action cannot be
-            undone.
-          </p>
-
-          <div class="flex justify-center gap-4 mt-6">
-            <UButton
-              color="gray"
-              variant="outline"
-              @click="deleteModalOpen = false"
-            >
-              Cancel
-            </UButton>
-            <UButton color="red" @click="deleteUser"> Delete </UButton>
-          </div>
-        </div>
-      </UCard>
-    </UModal>
 
     <div class="flex justify-between items-center">
       <div>

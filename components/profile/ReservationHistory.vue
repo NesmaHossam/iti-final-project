@@ -64,7 +64,7 @@ const cancelReservation = async (reservationId) => {
       <h2 class="text-xl md:text-2xl font-bold text-center">Reservation Summary</h2>
       <h4 class="text-center my-2">Guest Name</h4>
       <h3 class="text-center font-bold text-lg md:text-xl">
-        {{ reservation.info?.name || "Unknown Name" }}
+        {{ reservation.createdBy.userName || "Unknown Name" }}
       </h3>
 
       <div class="my-4 w-[80%] mx-auto">
@@ -106,6 +106,24 @@ const cancelReservation = async (reservationId) => {
             {{ reservation.guests > 1 ? `${reservation.guests} Guests` : '1 Guest' }}
           </span>
         </div>
+        <div class="flex justify-between items-center">
+          <h2 class="font-bold md:text-lg">Payment Method</h2>
+          <span class="md:text-lg">
+            {{ reservation.paymentMethod }}
+          </span>
+        </div>
+        <div class="flex justify-between items-center">
+          <h2 class="font-bold md:text-lg">reservation For Guest:</h2>
+          <span class="md:text-lg">
+            {{ reservation.info.name == reservation.createdBy.userName ? `Same Guest` : reservation.info.name }}
+          </span>
+        </div>
+        <div class="flex justify-between items-center">
+          <h2 class="font-bold md:text-lg">Guest Phone for Contact:</h2>
+          <span class="md:text-lg">
+            {{ reservation.info.phone ? reservation.info.phone : reservation.createdBy.phoneNumberRaw || "Not Provide"}} 
+          </span>
+        </div>
       </div>
       
       <UModal
@@ -132,7 +150,7 @@ const cancelReservation = async (reservationId) => {
         >
           <h2 class="text-xl md:text-2xl font-bold text-center">Reservation Summary</h2>
           <h4 class="text-center text-lg">Guest Name</h4>
-          <h3 class="text-center font-bold text-xl md:text-2xl mb-2">{{ reservation.userName }}</h3>
+          <h3 class="text-center font-bold text-xl md:text-2xl mb-2">{{ reservation.createdBy.userName }}</h3>
           <p class="text-center text-xl">
             Are you sure about canceling your reservation?
           </p>

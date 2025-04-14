@@ -395,8 +395,8 @@ const handleAddImageUpload = (event) => {
                   <UButton
                     type="button"
                     class="md:text-xl text-sm px-16 cursor-pointer bg-transparent text-primary border border-primary flex items-center justify-center hover:text-white"
-                    @click="addModalOpen = false"
                     :disabled="isAddLoading"
+                    @click="addModalOpen = false"
                     >Cancel</UButton
                   >
                   <UButton
@@ -454,7 +454,7 @@ const handleAddImageUpload = (event) => {
             :src="menuItem.image?.secure_url"
             alt=""
             class="w-full h-full object-contain"
-          />
+          >
         </div>
 
         <div>
@@ -530,8 +530,8 @@ const handleAddImageUpload = (event) => {
                     <UButton
                       type="button"
                       class="md:text-xl text-sm px-16 cursor-pointer bg-transparent text-primary border border-primary flex items-center justify-center hover:text-white"
-                      @click="editModalOpen = false"
                       :disabled="isEditLoading"
+                      @click="editModalOpen = false"
                       >Cancel</UButton
                     >
                     <UButton
