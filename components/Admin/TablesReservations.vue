@@ -6,105 +6,160 @@ const toast = useToast();
 // States for the component
 const data = ref([]);
 const loading = ref(true);
-const table = ref(null);
+const table = useTemplateRef("table");
 const globalFilter = ref("");
 const page = ref(1);
+const itemsPerPage = ref(10);
 const selectedReservation = ref(null);
-const showDetailsModal = ref(false);
-const showConfirmModal = ref(false);
-const actionType = ref(''); // 'confirm' or 'cancel'
+const detailsModalOpen = ref(false);
+const confirmModalOpen = ref(false);
+const actionType = ref(""); // 'confirm' or 'cancel'
+const loadingDetails = ref(false);
 
 // Fetch checkouts from API
 async function fetchReservations() {
   loading.value = true;
   try {
-    const response = await useApi('/admin/getCheckOut',"get")
+    const response = await useApi("/admin/getCheckOut", "get");
     if (response.success) {
-      data.value = response.results.map(reservation => ({
+      console.log(response);
+      data.value = response.results.map((reservation) => ({
         id: reservation._id,
-        status: reservation.status || 'pending',
-        deposit: reservation.deposit || 'NotPaid',
-        date: reservation.date ? `${reservation.date.year}-${reservation.date.month}-${reservation.date.day}T${reservation.time}:00` : new Date(),
-        userName: reservation.createdBy?.userName || 'Guest',
-        email: reservation.createdBy?.email || 'N/A',
-        phone: reservation.createdBy?.phoneNumberRaw || 'N/A',
-        fullDetails: reservation // Store the full reservation object
+        status: reservation.status || "pending",
+        date: `${reservation.date} T ${
+          reservation.time || "N/A"}`,
+        userName: reservation.createdBy?.userName || "Guest",
+        email: reservation.createdBy?.email || "N/A",
+        phone: reservation.createdBy?.phoneNumberRaw || "N/A",
+        fullDetails: reservation, // Store the full reservation object
       }));
     }
   } catch (error) {
-    console.error('Error fetching reservations:', error);
+    console.error("Error fetching reservations:", error);
     toast.add({
-      title: 'Failed to load reservations',
-      color: 'error',
-      icon: 'i-lucide-alert-circle'
+      title: "Failed to load reservations",
+      description: "Could not load reservation data",
+      color: "error",
+      icon: "i-lucide-alert-circle",
     });
   } finally {
     loading.value = false;
   }
 }
 
+
+// Fetch single reservation by ID
+async function fetchReservationById(id) {
+  loadingDetails.value = true;
+  try {
+    const response = await useApi(`/admin/getCheckOut/${id}`, "get");
+    console.log(response);
+    
+    if (response.success) {
+      const reservation = response.checkOut;
+      selectedReservation.value = {
+        id: reservation._id,
+        status: reservation.status || "pending",
+        date: reservation.date,
+        userName: reservation.createdBy?.userName || "Guest",
+        email: reservation.createdBy?.email || "N/A",
+        phone: reservation.createdBy?.phoneNumberRaw || "N/A",
+        guests: reservation.guests,
+        info: reservation.info,
+        time: reservation.time,
+        cart: reservation.cart,
+        fullDetails: reservation,
+      };
+    }
+  } catch (error) {
+    console.error("Error fetching reservation details:", error);
+    toast.add({
+      title: "Failed to load details",
+      description: "Could not load reservation details",
+      color: "error",
+      icon: "i-lucide-alert-circle",
+    });
+  } finally {
+    loadingDetails.value = false;
+  }
+}
+
 // Call API to update reservation status
 async function updateReservationStatus(reservationId, status) {
   try {
-    const response = await fetch(`/api/admin/changeCheckOutStatus/${reservationId}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
-      body: JSON.stringify({ status })
-    });
-    
-    if (!response.ok) throw new Error('Failed to update status');
-    
-    const result = await response.json();
-    if (result.success) {
+    const response = await useApi(
+      `/admin/changeCheckOutStatus/${reservationId}`,
+      "patch",
+      {
+        status: status,
+      }
+    );
+
+    if (response.success) {
       toast.add({
-        title: `Reservation ${status} successfully!`,
-        color: 'success',
-        icon: 'i-lucide-check-circle'
+        title: `Reservation ${
+          status === "delivered" ? "confirmed" : "cancelled"
+        } successfully!`,
+        color: "success",
+        icon: "i-lucide-check-circle",
       });
+      fetchReservations()
       // Update local data to reflect the change
-      const index = data.value.findIndex(item => item.id === reservationId);
+      const index = data.value.findIndex((item) => item.id === reservationId);
       if (index !== -1) {
         data.value[index].status = status;
       }
+
+      // Update selected reservation
+      if (
+        selectedReservation.value &&
+        selectedReservation.value.id === reservationId
+      ) {
+        selectedReservation.value.status = status;
+      }
+
+      return true;
     }
+    return false;
   } catch (error) {
-    console.error('Error updating reservation:', error);
+    console.error("Error updating reservation:", error);
     toast.add({
-      title: 'Failed to update reservation',
-      color: 'error',
-      icon: 'i-lucide-alert-circle'
+      title: "Failed to update reservation",
+      description: error.message || "Could not update reservation status",
+      color: "error",
+      icon: "i-lucide-alert-circle",
     });
+    return false;
   }
 }
 
 // Handle showing details modal
-function showDetails(reservation) {
-  selectedReservation.value = reservation.fullDetails;
-  showDetailsModal.value = true;
-}
-
-// Handle showing confirmation modal
-function showConfirmationModal(reservation, action) {
-  selectedReservation.value = reservation;
-  actionType.value = action;
-  showConfirmModal.value = true;
+async function openDetailsModal(reservation) {
+  await fetchReservationById(reservation.id);
+  detailsModalOpen.value = true;
 }
 
 // Handle confirmation
-function handleConfirm() {
-  const status = actionType.value === 'confirm' ? 'delivered' : 'canceled';
-  updateReservationStatus(selectedReservation.value.id, status);
-  showConfirmModal.value = false;
+async function handleConfirm() {
+  if (!selectedReservation.value) return;
+
+  const status = actionType.value === "confirm" ? "delivered" : "canceled";
+  const success = await updateReservationStatus(
+    selectedReservation.value.id,
+    status
+  );
+
+  if (success) {
+    confirmModalOpen.value = false;
+    detailsModalOpen.value = false;
+  }
 }
 
 const columns = [
   {
     accessorKey: "id",
     header: "#ID",
-    cell: ({ row }) => `#${row.getValue("id")}`,
+    cell: ({ row }) => `#${row.getValue("id").substring(0, 8)}...`,
   },
   {
     accessorKey: "userName",
@@ -116,26 +171,32 @@ const columns = [
     header: "Status",
     cell: ({ row }) => {
       const statusValue = row.getValue("status");
-      const color = {
-        delivered: "success",
-        preparing: "warning",
-        pending: "info", 
-        canceled: "error",
-      }[statusValue] || "info";
+      const color =
+        {
+          delivered: "success",
+          preparing: "warning",
+          pending: "info",
+          canceled: "error",
+        }[statusValue] || "info";
 
-      return h(UBadge, { class: "capitalize", variant: "subtle", color }, () =>
-        statusValue
+      return h(
+        UBadge,
+        { class: "capitalize", variant: "subtle", color },
+        () => statusValue
       );
     },
   },
-
   {
     accessorKey: "date",
     header: "Reservation Time",
     cell: ({ row }) => {
-      return new Date(row.getValue("date")).toLocaleString("en-US", {
+      const dateValue = row.getValue("date");
+      if (!dateValue || dateValue === "Invalid Date") return "Invalid Date";
+
+      return dateValue.toLocaleString("en-US", {
         day: "numeric",
         month: "short",
+        year: "numeric",
         hour: "2-digit",
         minute: "2-digit",
         hour12: false,
@@ -149,48 +210,9 @@ const columns = [
   },
 ];
 
-function getDropdownActions(reservation) {
-  return [
-    [
-      {
-        label: "View Details",
-        icon: "i-lucide-eye",
-        onSelect: () => showDetails(reservation),
-      },
-      {
-        label: "Copy Reservation ID",
-        icon: "i-lucide-copy",
-        onSelect: () => {
-          navigator.clipboard.writeText(reservation.id.toString());
-          toast.add({
-            title: "Reservation ID copied to clipboard!",
-            color: "success",
-            icon: "i-lucide-circle-check",
-          });
-        },
-      },
-    ],
-    [
-      {
-        label: "Confirm Reservation",
-        icon: "i-lucide-check-circle",
-        color: "success",
-        onSelect: () => showConfirmationModal(reservation, 'confirm'),
-        disabled: reservation.status === "delivered" || reservation.status === "canceled",
-      },
-      {
-        label: "Cancel Reservation",
-        icon: "i-lucide-x-circle",
-        color: "error",
-        onSelect: () => showConfirmationModal(reservation, 'cancel'),
-        disabled: reservation.status === "delivered" || reservation.status === "canceled",
-      },
-    ],
-  ];
-}
-
-// Fetch data when component mounts
-fetchReservations();
+onMounted(() => {
+  fetchReservations();
+});
 </script>
 
 <template>
@@ -227,28 +249,216 @@ fetchReservations();
       >
         <template #actions-cell="{ row }">
           <div class="flex items-center gap-2">
-            <UButton
-              color="primary"
-              variant="soft"
-              size="xs"
-              icon="i-lucide-eye"
-              @click="showDetails(row.original)"
-              label="View"
-            />
-            <UDropdownMenu :items="getDropdownActions(row.original)">
+            <UModal
+              v-model:open="detailsModalOpen"
+              title="Reservation Details"
+              :ui="{ width: 'md:max-w-2xl' }"
+            >
               <UButton
-                icon="i-lucide-ellipsis-vertical"
-                color="neutral"
-                variant="ghost"
-                aria-label="Actions"
-              />
-            </UDropdownMenu>
+                color="primary"
+                variant="soft"
+                size="sm"
+                icon="i-lucide-eye"
+                @click="openDetailsModal(row.original)"
+              >
+                View
+              </UButton>
+
+              <template #body>
+                <div v-if="loadingDetails" class="flex justify-center py-8">
+                  <UIcon
+                    name="i-lucide-loader-2"
+                    class="animate-spin h-8 w-8"
+                  />
+                </div>
+
+                <div class="space-y-4" v-else-if="selectedReservation">
+                  <div class="flex justify-between items-center mb-2">
+                    <h3 class="text-xl font-semibold">
+                      Reservation #{{ selectedReservation.id }}
+                    </h3>
+                    <UBadge
+                      class="capitalize"
+                      :color="
+                        selectedReservation.status === 'delivered'
+                          ? 'success'
+                          : selectedReservation.status === 'canceled'
+                          ? 'error'
+                          : selectedReservation.status === 'preparing'
+                          ? 'warning'
+                          : 'info'
+                      "
+                    >
+                      {{ selectedReservation.status || "pending" }}
+                    </UBadge>
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <h4 class="font-medium text-gray-500">
+                        Customer Information
+                      </h4>
+                      <div class="mt-2 space-y-2">
+                        <p>
+                          <span class="font-medium">Name:</span>
+                          {{ selectedReservation.userName }}
+                        </p>
+                        <p>
+                          <span class="font-medium">Email:</span>
+                          {{ selectedReservation.email }}
+                        </p>
+                        <p>
+                          <span class="font-medium">Phone:</span>
+                          {{ selectedReservation.phone }}
+                        </p>
+                        <p>
+                          <span class="font-medium">Guests:</span>
+                          {{ selectedReservation.guests || 1 }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 class="font-medium text-gray-500">
+                        Reservation Details
+                      </h4>
+                      <div class="mt-2 space-y-2">
+                        <p>
+                          <span class="font-medium">Date:</span>
+                          {{
+                            selectedReservation.date || "N/A"
+                          }}
+                        </p>
+                        <p>
+                          <span class="font-medium">Time:</span>
+                          {{
+                            selectedReservation.time || "N/A"
+                          }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    v-if="
+                      selectedReservation.info &&
+                      selectedReservation.info.message
+                    "
+                  >
+                    <h4 class="font-medium text-gray-500">Additional Notes</h4>
+                    <p class="mt-2 p-3 bg-gray-50 rounded-md">
+                    Notes : {{ selectedReservation.info.message }}
+                    </p>
+                <div v-if="selectedReservation.cart && selectedReservation.cart.items.length > 0 && selectedReservation.cart.items[0].menu != null">
+                  <h4 class="mt-2 p-3 rounded-md font-bold">
+                      Cart :
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                      <div
+                        v-for="(item, index) in selectedReservation.cart.items"
+                        :key="index"
+                        class="p-3 bg-gray-50 rounded-md"
+                      >
+                        <h4 class="font-medium text-gray-500">
+                          {{ item.menu?.name }}
+                        </h4>
+                        <p>Price: {{ item?.menu?.price }}</p>
+                        <p>Quantity: {{ item?.quantity }}</p>
+                      </div>
+                    </div>
+                </div>
+
+                  </div>
+                </div>
+              </template>
+
+              <template #footer>
+                <div class=" w-full flex justify-between">
+                  <UModal
+                    v-model="confirmModalOpen"
+                    :title="
+                      actionType === 'confirm'
+                        ? 'Confirm Reservation'
+                        : 'Cancel Reservation'
+                    "
+                  >
+                    <div
+                      v-if="
+                        selectedReservation &&
+                        selectedReservation.status !== 'delivered' &&
+                        selectedReservation.status !== 'canceled'
+                      "
+                      class=" mx-auto flex justify-between gap-8"
+                    >
+                      <UButton
+                        color="success"
+                        icon="i-lucide-check"
+                        @click="
+                          actionType = 'confirm';
+                          confirmModalOpen = true;
+                        "
+                      >
+                        Confirm Reservation
+                      </UButton>
+
+                      <UButton
+                        color="error"
+                        icon="i-lucide-x"
+                        @click="
+                          actionType = 'cancel';
+                          confirmModalOpen = true;
+                        "
+                      >
+                        Cancel Reservation
+                      </UButton>
+                    </div>
+
+                    <template #body>
+                      <p>
+                        Are you sure you want to
+                        {{
+                          actionType === "confirm" ? "confirm" : "cancel"
+                        }}
+                        this reservation?
+                      </p>
+                      <p class="text-sm text-gray-500 mt-2">
+                        This will notify the customer via WhatsApp and email.
+                      </p>
+                    </template>
+
+                    <template #footer>
+                      <div class="flex justify-end gap-2">
+                        <UButton
+                          color="gray"
+                          variant="outline"
+                          @click="confirmModalOpen = false"
+                        >
+                          Cancel
+                        </UButton>
+                        <UButton
+                          :color="
+                            actionType === 'confirm' ? 'success' : 'error'
+                          "
+                          @click="handleConfirm"
+                        >
+                          {{
+                            actionType === "confirm"
+                              ? "Confirm"
+                              : "Cancel Reservation"
+                          }}
+                        </UButton>
+                      </div>
+                    </template>
+                  </UModal>
+                </div>
+              </template>
+            </UModal>
           </div>
         </template>
-        
+
         <template #empty-state>
           <div class="flex flex-col items-center justify-center py-6">
-            <div class="i-lucide-calendar-x text-4xl text-gray-400 mb-2"></div>
+            <div class="i-lucide-calendar-x text-4xl text-gray-400 mb-2" />
             <p>No reservations found</p>
           </div>
         </template>
@@ -258,129 +468,25 @@ fetchReservations();
     <div class="flex justify-between items-center">
       <div>
         <p class="text-sm text-gray-500 cursor-default">
-          Showing {{ data.length > 0 ? 1 : 0 }}-{{ Math.min(data.length, page * 10) }} of {{ data.length }}
+          Showing {{ data.length > 0 ? (page - 1) * itemsPerPage + 1 : 0 }}-{{
+            Math.min(page * itemsPerPage, data.length)
+          }}
+          of {{ data.length }}
         </p>
       </div>
 
       <div>
         <UPagination
-          :default-page="page"
-          :items-per-page="10"
+          v-model="page"
+          :items-per-page="itemsPerPage"
           :total="data.length"
           @update:page="(p) => (page = p)"
         />
       </div>
     </div>
+
+    <!-- Details Modal -->
+
+    <!-- Confirmation Modal -->
   </div>
-
-  <!-- Reservation Details Modal -->
-  <UModal v-model="showDetailsModal" :ui="{ width: 'md:max-w-2xl' }">
-    <UCard v-if="selectedReservation">
-      <template #header>
-        <div class="flex justify-between items-center">
-          <h3 class="text-xl font-semibold">Reservation Details</h3>
-          <UBadge 
-            class="capitalize" 
-            :color="selectedReservation.status === 'delivered' ? 'success' : 
-                  selectedReservation.status === 'canceled' ? 'error' : 
-                  selectedReservation.status === 'preparing' ? 'warning' : 'info'"
-          >
-            {{ selectedReservation.status || 'pending' }}
-          </UBadge>
-        </div>
-      </template>
-      
-      <div class="space-y-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <h4 class="font-medium text-gray-500">Customer Information</h4>
-            <div class="mt-2 space-y-2">
-              <p><span class="font-medium">Name:</span> {{ selectedReservation.fullDetails?.createdBy?.userName || 'N/A' }}</p>
-              <p><span class="font-medium">Email:</span> {{ selectedReservation.fullDetails?.createdBy?.email || 'N/A' }}</p>
-              <p><span class="font-medium">Phone:</span> {{ selectedReservation.fullDetails?.createdBy?.phoneNumberRaw || 'N/A' }}</p>
-            </div>
-          </div>
-          
-          <div>
-            <h4 class="font-medium text-gray-500">Reservation Details</h4>
-            <div class="mt-2 space-y-2">
-              <p><span class="font-medium">Date:</span> {{ selectedReservation.fullDetails?.date ? 
-                `${selectedReservation.fullDetails.date.day}/${selectedReservation.fullDetails.date.month}/${selectedReservation.fullDetails.date.year}` : 'N/A' }}</p>
-              <p><span class="font-medium">Time:</span> {{ selectedReservation.fullDetails?.time || 'N/A' }}</p>
-            </div>
-          </div>
-        </div>
-        
-        <div v-if="selectedReservation.fullDetails?.notes">
-          <h4 class="font-medium text-gray-500">Additional Notes</h4>
-          <p class="mt-2 p-3 bg-gray-50 rounded-md">{{ selectedReservation.fullDetails.notes }}</p>
-        </div>
-      </div>
-      
-      <template #footer>
-        <div class="flex justify-between">
-          <UButton 
-            color="primary" 
-            variant="outline" 
-            @click="showDetailsModal = false"
-          >
-            Close
-          </UButton>
-          
-          <div class="flex gap-2">
-            <UButton 
-              v-if="selectedReservation.status !== 'delivered' && selectedReservation.status !== 'canceled'"
-              color="success" 
-              @click="showConfirmationModal(selectedReservation, 'confirm')"
-              icon="i-lucide-check"
-            >
-              Confirm Reservation
-            </UButton>
-            <UButton 
-              v-if="selectedReservation.status !== 'delivered' && selectedReservation.status !== 'canceled'"
-              color="error" 
-              @click="showConfirmationModal(selectedReservation, 'cancel')"
-              icon="i-lucide-x"
-            >
-              Cancel Reservation
-            </UButton>
-          </div>
-        </div>
-      </template>
-    </UCard>
-  </UModal>
-
-  <!-- Confirmation Modal -->
-  <UModal v-model="showConfirmModal">
-    <UCard>
-      <template #header>
-        <h3 class="text-lg font-semibold">
-          {{ actionType === 'confirm' ? 'Confirm Reservation' : 'Cancel Reservation' }}
-        </h3>
-      </template>
-      
-      <p>Are you sure you want to {{ actionType === 'confirm' ? 'confirm' : 'cancel' }} this reservation?</p>
-      <p class="text-sm text-gray-500 mt-2">
-        This will notify the customer via WhatsApp and email.
-      </p>
-      
-      <template #footer>
-        <div class="flex justify-end gap-2">
-          <UButton
-            color="gray"
-            variant="outline"
-            @click="showConfirmModal = false"
-          >
-            Cancel
-          </UButton>
-          <UButton
-            :color="actionType === 'confirm' ? 'success' : 'error'"
-            @click="handleConfirm"
-          >
-            {{ actionType === 'confirm' ? 'Confirm' : 'Cancel Reservation' }}
-          </UButton>
-        </div>
-      </template>
-    </UCard>
-  </UModal>
 </template>

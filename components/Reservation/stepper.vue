@@ -178,7 +178,7 @@ const router = useRouter();
 const currentStep = ref(0);
 const formData = ref({
   mealType: null,
-  date: null,
+  date: {},
   time: null,
   guests: 1,
   info: {},
@@ -224,6 +224,7 @@ async function submitForm() {
   try {
     errorMessage.value = ""
     console.log("Submitting reservation data:", formData.value);
+    console.log( typeof formData.value.date);
     const response = await useApi('/checkOut/addCheckout' ,'post' , formData.value)
     console.log(response);
     if (formData.value.paymentMethod == 'creditCard') {

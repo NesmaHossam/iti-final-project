@@ -108,18 +108,23 @@ const selectedDate = ref(
 
 // Update formData.date when selectedDate changes
 watch(selectedDate, (newDate) => {
-  emit("update-data", "date", newDate);
+  const jsDate = new Date(newDate.year, newDate.month - 1, newDate.day).toDateString();
+  emit("update-data", "date", jsDate);
+
 });
 
 onMounted(() => {
   emit("update-data", "date", selectedDate.value);
+  const jsDate = new Date(selectedDate.value.year, selectedDate.value.month - 1, selectedDate.value.day).toDateString();
+  emit("update-data", "date", jsDate);
 });
 
 // Emit the updated date
-function updateDate(newDate) {
-  selectedDate.value = newDate;
-  console.log(newDate);
-}
+watch(selectedDate, (newDate) => {
+  const jsDate = new Date(newDate.year, newDate.month - 1, newDate.day).toDateString();
+  emit("update-data", "date", jsDate);
+});
+
 
 const availableTimes = computed(() => {
   // Different time slots based on meal type
