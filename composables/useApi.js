@@ -1,6 +1,13 @@
 export const useApi = (request, method, payload, moreHeaders) => {
-  const token = useCookie("token");
-  const user = useCookie("userData")
+  const token = useCookie("token" , {
+    maxAge: 60 * 60
+  });
+  const RefreshToken = useCookie("RefreshToken" , {
+    maxAge: 60 * 60
+  });
+  const user = useCookie("userData" ,{
+    maxAge: 60 * 60
+  })
   const config = useRuntimeConfig();
   const headers = {
     ...moreHeaders,
