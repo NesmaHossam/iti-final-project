@@ -3,15 +3,17 @@
 
 const reservations = ref([])
 const cancelingId = ref(null)
+const selectedReservation = ref(null)
 const toast = useToast()
 const open= ref(false);
 const fetchReservations = async () => {
   try {
     const response = await useApi('/checkOut/getCheckOut', 'get')
+    console.log(response);
     if (response?.success && response?.results) {
       reservations.value = response.results.map(res => ({
         ...res,
-        status: res.status?.charAt(0).toUpperCase() + res.status?.slice(1) || 'Pending',
+        status: res.status,
         mealType: res.mealType?.charAt(0).toUpperCase() + res.mealType?.slice(1) || 'Unknown',
       }))
     }
@@ -23,14 +25,15 @@ const fetchReservations = async () => {
 
 onMounted(fetchReservations)
 
-const cancelReservation = async (reservationId) => {
-  cancelingId.value = reservationId
+const cancelReservation = async () => {
+  if (!selectedReservation.value) return
+  cancelingId.value = selectedReservation.value._id
   try {
-    const response = await useApi(`/checkOut/cancelCheckOut/${reservationId}`, 'delete')
+    const response = await useApi(`/checkOut/cancelCheckOut/${cancelingId.value}`, 'delete')
     if (response?.success) {
-      reservations.value = reservations.value.filter(res => res._id !== reservationId)
-      open.value = false
+      reservations.value = reservations.value.filter(res => res._id !== cancelingId.value)
       toast.add({ title: 'Reservation cancelled', color: 'green' })
+      open.value =false
     } else {
       toast.add({ title: 'Failed to cancel reservation', color: 'red' })
     }
@@ -38,9 +41,11 @@ const cancelReservation = async (reservationId) => {
     console.error('Error cancelling reservation:', error)
     toast.add({ title: 'Error cancelling reservation', color: 'red' })
   } finally {
+    selectedReservation.value = null
     cancelingId.value = null
   }
 }
+
 </script>
 
 <template>
@@ -57,8 +62,8 @@ const cancelReservation = async (reservationId) => {
 
   <TransitionGroup name="fade" tag="div">
     <ProfileWrapper
-      v-for="reservation in reservations"
-      :key="reservation._id"
+      v-for="(reservation,index) in reservations"
+      :key="index"
       class="flex flex-col rounded-lg mb-4 transition-all duration-300 ease-in-out transform"
     >
       <h2 class="text-xl md:text-2xl font-bold text-center">Reservation Summary</h2>
@@ -72,9 +77,9 @@ const cancelReservation = async (reservationId) => {
           <h2 class="font-bold md:text-lg">Status:</h2>
           <span
             :class="{
-              'text-yellow-500': reservation.status === 'Pending',
-              'text-green-500': reservation.status === 'Confirmed',
-              'text-red-500': reservation.status === 'Cancelled',
+              'text-yellow-500': reservation.status === 'pending',
+              'text-green-500': reservation.status === 'delivered',
+              'text-red-500': reservation.status === 'canceled',
               'font-bold md:text-lg': true
             }"
           >
@@ -85,7 +90,7 @@ const cancelReservation = async (reservationId) => {
         <div class="flex justify-between items-center">
           <h2 class="font-bold md:text-lg">Reservation Date:</h2>
           <span class="md:text-lg">
-            {{ `${reservation.date?.day || '--'}/${reservation.date?.month || '--'}/${reservation.date?.year || '--'}` }}
+            {{ reservation.date || "not selected" }}
           </span>
         </div>
         <div class="flex justify-between items-center">
@@ -134,12 +139,15 @@ const cancelReservation = async (reservationId) => {
       }"
     >
       <UButton
-        v-if="reservation.status === 'Pending'"
-        class="bg-primary text-white px-4 py-2 mt-5 rounded cursor-pointer mx-auto block hover:bg-primary"
+      v-if="reservation.status == 'pending' "
+      class="bg-primary text-white px-4 py-2 mt-5 rounded cursor-pointer mx-auto hover:bg-primary"
         label="Open"
         color="neutral"
         variant="subtle"
-        @click="reservation.showModal = true"
+        @click="() => {
+          open = true;
+          selectedReservation = reservation
+        }"
       >
         Cancel Reservation
       </UButton>
@@ -164,7 +172,7 @@ const cancelReservation = async (reservationId) => {
             </UButton>
             <UButton
               class="px-2 py-1 md:px-4 md:py-2 text-sm bg-red-500 text-white rounded cursor-pointer"
-              @click="cancelReservation(reservation.id)"
+              @click="cancelReservation(selectedReservation._id)"
             >
               Yes, cancel this reservation
             </UButton>

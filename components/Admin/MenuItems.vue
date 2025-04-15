@@ -342,7 +342,7 @@ const handleAddImageUpload = (event) => {
           placeholder="Search..."
         />
 
-        <UModal v-model="addModalOpen" title="Add New Item to Menu">
+        <UModal v-model:open="addModalOpen" title="Add New Item to Menu">
           <UButton
             label="Add New Item"
             color="neutral"
@@ -478,7 +478,7 @@ const handleAddImageUpload = (event) => {
 
         <div class="flex justify-between gap-5">
           <!-- Edit Modal -->
-          <UModal v-model="editModalOpen" title="Edit Menu Item">
+          <UModal v-model:open="editModalOpen" title="Edit Menu Item">
             <UButton
               label="Edit"
               color="neutral"
