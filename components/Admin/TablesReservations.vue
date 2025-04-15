@@ -216,8 +216,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-8 w-full my-8 mx-auto">
-    <div class="flex justify-between items-center">
+  <div class="flex flex-col gap-8 w-full my-8 mx-auto md:min-h-[90vh] min-h-[80vh] justify-between">
+
+    <div class="flex flex-col gap-8 w-full my-8 mx-auto ">
+
+      <div class="flex justify-between items-center">
       <div class="flex flex-col">
         <h2 class="text-primary text-xl md:text-3xl font-bold cursor-default">
           Tables Reservation
@@ -272,7 +275,7 @@ onMounted(() => {
                   />
                 </div>
 
-                <div class="space-y-4" v-else-if="selectedReservation">
+                <div v-else-if="selectedReservation" class="space-y-4">
                   <div class="flex justify-between items-center mb-2">
                     <h3 class="text-xl font-semibold">
                       Reservation #{{ selectedReservation.id }}
@@ -463,6 +466,9 @@ onMounted(() => {
           </div>
         </template>
       </UTable>
+    </div>
+
+
     </div>
 
     <div class="flex justify-between items-center flex-col md:flex-row gap-3">

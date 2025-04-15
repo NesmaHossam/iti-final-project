@@ -72,13 +72,6 @@ onMounted(async () => {
           new account to use our services again. This action cannot be reversed.
           If you're sure, click "Delete My Account" below.
         </p>
-        <!-- <UButton
-          class="md:text-xl text-sm px-4 block w-[80%] mx-auto md:mx-0 md:w-fit md:inline-block my-6"
-          color="error"
-          @click="deleteAccount"
-          >Delete my Account</UButton
-        > -->
-
         <UModal
           v-model:open="open"
           :ui="{

@@ -7,7 +7,7 @@
         src="../../assets/images/LOGO.png"
         alt="logo"
         class="w-20 md:w-35 mx-auto"
-      />
+      >
     </div>
 
     <div class="flex flex-col h-[80vh] justify-between">
@@ -36,13 +36,13 @@
                     fill="#FFFFFF"
                     opacity="1"
                     data-original="#000000"
-                  ></path>
+                  />
                   <path
                     d="M321.636 275.353c-6.827-29.645-33.434-51.818-65.121-51.818s-58.294 22.174-65.121 51.818z"
                     fill="#FFFFFF"
                     opacity="1"
                     data-original="#000000"
-                  ></path>
+                  />
                 </g>
               </svg>
               <span
@@ -76,7 +76,7 @@
                     fill="#FFFFFF"
                     data-original="#030104"
                     opacity="1"
-                  ></path>
+                  />
                 </g>
               </svg>
               <span
@@ -113,7 +113,7 @@
                     opacity="1"
                     data-original="#000000"
                     class=""
-                  ></path>
+                  />
                 </g>
               </svg>
               <span
@@ -162,13 +162,13 @@
                       fill="#FFFFFF"
                       opacity="1"
                       data-original="#000000"
-                    ></path>
+                    />
                     <path
                       d="M269.3 353.3c4.9 4.9 11.3 7.3 17.7 7.3s12.8-2.4 17.7-7.3l62.9-62.9c9.2-9.2 14.2-21.4 14.2-34.3s-5.1-25.2-14.2-34.3l-62.9-62.9c-9.8-9.8-25.6-9.8-35.4 0s-9.8 25.6 0 35.4l36.9 36.9H164.1c-13.8 0-25 11.2-25 25s11.2 25 25 25h142.2l-36.9 36.9c-9.8 9.6-9.8 25.4-.1 35.2z"
                       fill="#FFFFFF"
                       opacity="1"
                       data-original="#000000"
-                    ></path>
+                    />
                   </g>
                 </switch>
               </g>
@@ -187,7 +187,7 @@
   <UContainer class="w-full md:hidden py-4 bg-primary">
     <div class="flex justify-between items-center">
       <div>
-        <img src="../../assets/images/LOGO.png" alt="logo" class="w-25" />
+        <img src="../../assets/images/LOGO.png" alt="logo" class="w-25" >
       </div>
       <div>
         <UDrawer direction="left">
@@ -207,7 +207,7 @@
                   src="../../assets/images/LOGO.png"
                   alt="logo"
                   class="w-20 md:w-35 mx-auto"
-                />
+                >
               </div>
 
               <div class="flex flex-col h-[80vh] justify-between items-center">
@@ -239,13 +239,13 @@
                               fill="#FFFFFF"
                               opacity="1"
                               data-original="#000000"
-                            ></path>
+                            />
                             <path
                               d="M321.636 275.353c-6.827-29.645-33.434-51.818-65.121-51.818s-58.294 22.174-65.121 51.818z"
                               fill="#FFFFFF"
                               opacity="1"
                               data-original="#000000"
-                            ></path>
+                            />
                           </g>
                         </svg>
                         <span
@@ -282,7 +282,7 @@
                               fill="#FFFFFF"
                               data-original="#030104"
                               opacity="1"
-                            ></path>
+                            />
                           </g>
                         </svg>
                         <span
@@ -319,7 +319,7 @@
                               opacity="1"
                               data-original="#000000"
                               class=""
-                            ></path>
+                            />
                           </g>
                         </svg>
                         <span
@@ -367,13 +367,13 @@
                                 fill="#FFFFFF"
                                 opacity="1"
                                 data-original="#000000"
-                              ></path>
+                              />
                               <path
                                 d="M269.3 353.3c4.9 4.9 11.3 7.3 17.7 7.3s12.8-2.4 17.7-7.3l62.9-62.9c9.2-9.2 14.2-21.4 14.2-34.3s-5.1-25.2-14.2-34.3l-62.9-62.9c-9.8-9.8-25.6-9.8-35.4 0s-9.8 25.6 0 35.4l36.9 36.9H164.1c-13.8 0-25 11.2-25 25s11.2 25 25 25h142.2l-36.9 36.9c-9.8 9.6-9.8 25.4-.1 35.2z"
                                 fill="#FFFFFF"
                                 opacity="1"
                                 data-original="#000000"
-                              ></path>
+                              />
                             </g>
                           </switch>
                         </g>
@@ -402,7 +402,6 @@ console.log(auth.logout);
 <style scoped>
 .sidebar {
   backdrop-filter: blur(15px);
-  /* border-right: 1px solid rgba(255, 255, 255, 0.1); */
   transition: 0.5s;
 }
 

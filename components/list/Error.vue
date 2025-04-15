@@ -27,8 +27,8 @@
       <UButton
         color="red"
         variant="outline"
-        @click="$emit('retry')"
         class="mt-4"
+        @click="$emit('retry')"
       >
         Retry
       </UButton>

@@ -20,22 +20,22 @@
           src="../../assets/images/ourStory/img4-1.png"
           alt=""
           class="transition-transform duration-500 ease-in-out transform hover:scale-105 animate-fadeIn"
-        />
+        >
         <img
           src="../../assets/images/ourStory/img4-2.png"
           alt=""
           class="md:mt-10 transition-transform duration-500 ease-in-out transform hover:scale-105 animate-fadeIn"
-        />
+        >
         <img
           src="../../assets/images/ourStory/img4-3.png"
           alt=""
           class="transition-transform duration-500 ease-in-out transform hover:scale-105 animate-fadeIn"
-        />
+        >
         <img
           src="../../assets/images/ourStory/img4-4.png"
           alt=""
           class="md:mt-10 transition-transform duration-500 ease-in-out transform hover:scale-105 animate-fadeIn"
-        />
+        >
       </div>
     </UContainer>
   </div>

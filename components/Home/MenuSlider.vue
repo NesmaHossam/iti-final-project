@@ -39,7 +39,7 @@ const items = [shot1, shot2, shot3, shot4, shot6, shot7];
             width="350"
             height="350"
             class="rounded-tl-[20%] rounded-br-[20%]"
-          />
+          >
         </UCarousel>
       </div>
     </UContainer>

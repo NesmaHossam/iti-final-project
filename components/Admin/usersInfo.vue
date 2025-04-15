@@ -10,8 +10,7 @@ const columns = [
   {
     accessorKey: "_id",
     header: "#ID",
-    cell: ({ row }) => `#${row.getValue("_id")}`,
-  },
+    cell: ({ row }) => `#${row.getValue("_id").substring(0, 8)}...`},
   {
     accessorKey: "userName",
     header: "User Name",
@@ -258,8 +257,8 @@ const changeRole = async () => {
                     size="xs"
                     color="primary"
                     variant="soft"
-                    @click="openChangeRoleModal(row.original._id)"
                     class="min-w-[80px] sm:min-w-auto"
+                    @click="openChangeRoleModal(row.original._id)"
                   >
                     <UIcon
                       name="i-lucide-user-cog"
@@ -274,8 +273,8 @@ const changeRole = async () => {
                     size="xs"
                     color="red"
                     variant="soft"
-                    @click="openDeleteModal(row.original._id)"
                     class="min-w-[60px] sm:min-w-auto"
+                    @click="openDeleteModal(row.original._id)"
                   >
                     <UIcon
                       name="i-lucide-trash"
