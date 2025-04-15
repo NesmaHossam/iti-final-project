@@ -59,7 +59,7 @@
             <div>
               <p class="text-sm text-gray-500">Date</p>
               <p class="font-medium">
-                {{ formData.date ? formatDate(formData.date) : "Not selected" }}
+                {{ formData.date }}
               </p>
             </div>
             <div>
@@ -167,15 +167,6 @@ const props = defineProps({
   },
 });
 
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
 
 function calculateTotal() {
   if (!props.formData.cart?.items) return 0;
