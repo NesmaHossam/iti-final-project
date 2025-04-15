@@ -145,11 +145,10 @@ const openChangeRoleModal = (userId) => {
 // Handle change role
 const changeRole = async () => {
   try {
-    const response = await useApi(
-      `/admin/changeRole`,
-      "patch",
-      { userId: currentUserId.value ,role: "Admin" }
-    );
+    const response = await useApi(`/admin/changeRole`, "patch", {
+      userId: currentUserId.value,
+      role: "Admin",
+    });
 
     if (response && response.success) {
       toast.add({
@@ -179,176 +178,185 @@ const changeRole = async () => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-8 w-full my-6 ">
-    <div class="flex justify-between items-center">
-      <div class="flex justify-between flex-col">
-        <h2 class="text-primary text-xl md:text-3xl font-bold cursor-default">
-          Users Information
-        </h2>
-        <p class="cursor-default">
-          {{
-            `${filteredData.length} ${
-              selectedRole == "user" ? "users" : "admins"
-            }`
-          }}
-        </p>
+  <div class="flex flex-col w-full my-6 justify-between h-[80vh] md:h-[90vh]">
+    <div class="gap-8 flex flex-col">
+      <div class="flex justify-between items-center">
+        <div class="flex justify-between flex-col">
+          <h2 class="text-primary text-xl md:text-3xl font-bold cursor-default">
+            Users Information
+          </h2>
+          <p class="cursor-default">
+            {{
+              `${filteredData.length} ${
+                selectedRole == "user" ? "users" : "admins"
+              }`
+            }}
+          </p>
+        </div>
+
+        <div>
+          <UInput
+            :model-value="table?.tableApi?.getColumn('email')?.getFilterValue()"
+            icon="i-lucide-search"
+            class="max-w-sm"
+            size="md"
+            variant="outline"
+            placeholder="Search by email..."
+            @update:model-value="
+              table?.tableApi?.getColumn('email')?.setFilterValue($event)
+            "
+          />
+        </div>
       </div>
 
-      <div>
-        <UInput
-          :model-value="table?.tableApi?.getColumn('email')?.getFilterValue()"
-          icon="i-lucide-search"
-          class="max-w-sm"
-          size="md"
-          variant="outline"
-          placeholder="Search by email..."
-          @update:model-value="
-            table?.tableApi?.getColumn('email')?.setFilterValue($event)
+      <!-- Role filter bar -->
+      <div class="flex flex-wrap gap-3 mt-2 justify-center md:justify-start">
+        <UButton
+          :class="
+            selectedRole === 'user'
+              ? 'bg-primary text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
           "
-        />
+          class="px-4 py-2 rounded-md cursor-pointer"
+          @click="fetchUsers"
+        >
+          Regular Users
+        </UButton>
+        <UButton
+          :class="
+            selectedRole === 'admin'
+              ? 'bg-primary text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          "
+          class="px-4 py-2 rounded-md cursor-pointer"
+          @click="fetchAdmins"
+        >
+          Admins
+        </UButton>
       </div>
-    </div>
 
-    <!-- Role filter bar -->
-    <div class="flex flex-wrap gap-3 mt-2">
-      <UButton
-        :class="
-          selectedRole === 'user'
-            ? 'bg-primary text-white'
-            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-        "
-        class="px-4 py-2 rounded-md cursor-pointer"
-        @click="fetchUsers"
-      >
-        Regular Users
-      </UButton>
-      <UButton
-        :class="
-          selectedRole === 'admin'
-            ? 'bg-primary text-white'
-            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-        "
-        class="px-4 py-2 rounded-md cursor-pointer"
-        @click="fetchAdmins"
-      >
-        Admins
-      </UButton>
-    </div>
-
-    <div>
-      <UTable
-        v-if="filteredData.length > 0"
-        ref="table"
-        v-model:column-filters="columnFilters"
-        :data="filteredData"
-        :columns="columns"
-        class="flex-1"
-      >
-        <template v-if="selectedRole == 'user'" #action-cell="{ row }">
-          <div class="flex gap-2">
-            <UModal
-              v-model:open="changeRoleModalOpen"
-              title="Change User Role"
-              :ui="{ footer: 'justify-end' }"
+      <div class="flex flex-col">
+        <div class="overflow-x-auto -mx-2 sm:mx-0">
+          <div class="inline-block min-w-full py-2 align-middle sm:px-0">
+            <UTable
+              v-if="filteredData.length > 0"
+              ref="table"
+              v-model:column-filters="columnFilters"
+              :data="filteredData"
+              :columns="columns"
+              class="min-w-full divide-y divide-gray-200"
+              :ui="{
+                td: { base: 'whitespace-nowrap py-3 px-2 sm:px-4 text-sm' },
+                th: {
+                  base: 'px-2 sm:px-4 py-3 text-left text-xs sm:text-sm font-medium',
+                },
+              }"
             >
-              <UButton
-                size="sm"
-                color="primary"
-                variant="soft"
-                @click="openChangeRoleModal(row.original._id)"
-              >
-                <template #leading>
-                  <UIcon name="i-lucide-user-cog" class="w-4 h-4" />
-                </template>
-                Change Role
-              </UButton>
-              <template #body>
-                <p>
-                  Are you sure you want to change this user's role to admin?
-                  This grants additional permissions.
-                </p>
-              </template>
-
-              <template #footer>
-                <div class="flex justify-center gap-4 mt-6">
+              <template v-if="selectedRole == 'user'" #action-cell="{ row }">
+                <div class="flex space-x-1 sm:space-x-2">
                   <UButton
-                    color="gray"
-                    variant="outline"
-                    class="px-4 py-2 border border-slate-600 rounded-3"
-                    @click="changeRoleModalOpen = false"
+                    size="xs"
+                    color="primary"
+                    variant="soft"
+                    @click="openChangeRoleModal(row.original._id)"
+                    class="min-w-[80px] sm:min-w-auto"
                   >
-                    Cancel
+                    <UIcon
+                      name="i-lucide-user-cog"
+                      class="w-3 h-3 sm:w-4 sm:h-4"
+                    />
+                    <span class="sr-only sm:not-sr-only sm:ml-1"
+                      >Change Role</span
+                    >
                   </UButton>
+
                   <UButton
-                    class="px-4 py-2 bg-primary text-white rounded-3"
-                    @click="changeRole"
+                    size="xs"
+                    color="red"
+                    variant="soft"
+                    @click="openDeleteModal(row.original._id)"
+                    class="min-w-[60px] sm:min-w-auto"
                   >
-                    Confirm
+                    <UIcon
+                      name="i-lucide-trash"
+                      class="w-3 h-3 sm:w-4 sm:h-4"
+                    />
+                    <span class="sr-only sm:not-sr-only sm:ml-1">Delete</span>
                   </UButton>
                 </div>
               </template>
-            </UModal>
-
-
-
-            <UModal
-              v-model:open="deleteModalOpen"
-              title="Delete user"
-              :ui="{ footer: 'justify-end' }"
-            >
-            <UButton
-              size="sm"
-              color="red"
-              variant="soft"
-              @click="openDeleteModal(row.original._id)"
-            >
-              <template #leading>
-                <UIcon name="i-lucide-trash" class="w-4 h-4" />
-              </template>
-              Delete
-            </UButton>
-              <template #body>
-                <p>
-            Are you sure you want to delete this user? This action cannot be
-            undone.
-          </p>
-
-              </template>
-
-              <template #footer>
-                <div class="flex justify-center gap-4 mt-6">
-            <UButton
-              color="gray"
-              variant="outline"
-              class="px-4 py-2 border border-slate-600 rounded-3"
-              @click="deleteModalOpen = false"
-            >
-              Cancel
-            </UButton>
-            <UButton
-              class="px-4 py-2 bg-red-700 text-white rounded-3"
-              color="red"
-              @click="deleteUser"
-            >
-              Delete
-            </UButton>
+            </UTable>
           </div>
-              </template>
-            </UModal>
+        </div>
 
-          </div>
-        </template>
-      </UTable>
-      <div
-        v-if="filteredData.length === 0"
-        class="py-8 text-center text-gray-500"
-      >
-        No users found. Try a different filter or refresh the page.
+        <div
+          v-if="filteredData.length === 0"
+          class="py-8 text-center text-sm sm:text-base text-gray-500"
+        >
+          No users found. Try a different filter or refresh the page.
+        </div>
+
+        <UModal
+          v-model:open="changeRoleModalOpen"
+          title="Change User Role"
+          :ui="{
+            width: 'sm:max-w-md',
+            base: 'text-sm sm:text-base',
+            footer: 'justify-end',
+          }"
+        >
+          <template #body>
+            <p>
+              Are you sure you want to change this user's role to admin? This
+              grants additional permissions.
+            </p>
+          </template>
+          <template #footer>
+            <div class="flex justify-center gap-3">
+              <UButton
+                color="gray"
+                variant="outline"
+                @click="changeRoleModalOpen = false"
+              >
+                Cancel
+              </UButton>
+              <UButton color="primary" @click="changeRole"> Confirm </UButton>
+            </div>
+          </template>
+        </UModal>
+
+        <UModal
+          v-model:open="deleteModalOpen"
+          title="Delete user"
+          :ui="{
+            width: 'sm:max-w-md',
+            base: 'text-sm sm:text-base',
+            footer: 'justify-end',
+          }"
+        >
+          <template #body>
+            <p>
+              Are you sure you want to delete this user? This action cannot be
+              undone.
+            </p>
+          </template>
+          <template #footer>
+            <div class="flex justify-center gap-3">
+              <UButton
+                color="gray"
+                variant="outline"
+                @click="deleteModalOpen = false"
+              >
+                Cancel
+              </UButton>
+              <UButton color="red" @click="deleteUser"> Delete </UButton>
+            </div>
+          </template>
+        </UModal>
       </div>
     </div>
 
-
-    <div class="flex justify-between items-center">
+    <div class="flex justify-between items-center flex-col md:flex-row gap-3">
       <div>
         <p class="text-sm text-gray-500 cursor-default">
           Showing

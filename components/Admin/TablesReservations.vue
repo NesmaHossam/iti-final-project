@@ -255,7 +255,7 @@ fetchReservations();
       </UTable>
     </div>
 
-    <div class="flex justify-between items-center">
+    <div class="flex justify-between items-center flex-col md:flex-row gap-3">
       <div>
         <p class="text-sm text-gray-500 cursor-default">
           Showing {{ data.length > 0 ? 1 : 0 }}-{{ Math.min(data.length, page * 10) }} of {{ data.length }}

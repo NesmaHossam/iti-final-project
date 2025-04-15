@@ -197,4 +197,11 @@ const items = [
     font-size: 17px;
   }
 }
+.navigate.router-link-active {
+  font-weight:bolder;
+}
+
+.py-4.router-link-active {
+  font-weight: bold;
+}
 </style>

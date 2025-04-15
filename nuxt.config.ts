@@ -2,10 +2,13 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxt/ui", "@nuxt/eslint", "@pinia/nuxt", "@nuxt/icon"],
+  app: {
+    pageTransition: { name: "page", mode: "out-in" },
+  },
   colorMode: {
     preference: "light",
   },
-  
+
   css: ["~/assets/css/main.css", "@mdi/font/css/materialdesignicons.css"],
   ui: {
     theme: {
