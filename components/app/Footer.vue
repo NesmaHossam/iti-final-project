@@ -8,7 +8,7 @@
           src="../../assets/images/Logo.png"
           alt="footer image"
           class="w-[80%] lg:w-[100%] max-w-[250px]"
-        />
+        >
       </div>
 
       <div
@@ -16,7 +16,7 @@
       >
         <div class="flex flex-col gap-2 lg:gap-3">
           <nuxt-link to="/">Home</nuxt-link>
-          <nuxt-link to="/user/Tables/BookTable">Reservation</nuxt-link>
+          <nuxt-link to="/user/Tables">Reservation</nuxt-link>
           <nuxt-link to="/user/Menu">Menu</nuxt-link>
         </div>
         <div class="flex flex-col gap-2 lg:gap-3">
@@ -94,7 +94,7 @@
     class="bg-primary text-white text-center p-4 md:hidden flex flex-col items-center gap-3"
   >
     <nuxt-link to="/">
-      <img src="../../assets/images/LOGO.png" alt="logo" class="w-20 md:w-24" />
+      <img src="../../assets/images/LOGO.png" alt="logo" class="w-20 md:w-24">
     </nuxt-link>
     <p class="text-sm md:text-base">
       &copy; {{ new Date().getFullYear() }} Zaytona. All rights reserved.

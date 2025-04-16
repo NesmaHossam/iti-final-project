@@ -34,7 +34,7 @@
           src="../../assets/images/Home/aboutUs.png"
           alt="Dining Table"
           class="w-[85%] sm:w-[75%] md:w-[85%] lg:w-[90%] max-w-[400px] md:max-w-[600px]"
-        />
+        >
       </div>
     </UContainer>
   </div>

@@ -39,7 +39,7 @@
                     :src="review.rate"
                     alt="star"
                     class="w-[100px] h-[20px] inline"
-                  />
+                  >
                 </h3>
               </div>
               <div>
@@ -60,12 +60,12 @@
             src="@/assets/images/Home/arrowleft.png"
             class="cursor-pointer w-6 sm:w-8"
             @click="prevSlide"
-          />
+          >
           <img
             src="@/assets/images/Home/arrowright.png"
             class="cursor-pointer w-6 sm:w-8"
             @click="nextSlide"
-          />
+          >
         </div>
       </div>
     </UContainer>

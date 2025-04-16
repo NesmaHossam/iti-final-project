@@ -7,13 +7,23 @@ const menuItems = ref([
   { title: "Profile Info", icon: "i-lucide-user", route: "/user/profile" },
   {
     title: "Edit Profile",
-    icon: "i-lucide-settings",
+    icon: "i-heroicons-cog-8-tooth",
     route: "/user/profile/edit",
+  },
+  {
+    title: "Change Password",
+    icon: "i-heroicons-lock-closed",
+    route: "/user/profile/ChangePassword",
   },
   {
     title: "Reservations",
     icon: "i-lucide-calendar",
     route: "/user/profile/reservations",
+  },
+  {
+    title: "Delete Account",
+    icon: "i-lucide-lock",
+    route: "/user/profile/Delete",
   },
 ]);
 
@@ -22,9 +32,6 @@ watchEffect(() => {
   activeIcon.value = currentItem ? currentItem.title : "";
 });
 
-// const routeToPage = ( route) => {
-//   router.push(route);
-// };
 const routeToPage = (path) => {
   router.push(path).catch((err) => {
     console.error("Navigation error:", err);

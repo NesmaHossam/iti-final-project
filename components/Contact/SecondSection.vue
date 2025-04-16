@@ -56,11 +56,11 @@
         </h2>
         <p class="text-sm md:text-lg lg:text-xl text-primary cursor-default">
           Don't miss out on our latest updates, special offers, and delicious
-          <br />
+          <br>
           new dishes! Follow us on social media and be part of the Zaytona
-          <br />
+          <br>
           family. Join the conversation, share your moments, and let’s celebrate
-          <br />
+          <br>
           great food together!
         </p>
       </div>
@@ -70,7 +70,7 @@
           src="../../assets/images/contact/img2.png"
           alt="image 1"
           class="w-[80%]"
-        />
+        >
       </div>
     </UContainer>
   </div>
@@ -84,7 +84,7 @@
           src="../../assets/images/contact/img1.png"
           alt="image 2"
           class="w-[80%]"
-        />
+        >
       </div>
       <div>
         <h2
@@ -94,11 +94,11 @@
         </h2>
         <p class="text-sm md:text-lg lg:text-xl text-primary cursor-default">
           Get a taste of Zaytona wherever you are! Follow us on Instagram for
-          <br />
+          <br>
           mouthwatering food shots, behind-the-scenes moments, and exclusive
-          <br />
+          <br>
           updates. Tag us in your photos and share your dining experience with
-          <br />
+          <br>
           #ZaytonaEats. We can't wait to see your favorite dishes!
         </p>
       </div>

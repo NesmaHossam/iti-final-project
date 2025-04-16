@@ -5,7 +5,7 @@ import DefaultLayout from './default.vue';
 <template>
   <DefaultLayout>
     <UContainer class="min-h-[80vh] py-8">
-      <div class=" flex flex-col md:flex-row justify-between gap-8">
+      <div class=" flex flex-col md:flex-row justify-between gap-8 mt-6">
         <ProfileSide class="w-full md:w-[20%]" />
         <USeparator
           color="primary"

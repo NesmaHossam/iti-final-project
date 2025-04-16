@@ -32,7 +32,7 @@ const items = [
             src="../../assets/images/Logo.png"
             alt="logo image"
             class="w-35"
-          />
+          >
         </nuxt-link>
       </div>
 
@@ -53,14 +53,6 @@ const items = [
       <div class="hidden lg:block">
         <appAuthChecker>
           <template #auth>
-            <!-- <nuxt-link
-              to="#"
-              class="underline underline-offset-4"
-              @click="auth.logout"
-            >
-              Log Out
-            </nuxt-link> -->
-
             <UDropdownMenu
               size="xl"
               :items="items"
@@ -117,7 +109,7 @@ const items = [
         src="../../assets/images/Logo.png"
         alt="logo image"
         class="w-[60%] md:w-[100%] max-w-[150px] mb-6"
-      />
+      >
 
       <nuxt-link to="/" class="py-4 text-xl" @click="isMenuOpen = false"
         >Home</nuxt-link
@@ -176,7 +168,7 @@ const items = [
 
 <style scoped>
 .navigate::after {
-  bottom: 0;
+  bottom: -2px;
   content: "";
   display: block;
   height: 2px;
@@ -199,6 +191,8 @@ const items = [
 }
 .navigate.router-link-active {
   font-weight:bolder;
+  width: fit-content;
+  border-bottom: 2px solid #fff;
 }
 
 .py-4.router-link-active {
