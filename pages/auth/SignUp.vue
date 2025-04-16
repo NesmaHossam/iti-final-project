@@ -20,7 +20,7 @@ const schema = z
     userName: z.string().min(1, "User Name is required"),
     email: z.string().email("Invalid email format"),
     phoneNumber: z
-      .string().min(10, "mobile Number number must be at least 10 digits").max(15, "mobile Number number too long"),
+      .string().min(10, "mobile Number number must be at least 11 digits").max(15, "mobile Number number too long"),
     password: z.string().regex(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,"the password must 8-16 chars, A-Z, a-z, 0-9, special char, no spaces"),
     confirmPassword: z.string(),
   })

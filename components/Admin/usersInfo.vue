@@ -182,7 +182,7 @@ const changeRole = async () => {
       <div class="flex justify-between items-center">
         <div class="flex justify-between flex-col">
           <h2 class="text-primary text-xl md:text-3xl font-bold cursor-default">
-            {{ `${selectedRole == "user" ? "users" : "admins"} Information`  }} 
+            {{ `${selectedRole == "user" ? "Users" : "Admins"} Information`  }} 
           </h2>
           <p class="cursor-default">
             {{

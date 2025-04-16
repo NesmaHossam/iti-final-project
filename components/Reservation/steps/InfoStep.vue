@@ -11,6 +11,7 @@
         <p class="text-gray-500 cursor-default hidden lg:block">
           Please confirm your reservation information below. If you need to make
           any changes, you can update them before proceeding.
+          If you don't want to fill this press <strong>Next</strong> 
         </p>
       </div>
       <div class="mt-7 hidden lg:block">
@@ -30,7 +31,8 @@
       <h1
         class="text-xl md:text-2xl font-bold mb-4 text-primary cursor-default"
       >
-        Reservation Information
+        Reservation Information <br>
+        <span class="text-lg md:text-xl">(Additional Notes)</span>
       </h1>
 
       <div class="mt-6 flex flex-col gap-3">

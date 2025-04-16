@@ -118,6 +118,7 @@ const deleteItem = async () => {
 
       // Refresh data after deletion
       await fetchMenuItems();
+      page.value = 1;
     } else {
       throw new Error(response?.message || "Failed to delete item");
     }
@@ -325,8 +326,9 @@ const handleAddImageUpload = (event) => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-8 w-full my-6 ">
-    <div class="flex justify-between items-center">
+  <div class="flex flex-col gap-8 w-full my-6 min-h-[80vh] md:min-h-[90vh] justify-between ">
+    <div class="flex flex-col gap-8">
+      <div class="flex justify-between items-center">
       <div class="flex justify-between flex-col">
         <h2 class="text-primary text-xl md:text-3xl font-bold cursor-default">Menu Items</h2>
         <p class="cursor-default">{{ filteredData.length }} Items</p>
@@ -443,7 +445,7 @@ const handleAddImageUpload = (event) => {
       </UButton>
     </div>
 
-    <div class="flex flex-col gap-4 mt-6">
+    <div v-if="paginatedData.length > 0" class="flex flex-col gap-4 mt-6">
       <div
         v-for="menuItem in paginatedData"
         :key="menuItem._id"
@@ -575,13 +577,13 @@ const handleAddImageUpload = (event) => {
 
                 <div class="flex justify-end mt-8 gap-4">
                   <UButton
-                    class="mr-2 px-2 py-1 md:px-16 md:py-2 text-sm bg-primary text-white rounded cursor-pointer"
+                    class="mr-2 px-2 py-1 md:px-16 md:py-2 text-sm border border-primary text-primary bg-transparent rounded cursor-pointer"
                     @click="open = false"
                   >
                     Cancel
                   </UButton>
                   <UButton
-                    class="px-2 py-1 md:px-16 md:py-2 text-sm bg-transparent text-primary border border-primary rounded cursor-pointer hover:text-white"
+                    class="px-2 py-1 md:px-16 md:py-2 text-sm  text-white bg-red-700 rounded cursor-pointer hover:text-white"
                     @click="deleteItem"
                   >
                     Delete
@@ -592,6 +594,10 @@ const handleAddImageUpload = (event) => {
           </UModal>
         </div>
       </div>
+    </div>
+    <div v-else>
+      <h2 class="text-2xl text-primary text-center mt-8 font-bold">No Data to show please clean search Filed</h2>
+    </div>
     </div>
     <div class="flex justify-between items-center flex-col md:flex-row gap-3">
       <div>

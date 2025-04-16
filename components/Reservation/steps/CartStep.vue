@@ -215,7 +215,7 @@
                     class="h-full w-full object-contain"
                   >
                   <div
-                    class="absolute top-0 right-0 m-2 px-3 py-1 rounded-full text-xs font-semibold bg-primary/80 text-white cursor-default"
+                    class="absolute top-0 right-0 m-2 px-3 py-1 text-xl  text-primary cursor-default font-bold"
                   >
                     {{ item.price }} EGP
                   </div>
@@ -272,7 +272,7 @@
                 icon="i-heroicons-chevron-left"
                 color="primary"
                 variant="ghost"
-                class="cursor-pointer"
+                class="cursor-pointer flex justify-center items-center"
                 :disabled="currentPage === 1"
                 @click="currentPage--"
               />
@@ -282,7 +282,7 @@
                   :key="page"
                   :variant="currentPage === page ? 'solid' : 'outline'"
                   color="primary"
-                  class="w-10 h-10 cursor-pointer"
+                  class="w-10 h-10 cursor-pointer flex justify-center items-center"
                   @click="currentPage = page"
                 >
                   {{ page }}
@@ -329,7 +329,7 @@
                 label="Cancel"
                 variant="outline"
                 color="gray"
-                class="cursor-pointer"
+                class="cursor-pointer px-4 py-2 border border-primary"
                 @click="resetPreOrder"
               />
               <UButton
