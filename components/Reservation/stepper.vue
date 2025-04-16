@@ -69,21 +69,20 @@
     </template>
 
     <template #content>
-      <!-- Step Content -->
+      <!-- Step Content -->      
       <div
         class="bg-slate-200/10 backdrop-blur-md shadow-lg mb-8 md:mb-12 p-2 lg:p-12 overflow-hidden relative z-2 lg:rounded-tl-[30%] lg:rounded-br-[30%] border border-slate-100 w-full"
       >
         <div>
-          <p v-if="errorMessage" class="text-red-500 bg-red-100 p-2 rounded mb-4 text-center">
-              {{ errorMessage }}
-          </p>          
             <component
             :is="steps[currentStep].component"
             :form-data="formData"
             @update-data="updateFormData"
           />
         </div>
-
+        <p v-if="errorMessage" class="text-red-500 bg-red-100 p-2 rounded mb-6 text-center w-fit mx-auto">
+          {{ errorMessage }}
+        </p>    
         <!-- Navigation Buttons -->
         <div class="flex justify-between mb-4 me-9 mt-4">
           <button
@@ -155,6 +154,7 @@
             </button>
           </div>
         </div>
+ 
       </div>
     </template>
   </RereservationLayout>
