@@ -1,12 +1,10 @@
 <script setup>
 definePageMeta({
   layout : "profile",
-  name: "Edit Profile"
+  name: "Change Password"
 })
 </script>
 
 <template>
-<div>
-  <ProfileEdit />
-</div>
+  <ProfileChangePassword />
 </template>

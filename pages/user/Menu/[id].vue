@@ -1,5 +1,7 @@
 <template>
   <UContainer class="mt-[125px]">
+    <!-- Item details card -->
+    <h2 class="text-2xl font-bold text-primary mb-6">Meal Details</h2>
     <div
       class="bg-slate-200/10 backdrop-blur-md shadow-lg rounded-xl border border-slate-100 py-8 px-4 sm:px-6 my-8 transition-all duration-300"
     >
@@ -29,7 +31,7 @@
             <img
               :src="item.image.secure_url || '../../assets/images/Home/Menu1.png'"
               :alt="item.name"
-              class="rounded-xl  w-1/2  object-contain"
+              class="rounded-xl w-1/2 object-contain"
             >
           </div>
 
@@ -69,17 +71,23 @@
               <img
                 :src="item.image.secure_url || '../../assets/images/Home/Menu1.png'"
                 :alt="item.name"
-                class="rounded-xl w-full  object-contain transform hover:scale-[1.02] transition-transform duration-300"
+                class="rounded-xl w-full object-contain transform hover:scale-[1.02] transition-transform duration-300"
               >
             </div>
           </div>
         </div>
       </div>
     </div>
+    
+    <!-- Related Items Section -->
+    <MenuRelatedItems v-if="item" :current-item="item" />
   </UContainer>
 </template>
 
 <script setup>
+definePageMeta({
+  name : "Menu Item"
+})
 const route = useRoute();
 const router = useRouter();
 const itemId = route.params.id;

@@ -182,7 +182,7 @@ const changeRole = async () => {
       <div class="flex justify-between items-center">
         <div class="flex justify-between flex-col">
           <h2 class="text-primary text-xl md:text-3xl font-bold cursor-default">
-            Users Information
+            {{ `${selectedRole == "user" ? "users" : "admins"} Information`  }} 
           </h2>
           <p class="cursor-default">
             {{
@@ -344,11 +344,12 @@ const changeRole = async () => {
               <UButton
                 color="gray"
                 variant="outline"
+                class="cursor-pointer px-4 py-2 border border-primary"
                 @click="deleteModalOpen = false"
               >
                 Cancel
               </UButton>
-              <UButton color="red" @click="deleteUser"> Delete </UButton>
+              <UButton color="red" class="px-4 py-2 bg-red-700 text-white cursor-pointer" @click="deleteUser"> Delete </UButton>
             </div>
           </template>
         </UModal>
